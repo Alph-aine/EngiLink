@@ -29,4 +29,3 @@ EngiLink is a specialized web platform designed to connect certified and profess
 - **Frontend:** React.js, Bootstrap (or Tailwind CSS)
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
-- **Hosting:** Netlify, Heroku, or Vercel
