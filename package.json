@@ -1,0 +1,19 @@
+{
+  "name": "engilink",
+  "version": "1.0.0",
+  "description": "EngiLink is a specialized web platform connecting certified and professional engineers with employers seeking their expertise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alph-aine/EngiLink.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Alph-aine/EngiLink/issues"
+  },
+  "homepage": "https://github.com/Alph-aine/EngiLink#readme"
+}
