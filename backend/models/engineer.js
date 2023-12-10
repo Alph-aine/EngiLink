@@ -52,6 +52,7 @@ const engineerSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
     validate: [validator.isEmail, 'Enter a valid email address']
   },
   password: {
@@ -60,6 +61,10 @@ const engineerSchema = new mongoose.Schema({
     minLength: [8, 'password can not be less than 8 characters'],
     maxLength: [30, 'password can not be more than 30 characters'],
     select: false
+  },
+  phoneNumber: {
+    type: String,
+    required: true
   },
   skills: {
     type: [String],
@@ -78,7 +83,7 @@ const engineerSchema = new mongoose.Schema({
   appliedJobs: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Jobs' // Reference to the Job model
+      ref: 'Job' // Reference to the Job model
     }
   ],
   highestDegree: {
@@ -88,6 +93,10 @@ const engineerSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  fieldOfStudy: {
+    type: String,
+    required: [true, 'Enter your field of study']
   }
   // other fields
 });
@@ -99,3 +108,7 @@ engineerSchema.pre('save', async function (next) {
   }
   this.password = await bcrypt.hash(this.password, 12);
 });
+
+const Engineer = mongoose.model('Engineer', engineerSchema);
+
+export default Engineer;
