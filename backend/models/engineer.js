@@ -20,8 +20,7 @@ const certificationSchema = new mongoose.Schema({
 const engineerSchema = new mongoose.Schema({
   _id: {
     type: String,
-    default: uuidv4(),
-    required: true
+    default: uuidv4()
   },
   firstName: {
     type: String,
@@ -74,12 +73,11 @@ const engineerSchema = new mongoose.Schema({
     type: [certificationSchema],
     default: []
   },
-  experienceLevel: {
-    type: Number,
-    min: 1,
-    max: 5,
-    default: 1
-  },
+  experienceLevel: String,
+  bio: String,
+  resume: String,
+  portfolio: String,
+  desiredSalary: String,
   appliedJobs: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -91,6 +89,10 @@ const engineerSchema = new mongoose.Schema({
     required: true
   },
   createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
     type: Date,
     default: Date.now
   },
