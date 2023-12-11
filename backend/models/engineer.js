@@ -125,9 +125,11 @@ engineerSchema.methods.validatePassword = async function (insertedPassword) {
   return await bcrypt.compare(insertedPassword, this.password);
 };
 
+const userType = 'engineer';
+
 // Return jwt token after successful login
 engineerSchema.methods.getJwtToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+  return jwt.sign({ id: this._id, userType }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
 };
 
 const Engineer = mongoose.model('Engineer', engineerSchema);
