@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const certificationSchema = new mongoose.Schema({
   name: {
@@ -99,7 +100,10 @@ const engineerSchema = new mongoose.Schema({
   fieldOfStudy: {
     type: String,
     required: [true, 'Enter your field of study']
-  }
+  },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date
+
   // other fields
 });
 
@@ -110,6 +114,16 @@ engineerSchema.pre('save', async function (next) {
   }
   this.password = await bcrypt.hash(this.password, 12);
 });
+
+// validate password
+engineerSchema.methods.validatePassword = async function (insertedPassword) {
+  return await bcrypt.compare(insertedPassword, this.password);
+};
+
+// Return jwt token after successful login
+engineerSchema.methods.getSignedJwtToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+};
 
 const Engineer = mongoose.model('Engineer', engineerSchema);
 

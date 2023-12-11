@@ -16,6 +16,9 @@ const enumEmploymentType = {
   REMOTE: 'Remote'
 };
 
+/**
+ * Job Model
+ */
 const jobSchema = new mongoose.Schema({
   _id: { type: String, default: uuidv4() },
   title: { type: String, required: true },
