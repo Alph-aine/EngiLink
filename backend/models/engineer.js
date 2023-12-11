@@ -62,6 +62,11 @@ const engineerSchema = new mongoose.Schema({
     maxLength: [30, 'password can not be more than 30 characters'],
     select: false
   },
+  // role is to assign level of authorization
+  role: {
+    type: String,
+    default: 'user'
+  },
   phoneNumber: {
     type: String,
     required: true
@@ -121,7 +126,7 @@ engineerSchema.methods.validatePassword = async function (insertedPassword) {
 };
 
 // Return jwt token after successful login
-engineerSchema.methods.getSignedJwtToken = function () {
+engineerSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
 };
 

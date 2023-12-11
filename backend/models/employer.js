@@ -34,6 +34,11 @@ const employerSchema = new mongoose.Schema({
     maxLength: [30, 'password can not be more than 30 characters'],
     select: false
   },
+  // role is to assign level of authorization
+  role: {
+    type: String,
+    default: 'user'
+  },
   website: String,
   location: {
     type: String,
@@ -76,7 +81,7 @@ employerSchema.methods.validatePassword = async function (insertedPassword) {
 };
 
 // Return jwt token after successful login
-employerSchema.methods.getSignedJwtToken = function () {
+employerSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
 };
 
