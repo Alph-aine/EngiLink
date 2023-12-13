@@ -33,15 +33,13 @@ const engineerSchema = new mongoose.Schema({
   userName: {
     type: String,
     required: [true, 'Enter username'],
-    validate: [{
-      validator: (value) => /^[a-z]+$/.test(value),
-      message: 'Name must contain only lowercase letters.'
-    },
-    {
-      validator: (username) => !username.includes(' '),
-      message: 'Username cannot contain spaces.'
-    }
-    ]
+    validate:
+      {
+        validator: (username) => !username.includes(' '),
+        message: 'Username cannot contain spaces.'
+      },
+    lowercase: true,
+    match: /^[a-z0-9_-]+$/
   },
   email: {
     type: String,
@@ -101,6 +99,7 @@ const engineerSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Enter your field of study']
   },
+  userType: { type: String },
   resetPasswordToken: String,
   resetPasswordExpire: Date
 
@@ -113,6 +112,7 @@ engineerSchema.pre('save', async function (next) {
     return next();
   }
   this.password = await bcrypt.hash(this.password, 12);
+  this.userType = 'engineer';
 });
 
 // validate password

@@ -89,7 +89,7 @@ export const loginEmployer = asyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('Input email and password', 400));
   }
 
-  // check if engineer exists
+  // check if employer exists
   const employer = await Employer.findOne({ email }).select('+password');
   if (!employer) return next(new ErrorHandler('Invalid email', 401));
 
