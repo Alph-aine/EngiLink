@@ -5,7 +5,8 @@ import cors from 'cors';
 // error handler middleware
 import errorMiddleware from './middlewares/error.js';
 
-import auth from './routes/auth.js';
+import engrAuth from './routes/engrAuth.js';
+import empAuth from './routes/empAuth.js';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use(errorMiddleware);
 
-app.use(auth);
+app.use('/api/v1', engrAuth);
+app.use('/api/v1', empAuth);
 
 export default app;
