@@ -1,7 +1,7 @@
-import ErrorHandler from '../utils/errorHandler';
+import ErrorHandler from '../utils/errorHandler.js';
 
 // Error handler middleware
-export const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
 
   let error = { ...err };
@@ -37,3 +37,5 @@ export const errorHandler = (err, req, res, next) => {
     message: error.message || 'Something went wrong with the server.'
   });
 };
+
+export default errorHandler;

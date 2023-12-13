@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -19,10 +18,6 @@ const certificationSchema = new mongoose.Schema({
  * select: false is used in some cases to prevent those fields from being returned accidentally
  */
 const engineerSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    default: uuidv4()
-  },
   firstName: {
     type: String,
     required: [true, 'Enter your first name'],

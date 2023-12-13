@@ -1,8 +1,8 @@
 import { verify } from 'jsonwebtoken';
-import Engineer from '../models/engineer';
-import Employer from '../models/employer';
-import ErrorHandler from '../utils/errorHandler';
-import asyncErrors from './asyncError';
+import Engineer from '../models/engineer.js';
+import Employer from '../models/employer.js';
+import ErrorHandler from '../utils/errorHandler.js';
+import asyncErrors from './asyncError.js';
 
 // checks if user is authenticated
 export const isAuthenticated = asyncErrors(async (req, res, next) => {

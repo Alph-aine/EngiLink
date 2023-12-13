@@ -1,8 +1,8 @@
-import Engineer from '../models/engineer';
-import Employer from '../models/employer';
-import asyncErrors from '../middlewares/asyncError';
-import sendToken from '../utils/sendcookie';
-import ErrorHandler from '../utils/errorHandler';
+import Engineer from '../models/engineer.js';
+import Employer from '../models/employer.js';
+import asyncErrors from '../middlewares/asyncError.js';
+import sendToken from '../utils/sendcookie.js';
+import ErrorHandler from '../utils/errorHandler.js';
 
 // Register new engineer
 export const registerEngineer = asyncErrors(async (req, res, next) => {
