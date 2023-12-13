@@ -57,7 +57,6 @@ const employerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  userType: { type: String },
   resetPasswordToken: String,
   resetPasswordExpire: Date
 
@@ -69,7 +68,6 @@ employerSchema.pre('save', async function (next) {
     return next();
   }
   this.password = await bcrypt.hash(this.password, 12);
-  this.userType = 'employer';
 });
 
 // validate password
