@@ -51,3 +51,12 @@ export const loginEngineer = asyncErrors(async (req, res, next) => {
   // Return JWT token
   sendToken(engineer, 200, res);
 });
+
+// get currently login engineer
+export const getMe = asyncErrors(async (req, res, next) => {
+  const engineer = await Engineer.findById(req.user.id);
+  res.status(200).json({
+    success: true,
+    engineer
+  });
+});
