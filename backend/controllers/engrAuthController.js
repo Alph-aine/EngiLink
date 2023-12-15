@@ -179,3 +179,20 @@ export const getEngineerByUserName = asyncErrors(async (req, res, next) => {
     engineer
   });
 });
+
+// Delete engineer account
+export const deleteEngineerAccount = asyncErrors(async (req, res, next) => {
+  if (req.user.id !== req.params.id) {
+    return next(new ErrorHandler('You are not authorized to perform this action', 403));
+  }
+  const engineer = await Engineer.findById(req.params.id);
+  if (!engineer) {
+    return next(new ErrorHandler('Engineer not found', 404));
+  }
+
+  await engineer.deleteOne({ _id: req.params.id });
+  res.status(200).json({
+    success: true,
+    message: 'Account deleted successfully'
+  });
+});

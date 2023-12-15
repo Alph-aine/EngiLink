@@ -12,7 +12,8 @@ const {
   resetPassword,
   updatePassword,
   getEngineerById,
-  getEngineerByUserName
+  getEngineerByUserName,
+  deleteEngineerAccount
 } = authController;
 
 // Register engineer
@@ -35,6 +36,9 @@ router.route('/engineer/password/update').put(isAuthenticated, updatePassword);
 
 // Get engineer by id
 router.route('/engineer/id/:id').get(isAuthenticated, getEngineerById);
+
+// deletes an engineer account by id
+router.route('/engineer/id/:id').delete(isAuthenticated, deleteEngineerAccount);
 
 // Get engineer by userName
 router.route('/engineer/username/:userName').get(isAuthenticated, getEngineerByUserName);
