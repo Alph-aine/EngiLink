@@ -154,8 +154,22 @@ export const updatePassword = asyncErrors(async (req, res, next) => {
   sendToken(engineer, 200, res);
 });
 
+// Gets engineer by id
 export const getEngineerById = asyncErrors(async (req, res, next) => {
   const engineer = await Engineer.findById(req.params.id);
+
+  if (!engineer) {
+    return next(new ErrorHandler('Engineer does not exist', 404));
+  }
+  res.status(200).json({
+    success: true,
+    engineer
+  });
+});
+
+// Get engineer by userName
+export const getEngineerByUserName = asyncErrors(async (req, res, next) => {
+  const engineer = await Engineer.findOne({ userName: req.params.userName });
 
   if (!engineer) {
     return next(new ErrorHandler('Engineer does not exist', 404));

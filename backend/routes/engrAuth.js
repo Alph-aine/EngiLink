@@ -11,7 +11,8 @@ const {
   forgotPassword,
   resetPassword,
   updatePassword,
-  getEngineerById
+  getEngineerById,
+  getEngineerByUserName
 } = authController;
 
 // Register engineer
@@ -32,6 +33,10 @@ router.route('/engineer/password/reset/:token').put(resetPassword);
 // update logged in engineer password
 router.route('/engineer/password/update').put(isAuthenticated, updatePassword);
 
-router.route('/engineer/:id').get(isAuthenticated, getEngineerById);
+// Get engineer by id
+router.route('/engineer/id/:id').get(isAuthenticated, getEngineerById);
+
+// Get engineer by userName
+router.route('/engineer/username/:userName').get(isAuthenticated, getEngineerByUserName);
 
 export default router;
