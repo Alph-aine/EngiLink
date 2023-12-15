@@ -3,6 +3,7 @@ import asyncErrors from '../middlewares/asyncError.js';
 import sendToken from '../utils/sendcookie.js';
 import ErrorHandler from '../utils/errorHandler.js';
 import sendEmail from '../utils/mailer.js';
+import crypto from 'crypto';
 
 /**
  * Contain controllers specific to engineers
