@@ -132,7 +132,7 @@ export const resetPassword = asyncErrors(async (req, res, next) => {
   sendToken(engineer, 200, res);
 });
 
-// Update or change password of currently logged in user.
+// Update or change password of currently logged in engineer.
 export const updatePassword = asyncErrors(async (req, res, next) => {
   const engineer = await Engineer.findById(req.user.id).select('+password');
 
@@ -152,4 +152,16 @@ export const updatePassword = asyncErrors(async (req, res, next) => {
   await engineer.save();
 
   sendToken(engineer, 200, res);
+});
+
+export const getEngineerById = asyncErrors(async (req, res, next) => {
+  const engineer = await Engineer.findById(req.params.id);
+
+  if (!engineer) {
+    return next(new ErrorHandler('Engineer does not exist', 404));
+  }
+  res.status(200).json({
+    success: true,
+    engineer
+  });
 });
