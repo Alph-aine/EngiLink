@@ -3,6 +3,10 @@ import asyncErrors from '../middlewares/asyncError.js';
 import sendToken from '../utils/sendcookie.js';
 import ErrorHandler from '../utils/errorHandler.js';
 
+/**
+ * Contains controllers specific to Employers
+ */
+
 // Register new employer
 
 export const registerEmployer = asyncErrors(async (req, res, next) => {

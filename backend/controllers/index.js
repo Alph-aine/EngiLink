@@ -1,5 +1,8 @@
 import asyncErrors from '../middlewares/asyncError.js';
 
+/**
+ * Contains general controllers
+ */
 // Logout a user.
 export const logout = asyncErrors(async (req, res, next) => {
   res.cookie('token', null, {

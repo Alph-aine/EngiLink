@@ -2,6 +2,11 @@ import Engineer from '../models/engineer.js';
 import asyncErrors from '../middlewares/asyncError.js';
 import sendToken from '../utils/sendcookie.js';
 import ErrorHandler from '../utils/errorHandler.js';
+import sendEmail from '../utils/mailer.js';
+
+/**
+ * Contain controllers specific to engineers
+ */
 
 // Register new engineer
 export const registerEngineer = asyncErrors(async (req, res, next) => {
@@ -59,4 +64,69 @@ export const getMe = asyncErrors(async (req, res, next) => {
     success: true,
     engineer
   });
+});
+
+// Forgot password.
+export const forgotPassword = asyncErrors(async (req, res, next) => {
+  const engineer = await Engineer.findOne({ email: req.body.email });
+
+  // Check if email exists.
+  if (!engineer) {
+    return next(new ErrorHandler('Engineer with this email address not found', 404));
+  }
+
+  // Get reset token.
+  const resetToken = engineer.getResetPasswordToken();
+
+  await engineer.save({ validateBeforeSave: false });
+
+  // Create Reset Password URL.
+  const resetURL = `${req.protocol}://${req.get('host')}/api/v1/engineer/password/reset/${resetToken}`;
+  const message = `Your password reset token is:\n\n${resetURL}\n\nIf you did not request for a password reset, kindly ignore this email.`;
+
+  try {
+    await sendEmail({
+      email: engineer.email,
+      subject: 'Engilink Password Recovery',
+      message
+    });
+
+    res.status(200).json({
+      success: true,
+      message: `Email sent to ${engineer.email}`
+    });
+  } catch (error) {
+    engineer.resetPasswordToken = undefined;
+    engineer.resetPasswordExpire = undefined;
+
+    await engineer.save({ validateBeforeSave: false });
+
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
+// Reset password.
+export const resetPassword = asyncErrors(async (req, res, next) => {
+  const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+  const engineer = await Engineer.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() }
+  });
+
+  if (!engineer) {
+    return next(new ErrorHandler('Invalid or expired token', 400));
+  }
+
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new ErrorHandler('Passwords do not match', 400));
+  }
+
+  // Set new password.
+  engineer.password = req.body.password;
+  engineer.resetPasswordToken = undefined;
+  engineer.resetPasswordExpire = undefined;
+
+  await engineer.save();
+
+  sendToken(engineer, 200, res);
 });
