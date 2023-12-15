@@ -43,7 +43,6 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
         next(new ErrorHandler(error.message, 400));
     }
 });
-
 // Define the postJob route handler
 export const postJob = asyncErrors(async (req, res, next) => {
     isAuthenticated(req, res, async (req, res) => {
@@ -55,3 +54,26 @@ export const postJob = asyncErrors(async (req, res, next) => {
         }
     });
 });
+
+export const deleteJob = asyncErrors(async (req, res, next) => {
+    isAuthenticated(req, res, async (req, res) => {
+	const jobId = req.params.jobid;
+
+	try {
+	    const  job = await Job.findByid(jobId);
+
+	    if (!job) {
+		res.status(404).send("Job not found");
+	    }
+
+	    // check if  the delete requeter isan employerthat posted the job
+	    if (req.user.role === 'employer' && job.employer.toString() === req.user,userId) {
+		await Job.remove();
+	    } else {
+		res.status(403).send('Permission denied to delete the job');
+	    }
+
+	} catch(error) {
+	    next(new ErrorHandler(error.message, 400));
+	}
+    });
