@@ -17,7 +17,6 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
             location,
             postedAt,
             deadline,
-            employer,
         } = req.body;
 
         // Create a new Job instance with the provided data
@@ -32,9 +31,8 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
             location,
             postedAt,
             deadline,
-            employer,
         });
-
+	newjob.employer = req.user;
         // Save the new job to the database
         await newJob.save();
         res.status(201).json(newJob);
@@ -43,134 +41,130 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
         next(new ErrorHandler(error.message, 400));
     }
 });
+
 // Define the postJob route handler
+// Define the postJob asynchronous route handler
 export const postJob = asyncErrors(async (req, res, next) => {
-    isAuthenticated(req, res, async (req, res) => {
-	// ensures only employers can post jobs
-        if (req.user.role !== 'employer') {
-            res.status(403).send('Only employers can post jobs');
-        } else {
-            await newJobFunc(req, res, next);
-        }
-    });
+    // Check if the user is an employer
+    if (req.user.role !== 'employer') {
+        res.status(403).send('Only employers can post jobs');
+    } else {
+        await newJobFunc(req, res, next);
+    }
 });
 
 export const deleteJob = asyncErrors(async (req, res, next) => {
-    isAuthenticated(req, res, async (req, res) => {
-	const jobId = req.params.jobid;
+    const jobId = req.params.jobid;
 
-	try {
-	    const  job = await Job.findByid(jobId);
+    try {
+        const job = await Job.findByid(jobId);
 
-	    if (!job) {
-		res.status(404).send("Job not found");
-	    }
+        if (!job) {
+            res.status(404).send("Job not found");
+        }
 
-	    // check if  the delete requeter isan employerthat posted the job
-	    if (req.user.role === 'employer' && job.employer.toString() === req.user,userId) {
-		await Job.remove();
-	    } else {
-		res.status(403).send('Permission denied to delete the job');
-	    }
+        // Check if the delete requester is an employer that posted the job
+        if (req.user.role === 'employer' && job.employer.toString() === req.user.userId) {
+            await Job.remove();
+        } else {
+            res.status(403).send('Permission denied to delete the job');
+        }
+    } catch (error) {
+        next(new ErrorHandler(error.message, 400));
+    }
+});
 
-	} catch(error) {
-	    next(new ErrorHandler(error.message, 400));
-	}
-    });
-})
 
 // get job controller
-export const  getJobs = asyncErrors(async (req, res, next) => {
-    isAuthenticated(req, res, async (req, res) => {
-	try {
-	    // gets a single job if jobId param is present
-	    const jobId = req.params.jobId;
-	    if (jobId) {
-		const job = Job.findById(jobId);
-		if (!job) {
-		    re.status(404).send('Job not found');
-		}
-		res.json(job);
-	    } else {
-		// gets all jobs if jobid param is missing
-		const jobs = await Job.find();
-		res.json(jobs);
-	    }
-	} catch (error) {
-	    next(new ErrorHandler(error.message, 500));
-	}
-    });
+export const getJobs = asyncErrors(async (req, res, next) => {
+    try {
+        // Gets a single job if jobId param is present
+        const jobId = req.params.jobId;
+        if (jobId) {
+            const job = Job.findById(jobId);
+            if (!job) {
+                res.status(404).send('Job not found');
+            }
+            res.json(job);
+        } else {
+            // Gets all jobs if jobid param is missing
+            const jobs = await Job.find();
+            res.json(jobs);
+        }
+    } catch (error) {
+        next(new ErrorHandler(error.message, 500));
+    }
 });
 
 
-// To serach for jobs using sime filters or query
+// To search for jobs using some filters or query
 export const searchJobs = asyncErrors(async (req, res, next) => {
-    isAuthenticated(req, res, async (req, res) => {
-	try {
-	    const {
-		title,
-		skillsRequired,
-		experienceLevel,
-		employmentType,
-		minSalary,
-		maxSalary,
-		location,
-		employer
-	    } = req.query;
-/	    // A filter object to store the search queries of the user
-	    const filter = {};
-	    if (title) filter.title = new RegExp(title, 'i');
-	    if skillsRequired filter.skillsRequired = new RegExp(skillsRequired, 'i');
-	    if experienceLevel filter.experienceLevel = experienceLevel;
-	    if employmentType filter.employmentType = employmentType;
-	    if minSalary filter.minSalary = { $gte: parseInt(minSalary) };
-	    if maxSalary filter.maxSalary = { $lte: parseInt(maxSalary) };
-	    if location filter.location = new RegExp(location, 'i');
-	    if employer filter.employer = new RegExp(employer, 'i');
+    try {
+        const {
+            title,
+            skillsRequired,
+            experienceLevel,
+            employmentType,
+            minSalary,
+            maxSalary,
+            location,
+            employer
+        } = req.query;
 
-	    const jobs = await Job.find(filter);
-	    res.json(jobs);
-	} catch(error) {
-	    next(new ErrorHandler(error.message, 500));
-	}
-    });
+        // A filter object to store the search queries of the user
+        const filter = {};
+        if (title) filter.title = new RegExp(title, 'i');
+        if (skillsRequired) filter.skillsRequired = new RegExp(skillsRequired, 'i');
+        if (experienceLevel) filter.experienceLevel = experienceLevel;
+        if (employmentType) filter.employmentType = employmentType;
+        if (minSalary) filter.minSalary = { $gte: parseInt(minSalary) };
+        if (maxSalary) filter.maxSalary = { $lte: parseInt(maxSalary) };
+        if (location) filter.location = new RegExp(location, 'i');
+        if (employer) filter.employer = new RegExp(employer, 'i');
+
+        const jobs = await Job.find(filter);
+        res.json(jobs);
+    } catch (error) {
+        next(new ErrorHandler(error.message, 500));
+    }
 });
 
-// update job controller
+
+// Update job controller
 export const updateJob = asyncErrors(async (req, res, next) => {
-    isAuthenticated(req, res, async (req, res) => {
-	try {
-	    const jobId = req.params.jobId;
-	    const job = await Job.findById(jobId);
-	    if (!job) {
-		res.status(404).send('Job not found');
-	    }
-	    if (req.user.role === 'employer' && job.employer.toString() === req.user.userId) {
-		const {
-		    title,
-		    skillsRequired,
-		    experienceLevel,
-		    employmentType,
-		    minSalary,
-		    maxSalary,
-		    location,
-		    deadline
-		} = req.body;
-		job.title = title || job.title;
-		job.skillsRequired = skillsRequired || job.skillsRequired;
-		job.experienceLevel = experienceLevel || job.experienceLevel;
-		job.employmentType = employmentType || job.employmentType;
-		job.minSalary = minSalary || job.minSalary;
-		job.maxSalary = maxSalary || job.maxSalary;
-		job.location = location || job.location;
-		job.deadline = deadline || job.deadline;
-		await job.save();
-		res.status(200).json(job);
-	    } else {
-		res.status(403).send('Permission denied to update the job');
-	    }
-	} catch (error) {
-	    next(new ErrorHandler(error.message, 500));
+    try {
+        const jobId = req.params.jobId;
+        const job = await Job.findById(jobId);
+        if (!job) {
+            res.status(404).send('Job not found');
+        }
+        // Check if the user is an employer and the owner of the job
+        if (req.user.role === 'employer' && job.employer.toString() === req.user.userId) {
+            const {
+                title,
+                skillsRequired,
+                experienceLevel,
+                employmentType,
+                minSalary,
+                maxSalary,
+                location,
+                deadline
+            } = req.body;
+            job.title = title || job.title;
+            job.skillsRequired = skillsRequired || job.skillsRequired;
+            job.experienceLevel = experienceLevel || job.experienceLevel;
+            job.employmentType = employmentType || job.employmentType;
+            job.minSalary = minSalary || job.minSalary;
+            job.maxSalary = maxSalary || job.maxSalary;
+            job.location = location || job.location;
+            job.deadline = deadline;
+
+	    await job.save();
+	    res.status(200).json(job);
+	} else {
+            res.status(403).send('Permission denied to update the job');
 	}
-    });
+    } catch (error) {
+	next(new ErrorHandler(error.message, 500));
+    }
 });

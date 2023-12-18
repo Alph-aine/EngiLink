@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
+import * as general from '../controllers/index.js';
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const router = express.Router();
 
-module.exports = router;
+const {
+  logout
+} = general;
+
+router.route('/logout').get(logout);
+
+export default router;

@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 const certificationSchema = new mongoose.Schema({
   name: {
@@ -19,10 +19,6 @@ const certificationSchema = new mongoose.Schema({
  * select: false is used in some cases to prevent those fields from being returned accidentally
  */
 const engineerSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    default: uuidv4()
-  },
   firstName: {
     type: String,
     required: [true, 'Enter your first name'],
@@ -38,15 +34,13 @@ const engineerSchema = new mongoose.Schema({
   userName: {
     type: String,
     required: [true, 'Enter username'],
-    validate: [{
-      validator: (value) => /^[a-z]+$/.test(value),
-      message: 'Name must contain only lowercase letters.'
-    },
-    {
-      validator: (username) => !username.includes(' '),
-      message: 'Username cannot contain spaces.'
-    }
-    ]
+    validate:
+      {
+        validator: (username) => !username.includes(' '),
+        message: 'Username cannot contain spaces.'
+      },
+    lowercase: true,
+    match: /^[a-z0-9_-]+$/
   },
   email: {
     type: String,
@@ -130,6 +124,18 @@ const userType = 'engineer';
 // Return jwt token after successful login
 engineerSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id, userType }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+};
+
+// Generate and return random password reset token
+engineerSchema.methods.getResetPasswordToken = function () {
+  // generate the reset token
+  const resetToken = crypto.randomBytes(64).toString('hex');
+
+  // hassh and save this token to the resetPasswordToken field
+  this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+  this.resetPasswordExpire = Date.now() + 30 * 60 * 1000; // 30 minutes
+
+  return resetToken;
 };
 
 const Engineer = mongoose.model('Engineer', engineerSchema);

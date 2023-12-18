@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
-
 // set various values for enum used later on in the model
 const enumExperienceLevel = {
   ENTRY_LEVEL: 'Entry Level',
@@ -56,9 +55,9 @@ const jobSchema = new mongoose.Schema({
     employer: {
 	type: mongoose.Schema.Types.ObjectId,
 	ref: "Employer" },
-    applications: {
+    proposals: {
 	type: mongoose.Schema.Types.ObjectId,
-	ref: "Application" },  
+	ref: "Proposal" },  
 });
 
 const Job = mongoose.model('Job', jobSchema);

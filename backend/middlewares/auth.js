@@ -1,8 +1,8 @@
-import { verify } from 'jsonwebtoken';
-import Engineer from '../models/engineer';
-import Employer from '../models/employer';
-import ErrorHandler from '../utils/errorHandler';
-import asyncErrors from './asyncError';
+import jwt from 'jsonwebtoken';
+import Engineer from '../models/engineer.js';
+import Employer from '../models/employer.js';
+import ErrorHandler from '../utils/errorHandler.js';
+import asyncErrors from './asyncError.js';
 
 // checks if user is authenticated
 export const isAuthenticated = asyncErrors(async (req, res, next) => {
@@ -14,17 +14,19 @@ export const isAuthenticated = asyncErrors(async (req, res, next) => {
   }
 
   try {
-    // verify token and destructure user information
-    const { id, userType } = verify(token, process.env.JWT_SECRET);
+    // jwt.verify token and destructure user information
+    const verifiedToken = jwt.verify(token, process.env.JWT_SECRET);
 
     // retrieve user info based on user type
+    const userType = verifiedToken.userType;
     let user;
+
     switch (userType) {
       case 'engineer':
-        user = await Engineer.findById(id);
+        user = await Engineer.findById(verifiedToken.id);
         break;
       case 'employer':
-        user = await Employer.findById(id);
+        user = await Employer.findById(verifiedToken.id);
         break;
       default:
         throw new ErrorHandler('Invalid user type in token', 401);
@@ -34,7 +36,7 @@ export const isAuthenticated = asyncErrors(async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    return new ErrorHandler('Invalid Token, 401');
+    next(new ErrorHandler('Invalid Token, 401'));
   }
 });
 

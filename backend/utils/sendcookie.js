@@ -6,7 +6,7 @@ const sendToken = (user, statusCode, res) => {
   // cookie options
   const options = {
     expires: new Date(
-      Date.now() + process.env.COOKIE_EXPIRATION * 24 * 60 * 60 * 1000 // sets this for a day
+      Date.now() + process.env.COOKIE_EXPIRATION * 60 * 60 * 1000
     ),
     httpOnly: true
   };
