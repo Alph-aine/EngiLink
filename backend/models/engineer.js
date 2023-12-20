@@ -4,16 +4,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
-const certificationSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  authority: String,
-  obtainedAt: Date,
-  licenseNumber: String
-});
-
 /**
  * Model to store engineer data
  * select: false is used in some cases to prevent those fields from being returned accidentally
@@ -70,7 +60,7 @@ const engineerSchema = new mongoose.Schema({
     default: []
   },
   certifications: {
-    type: [certificationSchema],
+    type: [String],
     default: []
   },
   experienceLevel: String,
