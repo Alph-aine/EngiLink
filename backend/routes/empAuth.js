@@ -41,4 +41,5 @@ router.route('/employer/id/:id').delete(isAuthenticated, deleteEmployerAccount);
 
 // get employer by companyName
 router.route('/employer/company/:companyName').get(isAuthenticated, getEmployerByCompanyName);
+
 export default router;

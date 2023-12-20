@@ -11,7 +11,10 @@ import crypto from 'crypto';
 
 // Register new engineer
 export const registerEngineer = asyncErrors(async (req, res, next) => {
-  const { email, password, firstName, lastName, userName, phoneNumber, highestDegree, fieldOfStudy } = req.body;
+  const {
+    email, password, firstName, lastName, userName, phoneNumber, highestDegree,
+    fieldOfStudy, skills, certifications, bio, experienceLevel, resume, portfolio, desiredSalary
+  } = req.body;
   const engineer = new Engineer({
     email,
     password,
@@ -20,7 +23,14 @@ export const registerEngineer = asyncErrors(async (req, res, next) => {
     userName,
     phoneNumber,
     highestDegree,
-    fieldOfStudy
+    fieldOfStudy,
+    skills,
+    certifications,
+    bio,
+    experienceLevel,
+    resume,
+    portfolio,
+    desiredSalary
   });
 
   try {

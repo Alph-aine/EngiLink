@@ -168,7 +168,8 @@ export const getEmployerById = asyncErrors(async (req, res, next) => {
 
 // Get employer by companyName
 export const getEmployerByCompanyName = asyncErrors(async (req, res, next) => {
-  const employer = await Employer.findOne({ userName: req.params.companyName });
+  const decodedCompanyName = decodeURIComponent(req.params.companyName);
+  const employer = await Employer.findOne({ companyName: decodedCompanyName });
 
   if (!employer) {
     return next(new ErrorHandler('Employer does not exist', 404));
