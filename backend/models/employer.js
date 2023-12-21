@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 /**
  * Model to store Employer's details
@@ -80,6 +81,18 @@ const userType = 'employer';
 // Return jwt token after successful login
 employerSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id, userType }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+};
+
+// Generate and return random password reset token
+employerSchema.methods.getResetPasswordToken = function () {
+  // generate the reset token
+  const resetToken = crypto.randomBytes(64).toString('hex');
+
+  // hassh and save this token to the resetPasswordToken field
+  this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+  this.resetPasswordExpire = Date.now() + 30 * 60 * 1000; // 30 minutes
+
+  return resetToken;
 };
 
 const Employer = mongoose.model('Employer', employerSchema);
