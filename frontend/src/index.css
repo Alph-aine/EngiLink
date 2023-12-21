@@ -3,7 +3,19 @@
   --dark-green: #233E31;
   --muted-green: #70988F;
   --light-gray: #D5D8D5;
+  --white: #eeeeee;
+  --black: #333333;
 
-  --main-font: font-family: 'Merriweather', serif;
-  --accent-font: font-family: 'Lato', sans-serif;
+  --main-font: 'Merriweather', serif;
+  --accent-font: 'Lato', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: var(--white);
 }
