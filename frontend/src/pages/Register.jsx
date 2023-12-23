@@ -1,10 +1,14 @@
 import { StyleSheet, css } from "aphrodite"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import Button from "../components/Button/Button"
 
 const Register = ({ setAuth }) => {
+  const [step, setStep] = useState(1)
   const [error, setError] = useState(false)
   const [authError, setAuthError] = useState(false)
+
+  const nextStep = () => setStep(currentStep => currentStep + 1)
 
   const [formData, setFormData] = useState({
       username: '',
@@ -27,13 +31,9 @@ const Register = ({ setAuth }) => {
     }
 
   return (
-    <>
-      <div className="loginBackground">
-
-      </div>
-      <div className={css(styles.loginWrapper)}>
+    <div className={css(styles.loginWrapper)}>
         <h2>Login to your account</h2>
-        <form className={css(styles.form)} onSubmit={registerEngineer}>
+        <form className={css(styles.form)}>
           <div className={css(styles.formInputs)}>
             { error && <span className="error">Please fill in all your details to continue.</span> }
             { authError && <span className="error">Something went wrong! Please check your details and try again :(</span> }
@@ -53,12 +53,11 @@ const Register = ({ setAuth }) => {
               <label className={css(styles.label)} htmlFor="">Confirm Password</label>
               <input className={css(styles.input)} type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} />
             </div>
-            <button className={css(styles.button)} type="submit">Register</button>
+            <Button text="Continue" type="button" />
           </div>
         </form>
         <span>Already have an account? <Link to='/login'>Log in</Link> </span>
       </div>
-    </>
     
   )
 }
@@ -98,19 +97,6 @@ const styles = StyleSheet.create({
     outline: 'none',
     border: '1px solid gray'
   },
-
-  button: {
-    backgroundColor: 'var(--dark-green)',
-    color: '#fff',
-    padding: '0.8em',
-    cursor: 'pointer',
-    borderRadius: '3px',
-    transition: 'all 0.1s ease-in-out',
-    ':hover': {
-      transform: 'scale(1.01)'
-      // backgroundColor: 'var(--muted-green)',
-    }
-  }
 })
 
 export default Register

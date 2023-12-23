@@ -1,6 +1,7 @@
 import { StyleSheet, css } from "aphrodite"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom" 
+import Button from "../components/Button/Button"
 
 const Register = ({ setAuth }) => {
   const [error, setError] = useState(false)
@@ -21,7 +22,7 @@ const Register = ({ setAuth }) => {
 
     const loginEngineer = (e) => {
       e.preventDefault()
-      alert(`Hello ${formData.username}`)
+      alert(`Hello ${formData.email}`)
     }
 
   return (
@@ -43,7 +44,7 @@ const Register = ({ setAuth }) => {
               <label className={css(styles.label)} htmlFor="">Password</label>
               <input className={css(styles.input)} type="password" name="password" value={formData.password} onChange={handleInputChange} />
             </div>
-            <button className={css(styles.button)} type="submit">Register</button>
+            <Button text="Log In" type="submit" />
           </div>
         </form>
         <span>Dont have an account? <Link to='/register'>Sign up</Link> </span>
@@ -89,19 +90,6 @@ const styles = StyleSheet.create({
     outline: 'none',
     border: '1px solid gray'
   },
-
-  button: {
-    backgroundColor: 'var(--dark-green)',
-    color: '#fff',
-    padding: '0.8em',
-    cursor: 'pointer',
-    borderRadius: '3px',
-    transition: 'all 0.1s ease-in-out',
-    ':hover': {
-      transform: 'scale(1.01)'
-      // backgroundColor: 'var(--muted-green)',
-    }
-  }
 })
 
 export default Register
