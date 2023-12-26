@@ -16,4 +16,4 @@ const proposalSchema = new mongoose.Schema({
 
 const Proposal = mongoose.model('Proposal', proposalSchema);
 
-module.exports = Proposal;
+export default Proposal;

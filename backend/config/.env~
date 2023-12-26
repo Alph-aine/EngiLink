@@ -1,4 +1,0 @@
-MONGODB_URI=mongodb://localhost:27017/engilink
-JWT_SECRET=mysecretkey
-PORT=3000
-JWT_EXPIRE = 3000*60*1000
