@@ -1,9 +1,8 @@
 import Job from '../models/job.js';
 import asyncErrors from '../middlewares/asyncError.js';
 import ErrorHandler from '../utils/errorHandler.js';
-import { isAuthenticated, authorizeRoles } from '../middlewares/auth.js';
 
-// Define the postJob asynchronous route handler
+
 // Define the postJob asynchronous route handler
 const newJobFunc = asyncErrors(async (req, res, next) => {
      try {
@@ -19,7 +18,7 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
             postedAt,
             deadline,
 
-        l} = req.body;
+        } = req.body;
 
         // Create a new Job instance with the provided data
         const newJob = new Job({
@@ -53,7 +52,6 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
 // Define the postJob route handler
 export const postJob = asyncErrors(async (req, res, next) => {
     // Check if the user is an employer
-    console.log(req.user.role);
     if (req.user.role !== 'employer') {
         res.status(403).send('Only employers can post jobs');
     } else {
@@ -172,88 +170,6 @@ export const updateJob = asyncErrors(async (req, res, next) => {
 	    res.status(200).json(job);
 	} else {
             res.status(403).send('Permission denied to update the job');
-	}
-    } catch (error) {
-	next(new ErrorHandler(error.message, 500));
-    }
-});
-
-/// apply for jobs
-export const applyJob = asyncErrors(async (req, res, next) => {
-    try {
-	const jobId = req.params.id;
-	const job = Job.findJobById(jobId);
-	if (!job) {
-	    res.status(404).send('Job not found');
-	}
-	if (req.user.role === 'engineer') {
-	    const {
-		coverLetter,
-		price
-	    } = req.body;
-	    const proposal = new Proposal;
-	    proposal.job = jobId;
-	    proposal.engineer = req.user.id;
-	    proposal.coverLetter = coverLetter;
-	    proposal.price = price;
-	    proposal.save();
-	} else {
-	    res.status(403).send('Permission denied to apply for  the job');
-	}
-    } catch (error) {
-	next(new ErrorHandler(error.message, 500));
-    }
-});
-
-//Delete a proposal
-export const deleteProposal = asyncErrors(async (req, res, next) => {
-    try {
-	const proposalId = req.params.id;
-	const proposal = Proposal.findProposalById(proposalId);
-	if (!proposal) {
-	    res.status(404).send('Proposal not found');
-	}
-	if (req.user.role === 'engineer' && req.user.id == proposal.user.toString()) {
-	    proposal.deleteOne();
-	} else {
-	    req.status(403).send('Permission denied to delete proposal');
-	}
-    } catch (error) {
-	next(new ErrorHandler(error.message, 500));
-    }
-});
-
-//get applications for a job
-export const getProposals = asyncErrors(async (req, res, next) => {
-    try {
-	const jobId = req.params.id;
-	const job  = Job.findJobById(jobId);
-	if (!job) {
-	    res.status(404).send('Job not found');
-	}
-        if (req.user.role === 'employer' && job.employer.toString() === req.user.id) {
-	    proposals = Proposal.find({job: jobId});
-	    res.json(proposals);
-	} else {
-	    res.status(403).send('Permission deni0ed to list proposals for this jobs');
-	}
-    } catch (error) {
-	next(new ErrorHandler(error.message, 500));
-    }
-});
-
-//get a particular application
-export const getProposal = asyncErrors(async (req, res, next) => {
-    try {
-	const proposalId = req.params.id;
-	const proposal  = Proposal.findProposalById(proposalId);
-	if (!proposal) {
-	    res.status(404).send('Proposal not found');
-	}
-        if ((req.user.role === 'employer' && proposal.job.employer.toString() === req.user.id) || (req.user.role === 'engineer' && proposal.engineer.toString() === req.user.id)) {
-	    res.json(proposal)
-	} else {
-	    res.status(403).send('Permission deni0ed to view this proposal');
 	}
     } catch (error) {
 	next(new ErrorHandler(error.message, 500));

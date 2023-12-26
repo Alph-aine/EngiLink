@@ -13,21 +13,21 @@ const {
 } = jobController;
 
 // post a job
-router.route('/job').post(isAuthenticated, postJob);
+router.route('/jobs').post(isAuthenticated, postJob);
 
 // get jobs 
-router.route('/job').get(isAuthenticated, getJobs);
+router.route('/jobs').get(isAuthenticated, getJobs);
 
 // get a job usng id
-router.route('/job/:id').get(isAuthenticated, getJobs);
+router.route('/jobs/:id').get(isAuthenticated, getJobs);
 
 // delete a job based on id
-router.route('/job/:id').delete(isAuthenticated, deleteJob);
+router.route('/jobs/:id').delete(isAuthenticated, deleteJob);
 
 // update a job
-router.route('/job/:id').put(isAuthenticated, updateJob);
+router.route('/jobs/:id').put(isAuthenticated, updateJob);
 
 // search for jibs using filters (search query)
-router.route('/job/search').get(isAuthenticated, searchJobs);
+router.route('/jobs/search').get(isAuthenticated, searchJobs);
 
 export default router;
