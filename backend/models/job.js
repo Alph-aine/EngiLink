@@ -55,9 +55,6 @@ const jobSchema = new mongoose.Schema({
     employer: {
 	type: mongoose.Schema.Types.ObjectId,
 	ref: "Employer" },
-    proposals: {
-	type: mongoose.Schema.Types.ObjectId,
-	ref: "Proposal" },  
 });
 
 const Job = mongoose.model('Job', jobSchema);
