@@ -1,4 +1,4 @@
-import NavLink from "../NavLink/NavLink"
+import NavLink from "../NavBar/NavLink"
 import { StyleSheet, css } from "aphrodite"
 
 const LandingNav = () => {

@@ -1,6 +1,8 @@
 import { StyleSheet, css } from "aphrodite"
 import { useState } from "react"
 import { Link } from "react-router-dom" 
+import axios from 'axios'
+import Cookies from 'js-cookie'
 import Button from "../components/Button/Button"
 
 const Register = ({ setAuth }) => {
@@ -20,9 +22,38 @@ const Register = ({ setAuth }) => {
       }))
     }
 
-    const loginEngineer = (e) => {
+    const loginEngineer = async (e) => {
       e.preventDefault()
-      alert(`Hello ${formData.email}`)
+      console.log("login")
+      console.log(JSON.stringify(formData))
+      const url = 'http://localhost:3000/api/v1/engineer/login'
+      // alert(`Hello ${formData.email}`)
+      try {
+        const response = await axios.post(url, formData, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        })
+        const { token } = response.data
+        console.log(token)
+        // Cookies.set('token', token)
+        console.log('success')
+      } catch (error) {
+        console.log(error.response)
+      }
+
+      // const options = {  
+      //   method: "POST",
+      //   headers: {
+      //     Accept: "*/*",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: formData,
+      // };
+      // fetch(url, options)
+      //   .then(response => response.json())
+      //   .then(data => console.log(data))
     }
 
   return (

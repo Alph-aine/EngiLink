@@ -1,16 +1,19 @@
 import './App.css'
-import { useState } from 'react'
+import { useState, useContext, createContext } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header/Header'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Discover from './pages/Discover'
 import Home from './pages/Home'
-import SkillsForm from './components/Skills/SkillsForm'
+import SkillsSection from './components/Register/SkillsSection'
 
+const AppContext = createContext()
 
 const App = () => {
   const [auth, setAuth] = useState(false)
+  const [token, setToken] = useState(null)
+
   return (
     <div>
       <Router>
@@ -20,7 +23,7 @@ const App = () => {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/discover' element={<Discover />} />
-          <Route path='/skills' element={<SkillsForm />} />
+          <Route path='/skills' element={<SkillsSection />} />
         </Routes>
       </Router>
       

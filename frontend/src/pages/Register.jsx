@@ -1,102 +1,96 @@
-import { StyleSheet, css } from "aphrodite"
 import { useState } from "react"
-import { Link } from "react-router-dom"
-import Button from "../components/Button/Button"
+import RegisterForm from '../components/Register/RegisterForm'
+import SkillsSection from '../components/Register/SkillsSection'
+import ExperienceSection from "../components/Experience/ExperienceSection"
+import CertificationsSection from "../components/Register/CertificationsSection"
+import EducationSection from "../components/Register/EducationSection"
 
 const Register = ({ setAuth }) => {
   const [step, setStep] = useState(1)
-  const [error, setError] = useState(false)
-  const [authError, setAuthError] = useState(false)
 
-  const nextStep = () => setStep(currentStep => currentStep + 1)
+  const changeStep = change => setStep(currentStep => currentStep + change)
 
   const [formData, setFormData] = useState({
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    });
+    userName: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
+    experiences: [],
+    certifications: [],
+    selectedLevel: '',
+    highestDegree: '',
+    fieldStudy: ''
+  });
 
-    const handleInputChange = (e) => {
-      const { name, value } = e.target
-      setFormData((previousFormData) => ({
-        ...previousFormData,
-        [name]: value
-      }))
-    }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((previousFormData) => ({
+      ...previousFormData,
+      [name]: value
+    }))
+  }
 
-    const registerEngineer = (e) => {
-      e.preventDefault()
-      alert(`Hello ${formData.username}`)
-    }
+  const handleSaveCertification = (certificationInput) => {
+    console.log(formData)
+    setFormData(previousFormData => ({
+      ...previousFormData,
+      certifications: [...formData.certifications, certificationInput]
+    }))
+  }
+
+  const handleRemoveCertification = (certification) => {
+    console.log(formData)
+    setFormData(previousFormData => ({
+      ...previousFormData,
+      certifications: formData.certifications.filter(exp => exp !== certification)
+    }))
+  }
+
+  const handleSaveExperience = (skillInput) => {
+    console.log(formData.experiences)
+    setFormData(previousFormData => ({
+      ...previousFormData,
+      experiences: [...formData.experiences, skillInput]
+    }))
+  }
+
+  const handleRemoveExperience = (experience) => {
+    console.log(formData.experiences)
+    setFormData(previousFormData => ({
+      ...previousFormData,
+      experiences: formData.experiences.filter(exp => exp !== experience)
+    }))
+  } 
+
+  const handleExperienceLevel = (e) => {
+    const {value} = e.target
+    setFormData(previousFormData => ({
+      ...previousFormData,
+      selectedLevel: value
+    }))
+  }
+
+  const handleDegreeOptionChange = selectedOption => {
+    setFormData(previousData => ({
+      ...previousData,
+      highestDegree: selectedOption.value
+    }))
+  }
 
   return (
-    <div className={css(styles.loginWrapper)}>
-        <h2>Login to your account</h2>
-        <form className={css(styles.form)}>
-          <div className={css(styles.formInputs)}>
-            { error && <span className="error">Please fill in all your details to continue.</span> }
-            { authError && <span className="error">Something went wrong! Please check your details and try again :(</span> }
-            <div className={css(styles.formInput)}>
-              <label className={css(styles.label)} htmlFor="">Username</label>
-              <input className={css(styles.input)} type="text" name="username" value={formData.username} onChange={handleInputChange} />
-            </div>
-            <div className={css(styles.formInput)}>
-              <label className={css(styles.label)} htmlFor="">Email</label>
-              <input className={css(styles.input)} type="email" name="email" value={formData.email} onChange={handleInputChange} />
-            </div>
-            <div className={css(styles.formInput)}>
-              <label className={css(styles.label)} htmlFor="">Password</label>
-              <input className={css(styles.input)} type="password" name="password" value={formData.password} onChange={handleInputChange} />
-            </div>
-            <div className={css(styles.formInput)}>
-              <label className={css(styles.label)} htmlFor="">Confirm Password</label>
-              <input className={css(styles.input)} type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} />
-            </div>
-            <Button text="Continue" type="button" />
-          </div>
-        </form>
-        <span>Already have an account? <Link to='/login'>Log in</Link> </span>
-      </div>
-    
+    <div>
+      { step === 1 && <RegisterForm formData={formData} handleInputChange={handleInputChange} onStepChange={changeStep} /> }
+      { step === 2 && <SkillsSection formData={formData} onSaveExperience={handleSaveExperience} onRemoveExperience={handleRemoveExperience} onStepChange={changeStep} /> }
+      { step === 3 && <CertificationsSection formData={formData} onSaveCertification={handleSaveCertification} onRemoveCertification={handleRemoveCertification} onStepChange={changeStep} /> }
+      { step === 4 && <ExperienceSection formData={formData} onChangeExpLevel={handleExperienceLevel} onStepChange={changeStep} /> }
+      { step === 5 && <EducationSection formData={formData} handleInputChange={handleInputChange} onChangeDegree={handleDegreeOptionChange} onStepChange={changeStep} /> }
+    </div>
   )
 }
 
-const styles = StyleSheet.create({
-  loginWrapper: {
-    fontFamily: 'var(--accent-font)',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '20%',
-    minWidth: '20rem',
-    padding: '2em 2em',
-    backgroundColor: '#fff',
-    boxShadow: '0 3px 3px 0 rgba(0,0,0,0.1)'
-  },
 
-  form: {
-    marginBottom: '1em'
-  },
-
-  formInputs: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1em'
-  },
-
-  formInput: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-
-  input: {
-    padding: '0.8em',
-    borderRadius: '3px',
-    outline: 'none',
-    border: '1px solid gray'
-  },
-})
 
 export default Register

@@ -1,13 +1,36 @@
 import { StyleSheet, css } from "aphrodite"
+import { useEffect } from "react"
+import Cookies from 'js-cookie'
+import axios from 'axios'
 import image from '/engineers.jpg'
 import Searchbar from "../components/SearchBar/Searchbar"
 import LandingNav from "../components/LandingNav/LandingNav"
 
 const Home = () => {
+
+  const getProfile = async () => {
+    const url = 'http://localhost:3000/api/v1/engineer/me'
+    console.log(url)
+    const token = Cookies.get('token')
+    console.log(token)
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          // 'Cookie': `token=${}`
+        },
+      })
+      console.log(response.data)
+      
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
   return (
     <div className={css(styles.landing)}>
       <div className={css(styles.landingIntro)}>
         <h1>ENGINEER YOUR CAREER GROWTH WITH ENGILINK</h1>
+        <button type="button" onClick={getProfile}>Get</button>
         <p>Discover tailored job opportunities with personalized matches to companies based on your skills, experience, location, and more.</p>
         <Searchbar />
         <LandingNav />
