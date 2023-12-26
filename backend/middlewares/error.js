@@ -7,6 +7,8 @@ const errorHandler = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
 
+  console.error(err.stack);
+
   // handle mongoose ObjectId errors
   if (err.name === 'CastError') {
     const message = `Resource not found. Invalid: ${err.path}`;

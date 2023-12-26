@@ -16,11 +16,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
-app.use(errorMiddleware);
 
 app.use('/api/v1', engrAuth);
 app.use('/api/v1', empAuth);
 app.use('/api/v1', index);
 app.use('/api/v1', job);
 app.use('/api/v1', proposal);
+app.use(errorMiddleware);
+
 export default app;
