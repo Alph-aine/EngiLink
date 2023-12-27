@@ -1,6 +1,6 @@
 import { StyleSheet, css } from "aphrodite"
-import { useEffect } from "react"
-import Cookies from 'js-cookie'
+import { AuthContext } from "../../auth/AppContext"
+import { useContext } from "react"
 import axios from 'axios'
 import image from '/engineers.jpg'
 import Searchbar from "../components/SearchBar/Searchbar"
@@ -8,19 +8,17 @@ import LandingNav from "../components/LandingNav/LandingNav"
 
 const Home = () => {
 
+  const { sharedToken } = useContext(AuthContext)
+
   const getProfile = async () => {
-    const url = 'http://localhost:3000/api/v1/engineer/me'
-    console.log(url)
-    const token = Cookies.get('token')
-    console.log(token)
     try {
+      const url = 'http://localhost:3000/api/v1/engineer/me'
+      console.log(`token=${sharedToken}`)
+
       const response = await axios.get(url, {
-        headers: {
-          // 'Cookie': `token=${}`
-        },
+        withCredentials: true
       })
       console.log(response.data)
-      
     } catch (error) {
       console.log(error.response.data)
     }
