@@ -2,6 +2,8 @@ import { StyleSheet, css } from "aphrodite"
 import { useContext, useState } from "react"
 import { AuthContext } from "../../auth/AppContext"
 import { Link } from "react-router-dom" 
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import Button from "../components/Button/Button"
 
@@ -46,6 +48,10 @@ const Register = ({ setAuth }) => {
       }
     }
 
+    const showToast = () => {
+      toast.error("Success Notification !");
+    }
+
   return (
     <>
       <div className={css(styles.loginWrapper)}>
@@ -66,7 +72,9 @@ const Register = ({ setAuth }) => {
           </div>
         </form>
         <span>Dont have an account? <Link to='/register'>Sign up</Link> </span>
+        <button type="button" onClick={showToast}>Get</button>
       </div>
+      <ToastContainer />
     </>
     
   )

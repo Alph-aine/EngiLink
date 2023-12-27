@@ -19,17 +19,13 @@ const App = () => {
           <Routes>
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
-            <Route exact path='/' element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            } />
-            <Route path='/discover' element={
+            <Route exact path='/' element={<Home />} />
+            <Route exact path='/discover' element={
               <ProtectedRoute>
                 <Discover />
               </ProtectedRoute>
             } />
-            <Route path='/skills' element={
+            <Route exact path='/skills' element={
               <ProtectedRoute>
                 <SkillsSection />
               </ProtectedRoute>
