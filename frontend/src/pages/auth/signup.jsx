@@ -38,7 +38,7 @@ export default function SignUp() {
       <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
         <div className='grow flex flex-col justify-between md:items-start items-center gap-5 md:p-10 p-5'>
           <Text size='xl'>Create an account</Text>
-          <div className='flex justify-start gap-2'>
+          <div className='flex justify-start items-center gap-2'>
             <Text size='sm'>Already have an account?</Text>
             <TextLink to='/auth/signin'>Sign In</TextLink>
           </div>
