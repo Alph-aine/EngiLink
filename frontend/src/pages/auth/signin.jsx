@@ -24,7 +24,7 @@ export default function SignIn() {
       <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
         <div className='grow flex flex-col justify-between md:items-start items-center gap-5 md:p-10 p-5'>
           <Text size='xl'>Sign in</Text>
-          <div className='flex justify-start gap-2'>
+          <div className='flex justify-start items-center gap-2'>
             <Text size='sm'>Don&apos;t have an account?</Text>
             <TextLink to='/signup'>Create an account</TextLink>
           </div>
@@ -43,7 +43,7 @@ export default function SignIn() {
             />
           </div>
           <Button onClick={submit}>Sign In</Button>
-          <TextLink to='/signup'>Forgot password?</TextLink>
+          <TextLink to='/auth/signup'>Forgot password?</TextLink>
         </div>
       </div>
       <div
