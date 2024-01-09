@@ -28,7 +28,9 @@ export default function Layout({ children }) {
           </span>
           <div
             className={`${
-              isNavOpen ? 'absolute left-0 w-full top-[100%] flex bg-primary py-5' : 'hidden'
+              isNavOpen
+                ? 'absolute left-0 w-full top-[100%] flex bg-primary py-5'
+                : 'hidden'
             } order-first lg:order-none shrink-0 lg:flex lg:flex-row flex-col justify-center items-center xl:gap-12 lg:gap-4 gap-3`}
           >
             <Text size='sm' white>
