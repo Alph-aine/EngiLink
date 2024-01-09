@@ -24,10 +24,13 @@ export default function Button({
       className={`${isOutline} shrink-0 rounded-lg md:px-4 px-3 md:py-3 py-2  ${disabledBg} disabled:cursor-not-allowed`}
       onClick={onClick}
     >
-      {(typeof children === 'string') ? <Text size='sm' white={!textBlack}>
-        {children}
-      </Text> : children}
-
+      {typeof children === 'string' ? (
+        <Text size='sm' white={!textBlack}>
+          {children}
+        </Text>
+      ) : (
+        children
+      )}
     </button>
   )
 }
