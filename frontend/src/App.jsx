@@ -42,6 +42,14 @@ const router = createBrowserRouter([
     path: "/auth/signin",
     element: <SignIn />,
   },
+  {
+    path: "/auth/signup",
+    element: <SignUp />,
+  },
+  {
+    path: "/auth/forgotpassword",
+    element: <ForgotPassword />,
+  },
 ])
 
 export default router
