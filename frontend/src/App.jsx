@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom'
 import Landing from './pages/Landing'
 import SignIn from './pages/auth/sigin'
-import './App.css'
 import SignUp from './pages/auth/signup'
 import ForgotPassword from './pages/auth/forgotpsw'
 import UpdatePassword from './pages/auth/updatepsw'
