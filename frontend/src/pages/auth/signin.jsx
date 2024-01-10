@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
 import Button from '../../components/button'
 
 export default function SignIn() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -19,7 +21,11 @@ export default function SignIn() {
           'Content-Type': 'application/json',
         },
       })
-      .then((response) => console.log('New login date:', response.data))
+      .then((response) => {
+        const employerId = response.data?.user._id
+
+        navigate(`/${employerId}/profile`)
+      })
       .catch((error) => console.error(error))
   }
 
