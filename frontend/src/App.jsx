@@ -8,7 +8,7 @@ import Profile, { profileLoader } from './pages/profile/page'
 import EditProfile from './pages/profile/edit'
 import Proposals, { proposalsLoader } from './pages/proposals/page'
 import CreateJob from './pages/job/create'
-import Proposal from './pages/proposals/proposal'
+import Proposal, { proposalLoader } from './pages/proposals/proposal'
 
 const router = createBrowserRouter([
   {
@@ -51,6 +51,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'employer/:employerId/job/:jobId/proposals/proposal/:proposalId',
+    loader: proposalLoader,
     element: <Proposal />,
   },
 ])
