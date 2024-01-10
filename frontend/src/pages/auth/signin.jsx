@@ -24,7 +24,7 @@ export default function SignIn() {
       .then((response) => {
         const employerId = response.data?.user._id
 
-        navigate(`/${employerId}/profile`)
+        navigate(`/employer/${employerId}/profile`)
       })
       .catch((error) => console.error(error))
   }

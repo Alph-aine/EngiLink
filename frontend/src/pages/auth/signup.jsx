@@ -58,7 +58,7 @@ export default function SignUp() {
         console.log('Registration Successfull.')
 
         const employerId = response?.user.id
-        navigate(`/${employerId}/profile`)
+        navigate(`/employer/${employerId}/profile`)
       })
       .catch((error) => console.error(error))
   }
