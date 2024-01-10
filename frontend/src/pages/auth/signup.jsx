@@ -27,7 +27,12 @@ export default function SignUp() {
   const setPsw = (password) => setForm((prev) => ({ ...prev, password }))
 
   const allowSubmit = useMemo(() => {
-    return !has1num || !has8chars || !has1spec || !Object.keys(form).every(key => form[key] !== '')
+    return (
+      !has1num ||
+      !has8chars ||
+      !has1spec ||
+      !Object.keys(form).every((key) => form[key] !== '')
+    )
   }, [has1num, has8chars, has1spec, form])
 
   const submit = () => {
@@ -89,7 +94,13 @@ export default function SignUp() {
               has1spec={has1spec}
             />
           </div>
-          <Button disabled={allowSubmit} cx='bg-primary w-full' onClick={submit}>Sign Up</Button>
+          <Button
+            disabled={allowSubmit}
+            cx='bg-primary w-full'
+            onClick={submit}
+          >
+            Sign Up
+          </Button>
         </div>
       </div>
       <div
