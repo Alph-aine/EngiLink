@@ -26,6 +26,10 @@ export default function SignUp() {
   const setCompany = (company) => setForm((prev) => ({ ...prev, company }))
   const setPsw = (password) => setForm((prev) => ({ ...prev, password }))
 
+  const allowSubmit = useMemo(() => {
+    return !has1num || !has8chars || !has1spec || !Object.keys(form).every(key => form[key] !== '')
+  }, [has1num, has8chars, has1spec, form])
+
   const submit = () => {
     axios
       .post('http://localhost:5000/api/v1/employer/register/', form)
@@ -85,7 +89,7 @@ export default function SignUp() {
               has1spec={has1spec}
             />
           </div>
-          <Button cx='bg-primary w-full' onClick={submit}>Sign Up</Button>
+          <Button disabled={true} cx='bg-primary w-full' onClick={submit}>Sign Up</Button>
         </div>
       </div>
       <div
