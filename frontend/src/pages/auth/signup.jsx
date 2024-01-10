@@ -40,7 +40,7 @@ export default function SignUp() {
           <Text size='xl'>Create an account</Text>
           <div className='flex justify-start items-center gap-2'>
             <Text size='sm'>Already have an account?</Text>
-            <TextLink to='/auth/signin'>Sign In</TextLink>
+            <TextLink to='employer/auth/signin'>Sign In</TextLink>
           </div>
           <div className='flex flex-col md:gap-5 gap-2 w-full'>
             <Input

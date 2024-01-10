@@ -18,7 +18,7 @@ export default function ForgotPassword() {
             <Input type='email' name='email' placeholder='Email' />
           </div>
           <Button cx='bg-primary w-full' type='submit'>Receive Token</Button>
-          <TextLink to='/signup'>Forgot email?</TextLink>
+          <TextLink to='/contact'>Forgot email?</TextLink>
         </form>
       </div>
       <div

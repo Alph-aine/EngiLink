@@ -26,7 +26,7 @@ export default function UpdatePassword() {
             />
           </div>
           <Button cx='bg-primary w-full' type='submit'>Receive Password</Button>
-          <TextLink to='/signup'>Forgot email</TextLink>
+          <TextLink to='/contact'>Forgot email</TextLink>
         </form>
       </div>
       <div

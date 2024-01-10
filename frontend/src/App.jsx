@@ -16,39 +16,39 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
-    path: '/auth/signin',
+    path: 'employer/auth/signin',
     element: <SignIn />,
   },
   {
-    path: '/auth/signup',
+    path: 'employer/auth/signup',
     element: <SignUp />,
   },
   {
-    path: '/auth/forgotpassword',
+    path: 'employer/auth/forgotpassword',
     element: <ForgotPassword />,
   },
   {
-    path: '/auth/updatepassword',
+    path: 'employer/auth/updatepassword',
     element: <UpdatePassword />,
   },
   {
-    path: '/:employerId/profile',
+    path: 'employer/:employerId/profile',
     element: <Profile />,
   },
   {
-    path: '/:employerId/profile/edit',
+    path: 'employer/:employerId/profile/edit',
     element: <EditProfile />,
   },
   {
-    path: '/:employerId/job/create',
+    path: 'employer/:employerId/job/create',
     element: <CreateJob />,
   },
   {
-    path: '/:employerId/job/jobId/proposals',
+    path: 'employer/:employerId/job/jobId/proposals',
     element: <Proposals />,
   },
   {
-    path: '/:employerId/job/jobId/proposals/proposal/:proposalId',
+    path: 'employer/:employerId/job/jobId/proposals/proposal/:proposalId',
     element: <Proposal />,
   },
 ])
