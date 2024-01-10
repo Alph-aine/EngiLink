@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
@@ -7,6 +8,7 @@ import useVetPsw from '../../hooks/usevetpsw'
 import Button from '../../components/button'
 
 export default function SignUp() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     email: '',
     phone: '',
@@ -36,8 +38,17 @@ export default function SignUp() {
   }, [has1num, has8chars, has1spec, form])
 
   const submit = () => {
+    const formData = {
+      email,
+      industry,
+      password,
+      location: form.address,
+      companyName: form.company,
+      phoneNumber: form.phone,
+    }
+
     axios
-      .post('http://localhost:5000/api/v1/employer/register/', form, {
+      .post('http://localhost:3000/api/v1/employer/register/', formData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -45,7 +56,8 @@ export default function SignUp() {
       .then((response) => {
         console.log('Registration Successfull.')
 
-
+        const employerId = response?.user.id
+        navigate(`/${employerId}/profile`)
       })
       .catch((error) => console.error(error))
   }
