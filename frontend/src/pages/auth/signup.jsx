@@ -38,13 +38,14 @@ export default function SignUp() {
   }, [has1num, has8chars, has1spec, form])
 
   const submit = () => {
+    const { email, industry, password, address, company, phone } = form
     const formData = {
       email,
       industry,
       password,
-      location: form.address,
-      companyName: form.company,
-      phoneNumber: form.phone,
+      location: address,
+      companyName: company,
+      phoneNumber: phone,
     }
 
     axios
