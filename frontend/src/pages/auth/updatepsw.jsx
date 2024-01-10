@@ -25,7 +25,7 @@ export default function UpdatePassword() {
               placeholder='New Password'
             />
           </div>
-          <Button type='submit'>Receive Password</Button>
+          <Button cx='bg-primary w-full' type='submit'>Receive Password</Button>
           <TextLink to='/signup'>Forgot email</TextLink>
         </form>
       </div>

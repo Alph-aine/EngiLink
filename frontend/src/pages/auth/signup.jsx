@@ -85,7 +85,7 @@ export default function SignUp() {
               has1spec={has1spec}
             />
           </div>
-          <Button onClick={submit}>Sign Up</Button>
+          <Button cx='bg-primary w-full' onClick={submit}>Sign Up</Button>
         </div>
       </div>
       <div

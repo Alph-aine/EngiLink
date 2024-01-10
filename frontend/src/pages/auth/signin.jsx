@@ -42,7 +42,7 @@ export default function SignIn() {
               onChange={(e) => setPsw(e.target.value)}
             />
           </div>
-          <Button onClick={submit}>Sign In</Button>
+          <Button cx='bg-primary w-full' onClick={submit}>Sign In</Button>
           <TextLink to='/auth/forgotpassword'>Forgot password?</TextLink>
         </div>
       </div>
