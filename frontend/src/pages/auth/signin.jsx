@@ -19,7 +19,7 @@ export default function SignIn() {
       .post('http://localhost:3000/api/v1/employer/login/', form)
       .then((response) => {
         const employerId = response.data?.user._id
-        navigate(`/${employerId}/profile`)
+        navigate(`/employer/${employerId}/profile`)
       })
       .catch(() => console.error("An error occured"))
   }
