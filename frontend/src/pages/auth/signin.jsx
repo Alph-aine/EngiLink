@@ -16,15 +16,10 @@ export default function SignIn() {
 
   const submit = () => {
     axios
-      .post('http://localhost:3000/api/v1/employer/login/', form, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .post('http://localhost:3000/api/v1/employer/login/', form)
       .then((response) => {
         const employerId = response.data?.user._id
-
-        navigate(`/employer/${employerId}/profile`)
+        navigate(`/${employerId}/profile`)
       })
       .catch((error) => console.error(error))
   }
