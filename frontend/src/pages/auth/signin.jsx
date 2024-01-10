@@ -21,7 +21,7 @@ export default function SignIn() {
         const employerId = response.data?.user._id
         navigate(`/${employerId}/profile`)
       })
-      .catch((error) => console.error(error))
+      .catch((error) => console.error("An error occured"))
   }
 
   return (
