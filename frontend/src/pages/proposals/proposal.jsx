@@ -2,6 +2,26 @@ import Button from '../../components/button'
 import Text from '../../components/text'
 import Layout from '../../components/layout'
 
+export const proposalLoader = async ({ params }) => {
+  let proposalData = null
+
+  try {
+    res = await axios.get(
+      `http://localhost:3000/api/v1/proposal/${params.proposalId}`
+    )
+
+    proposalData = res.data?.proposal
+  } catch (e) {
+    console.log('Error loading data')
+  }
+
+  if (!proposalData)
+    return redirect(
+      'employer/${params.employerId}/job/${params.jobId}/proposals'
+    )
+  return proposalData
+}
+
 export default function Proposal() {
   return (
     <Layout>

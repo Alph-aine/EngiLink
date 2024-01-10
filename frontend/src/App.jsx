@@ -45,12 +45,12 @@ const router = createBrowserRouter([
     element: <CreateJob />,
   },
   {
-    path: 'employer/:employerId/job/jobId/proposals',
+    path: 'employer/:employerId/job/:jobId/proposals',
     loader: proposalsLoader,
     element: <Proposals />,
   },
   {
-    path: 'employer/:employerId/job/jobId/proposals/proposal/:proposalId',
+    path: 'employer/:employerId/job/:jobId/proposals/proposal/:proposalId',
     element: <Proposal />,
   },
 ])
