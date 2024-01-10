@@ -14,7 +14,11 @@ export default function SignIn() {
 
   const submit = () => {
     axios
-      .post('http://localhost:5000/api/v1/employer/login/', form)
+      .post('http://localhost:3000/api/v1/employer/login/', form, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => console.log('New login date:', response.data))
       .catch((error) => console.error(error))
   }
@@ -42,8 +46,12 @@ export default function SignIn() {
               onChange={(e) => setPsw(e.target.value)}
             />
           </div>
-          <Button cx='bg-primary w-full' onClick={submit}>Sign In</Button>
-          <TextLink to='/employer/auth/forgotpassword'>Forgot password?</TextLink>
+          <Button cx='bg-primary w-full' onClick={submit}>
+            Sign In
+          </Button>
+          <TextLink to='/employer/auth/forgotpassword'>
+            Forgot password?
+          </TextLink>
         </div>
       </div>
       <div
