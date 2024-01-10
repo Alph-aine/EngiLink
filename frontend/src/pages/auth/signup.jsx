@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
@@ -50,8 +50,8 @@ export default function SignUp() {
     axios
       .post('http://localhost:3000/api/v1/employer/register/', formData, {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       })
       .then((response) => {
         console.log('Registration Successfull.')
