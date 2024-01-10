@@ -1,10 +1,31 @@
+import { redirect, useLoaderData } from 'react-router-dom'
+import axios from 'axios'
 import Button from '../../components/button'
 import Text from '../../components/text'
 import ProposalCard from './card'
 import DropDown, { DropItem } from '../../components/dropdown'
 import Layout from '../../components/layout'
 
+export const proposalsLoader = async ({ params }) => {
+  let proposalsData = null
+
+  try {
+    res = await axios.get(
+      `http://localhost:3000/api/v1/job/${params.jobId}/proposals`
+    )
+
+    proposalsData = res.data?.proposals
+  } catch (e) {
+    console.log('Error loading data')
+  }
+
+  if (!proposalsData) return redirect('/employer/auth/signin')
+  return proposalsData
+}
+
 export default function Proposals() {
+  const proposalsData = useLoaderData()
+
   return (
     <Layout>
       <div className='flex flex-col gap-20'>
