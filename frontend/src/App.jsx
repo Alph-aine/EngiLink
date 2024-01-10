@@ -6,7 +6,7 @@ import ForgotPassword from './pages/auth/forgotpsw'
 import UpdatePassword from './pages/auth/updatepsw'
 import Profile, { profileLoader } from './pages/profile/page'
 import EditProfile from './pages/profile/edit'
-import Proposals from './pages/proposals/page'
+import Proposals, { proposalsLoader } from './pages/proposals/page'
 import CreateJob from './pages/job/create'
 import Proposal from './pages/proposals/proposal'
 
@@ -46,6 +46,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'employer/:employerId/job/jobId/proposals',
+    loader: proposalsLoader,
     element: <Proposals />,
   },
   {
