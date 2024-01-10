@@ -12,8 +12,8 @@ export default function Button({
   const bg = cx ? cx : 'bg-primary'
   const disabledBg = disabled
     ? cx !== undefined
-      ? `${cx}/50`
-      : 'bg-primary/50'
+      ? `${cx}/30`
+      : 'bg-primary/30'
     : bg
   const isOutline = outline ? 'bg-transparent border border-bg-primary' : bg
 
