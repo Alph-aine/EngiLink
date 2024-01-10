@@ -19,7 +19,7 @@ export const proposalsLoader = async ({ params }) => {
     console.log('Error loading data')
   }
 
-  if (!proposalsData) return redirect('/employer/auth/signin')
+  if (!proposalsData) return redirect(`/employer/${params.employerId}/profile`)
   return proposalsData
 }
 

@@ -17,7 +17,7 @@ export const proposalLoader = async ({ params }) => {
 
   if (!proposalData)
     return redirect(
-      'employer/${params.employerId}/job/${params.jobId}/proposals'
+      `employer/${params.employerId}/job/${params.jobId}/proposals`
     )
   return proposalData
 }
