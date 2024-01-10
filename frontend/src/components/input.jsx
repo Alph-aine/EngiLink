@@ -1,5 +1,6 @@
 export default function Input({
   type,
+  minLength,
   id,
   name,
   placeholder,
@@ -10,6 +11,7 @@ export default function Input({
     <input
       id={id}
       type={type}
+      minLength={minLength}
       name={name}
       placeholder={placeholder}
       value={value}

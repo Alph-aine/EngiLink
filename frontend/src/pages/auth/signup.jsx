@@ -37,8 +37,16 @@ export default function SignUp() {
 
   const submit = () => {
     axios
-      .post('http://localhost:5000/api/v1/employer/register/', form)
-      .then((response) => console.log('Data created:', response.data))
+      .post('http://localhost:5000/api/v1/employer/register/', form, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => {
+        console.log('Registration Successfull.')
+
+
+      })
       .catch((error) => console.error(error))
   }
 
@@ -84,6 +92,7 @@ export default function SignUp() {
             />
             <Input
               type='password'
+              minLength='8'
               name='password'
               placeholder='Password'
               onChange={(e) => setPsw(e.target.value)}
