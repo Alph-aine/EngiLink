@@ -1,3 +1,4 @@
+import { redirect, useLoaderData } from 'react-router-dom'
 import Button from '../../components/button'
 import Text from '../../components/text'
 import Layout from '../../components/layout'
@@ -23,6 +24,8 @@ export const proposalLoader = async ({ params }) => {
 }
 
 export default function Proposal() {
+  const proposalData = useLoaderData()
+
   return (
     <Layout>
       <div className='grid lg:grid-cols-12 grid-cols-1 place-items-stretch gap-16'>

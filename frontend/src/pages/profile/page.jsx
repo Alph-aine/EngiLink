@@ -27,7 +27,7 @@ export const profileLoader = async ({ params }) => {
 
 export default function Profile() {
   const profileData = useLoaderData()
-  if (!profileData)
+  
     return (
       <Layout>
         <div className='grid md:grid-cols-12 grid-cols-1 place-items-stretch gap-16 lg:px-20 px-0'>
