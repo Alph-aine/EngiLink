@@ -7,7 +7,7 @@ import UpdatePassword from './pages/auth/updatepsw'
 import Profile, { profileLoader } from './pages/profile/page'
 import EditProfile from './pages/profile/edit'
 import Proposals, { proposalsLoader } from './pages/proposals/page'
-import CreateJob from './pages/job/create'
+import CreateJob from './pages/jobs/job/create'
 import Proposal, { proposalLoader } from './pages/proposals/proposal'
 
 const router = createBrowserRouter([

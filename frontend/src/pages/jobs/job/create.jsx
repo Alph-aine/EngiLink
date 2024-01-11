@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import Button from '../../components/button'
-import Input from '../../components/input'
-import Layout from '../../components/layout'
-import Text from '../../components/text'
+import Button from '../../../components/button'
+import Input from '../../../components/input'
+import Layout from '../../../components/layout'
+import Text from '../../../components/text'
 
 export default function CreateJob() {
   const { employerId } = useParams()
