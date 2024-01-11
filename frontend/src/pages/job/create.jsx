@@ -1,16 +1,35 @@
+import axios from 'axios'
+import {useParams} from 'react-router-dom'
 import Button from '../../components/button'
 import Input from '../../components/input'
 import Layout from '../../components/layout'
 import Text from '../../components/text'
 
 export default function CreateJob() {
+  const {employerId} = useParams()
+
+  const postJob = (e) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.target)
+    const postedAt = new Date()
+    formData['postedAt'] = postedAt
+    
+    axios
+      .post('http://localhost:3000/api/v1/jobs/', formData)
+      .then((response) => {
+        navigate(`/employer/${employerId}/jobs`)
+      })
+      .catch(() => console.error("An error occured"))
+  }
+
   return (
     <Layout>
       <div className='flex flex-col lg:gap-10 gap-5 w-full text-center'>
         <Text size='xl'>Create A Job</Text>
 
         <form
-          onSubmit={() => console.log('Job created!')}
+          onSubmit={postJob}
           className='flex flex-col gap-7 lg:px-20 px-0 py-10'
         >
           <div className='flex flex-col gap-2 text-left'>
