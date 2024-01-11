@@ -14,11 +14,6 @@ const RegisterForm = ({ onStepChange, formData, handleInputChange }) => {
     passwordError: false,
     passwordLenError: false
 })
-  
-  const registerEngineer = (e) => {
-    e.preventDefault()
-    alert(`Hello ${formData.userName}`)
-  }
 
   const nextSection = () => {
     // First, reset all existing errors

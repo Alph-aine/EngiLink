@@ -3,14 +3,18 @@ import { useContext, useState } from "react"
 import { AuthContext } from "../../auth/AppContext"
 import { Link } from "react-router-dom" 
 import { toast, ToastContainer } from 'react-toastify'
+import { useNavigate } from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import Button from "../components/Button/Button"
 
-const Register = ({ setAuth }) => {
+const Login = () => {
   const [error, setError] = useState(false)
   const [authError, setAuthError] = useState(false)
   const { setSharedToken } = useContext(AuthContext) // Destructure setSharedToken from the AuthContext using useContext
+  const [buttonText, setButtonText] = useState("Log In")
+
+  const navigate = useNavigate()
 
   // form state data
   const [formData, setFormData] = useState({
@@ -30,6 +34,7 @@ const Register = ({ setAuth }) => {
     const loginEngineer = async (e) => {
       e.preventDefault()
       try {
+        setButtonText("Please wait...")
         const url = 'http://localhost:3000/api/v1/engineer/login'
 
         const response = await axios.post(url, formData, {
@@ -40,10 +45,19 @@ const Register = ({ setAuth }) => {
         })
         
         const { token } = response.data
+        console.log(token)
 
-        // set token in app wide token state value
+        // set token in app wide token state value and navigate to home page
         setSharedToken(token)
-      } catch (error) {
+        
+        toast.success('You have logged in')
+        console.log('Navigated to Home page')
+        navigate('/discover')
+      }
+      catch (error) {
+        setAuthError(true)
+        setButtonText("Log In")
+        console.log('error')
         console.log(error)
       }
     }
@@ -58,8 +72,8 @@ const Register = ({ setAuth }) => {
         <h2>Login to your account</h2>
         <form className={css(styles.form)} onSubmit={loginEngineer}>
           <div className={css(styles.formInputs)}>
-            { error && <span className="error">Please fill in all your details to continue.</span> }
-            { authError && <span className="error">Something went wrong! Please check your details and try again :(</span> }
+            { error && <span className={css(styles.error)}>Please fill in all your details to continue.</span> }
+            { authError && <span className={css(styles.error)}>Something went wrong! Please check your details and try again :(</span> }
             <div className={css(styles.formInput)}>
               <label className={css(styles.label)} htmlFor="">Email</label>
               <input className={css(styles.input)} type="email" name="email" value={formData.email} onChange={handleInputChange} />
@@ -68,10 +82,10 @@ const Register = ({ setAuth }) => {
               <label className={css(styles.label)} htmlFor="">Password</label>
               <input className={css(styles.input)} type="password" name="password" value={formData.password} onChange={handleInputChange} />
             </div>
-            <Button text="Log In" type="submit" />
+            <Button text={buttonText} type="submit" />
           </div>
         </form>
-        <span>Dont have an account? <Link to='/register'>Sign up</Link> </span>
+        <span>Don't have an account? <Link to='/register'>Sign up</Link> </span>
         <button type="button" onClick={showToast}>Get</button>
       </div>
       <ToastContainer />
@@ -116,6 +130,11 @@ const styles = StyleSheet.create({
     outline: 'none',
     border: '1px solid gray'
   },
+
+  error: {
+    color: 'red',
+    fontSize: '0.8rem'
+  }
 })
 
-export default Register
+export default Login

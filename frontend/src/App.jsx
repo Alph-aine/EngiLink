@@ -20,11 +20,7 @@ const App = () => {
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
             <Route exact path='/' element={<Home />} />
-            <Route exact path='/discover' element={
-              <ProtectedRoute>
-                <Discover />
-              </ProtectedRoute>
-            } />
+            <Route exact path='/discover' element={<Discover />} />
             <Route exact path='/skills' element={
               <ProtectedRoute>
                 <SkillsSection />
