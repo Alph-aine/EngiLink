@@ -1,12 +1,12 @@
 import axios from 'axios'
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Button from '../../components/button'
 import Input from '../../components/input'
 import Layout from '../../components/layout'
 import Text from '../../components/text'
 
 export default function CreateJob() {
-  const {employerId} = useParams()
+  const { employerId } = useParams()
 
   const postJob = (e) => {
     e.preventDefault()
@@ -14,13 +14,13 @@ export default function CreateJob() {
     const formData = new FormData(e.target)
     const postedAt = new Date()
     formData['postedAt'] = postedAt
-    
+
     axios
       .post('http://localhost:3000/api/v1/jobs/', formData)
       .then((response) => {
         navigate(`/employer/${employerId}/jobs`)
       })
-      .catch(() => console.error("An error occured"))
+      .catch(() => console.error('An error occured'))
   }
 
   return (
