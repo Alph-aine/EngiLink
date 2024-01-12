@@ -11,8 +11,10 @@ import { TfiArrowRight } from 'react-icons/tfi'
 import { BsSendCheck } from 'react-icons/bs'
 import { TbFilterBolt } from 'react-icons/tb'
 import { TiGroupOutline } from 'react-icons/ti'
+import {useNavigate} from 'react-router-dom'
 
 export default function Lander() {
+  const navigate = useNavigate()
   const [isNavOpen, setIsNavOpen] = useState(false)
 
   return (
@@ -49,14 +51,14 @@ export default function Lander() {
             <div className='lg:hidden flex flex-col gap-3 w-full md:px-8 px-4'>
               <Button
                 cx='bg-bg-secondary w-full'
-                onClick={() => console.log('Job created!')}
+                onClick={() => navigate('/engineer/auth/signup')}
                 textBlack
               >
                 Find a Job
               </Button>
               <Button
                 cx='bg-bg-secondary w-full'
-                onClick={() => console.log('Job created!')}
+                onClick={() => navigate('/employer/auth/signup')}
                 textBlack
               >
                 Post a Job
@@ -66,14 +68,14 @@ export default function Lander() {
           <div className='shrink-0 flex justify-end items-center xl:gap-6 gap-3'>
             <Button
               cx='bg-bg-secondary lg:block hidden'
-              onClick={() => console.log('Job created!')}
+              onClick={() => navigate('/engineer/auth/signup')}
               textBlack
             >
               Find a job
             </Button>
             <Button
               cx='bg-bg-secondary lg:block hidden'
-              onClick={() => console.log('Job created!')}
+              onClick={() => navigate('/employer/auth/signup')}
               textBlack
             >
               Post a job
@@ -136,7 +138,7 @@ export default function Lander() {
                 </div>
                 <Button
                   cx='bg-primary md:w-fit w-full'
-                  onClick={() => console.log('signed up!')}
+                  onClick={() => navigate('/employer/auth/signup')}
                 >
                   Sign up as employer
                 </Button>
@@ -165,7 +167,7 @@ export default function Lander() {
                 </div>
                 <Button
                   cx='bg-primary md:w-fit w-full'
-                  onClick={() => console.log('signed up!')}
+                  onClick={() => navigate('engineer/auth/signup')}
                 >
                   Sign up as engineer
                 </Button>
