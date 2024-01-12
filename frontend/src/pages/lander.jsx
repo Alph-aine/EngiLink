@@ -151,7 +151,7 @@ export default function Lander() {
           </div>
         </div>
         <div className='xl:px-32 md:px-8 px-4 lg:py-10 py-8 w-full'>
-          <div className='grid xl:grid-cols-12 lg:grid-cols-10 lg:gap-20 md:gap-10 gap-0 lg:h-[35rem] min-h-[20rem]'>
+          <div className='grid xl:grid-cols-12 lg:grid-cols-10 gap-8 lg:h-[35rem]'>
             <div
               className={`bg-[url('/imgs/login-pic.jpg')] bg-cover bg-no-repeat bg-right xl:col-span-8 lg:col-span-6 md:block hidden`}
             />
