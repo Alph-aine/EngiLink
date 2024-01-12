@@ -171,7 +171,7 @@ export default function Lander() {
                 >
                   Sign up as engineer
                 </Button>
-                <TextLink to='/signup'>Learn more</TextLink>
+                <TextLink to='/employee/auth/signup'>Learn more</TextLink>
               </div>
             </div>
           </div>
