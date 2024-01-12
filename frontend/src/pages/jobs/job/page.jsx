@@ -1,9 +1,9 @@
 import { IoLocationOutline, IoTrashBinOutline } from 'react-icons/io5'
-import Text from '../../components/text'
-import Layout from '../../components/layout'
+import Text from '../../../components/text'
+import Layout from '../../../components/layout'
 import { BsCurrencyDollar } from 'react-icons/bs'
 import { RiEditBoxLine, RiUserSettingsLine } from 'react-icons/ri'
-import Button from '../../components/button'
+import Button from '../../../components/button'
 
 export default function Job() {
   return (
