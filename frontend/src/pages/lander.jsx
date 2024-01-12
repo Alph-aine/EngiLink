@@ -11,7 +11,7 @@ import { TfiArrowRight } from 'react-icons/tfi'
 import { BsSendCheck } from 'react-icons/bs'
 import { TbFilterBolt } from 'react-icons/tb'
 import { TiGroupOutline } from 'react-icons/ti'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function Lander() {
   const navigate = useNavigate()
