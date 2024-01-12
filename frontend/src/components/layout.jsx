@@ -59,10 +59,10 @@ export default function Layout({ children }) {
                 PROPOSALS
               </NavLink>
             </Text>
-            <Text size='sm' white faded>
+            <Text size='sm' white>
               COMMUNITY
             </Text>
-            <Text size='sm' white faded>
+            <Text size='sm' white>
               HELP
             </Text>
             <div className='lg:hidden block w-full md:px-8 px-4'>
