@@ -5,11 +5,22 @@ import {
   RiTwitterXLine,
 } from 'react-icons/ri'
 import { RxHamburgerMenu } from 'react-icons/rx'
+import {NavLink, useParams} from 'react-router-dom'
 import Button from './button'
 import Text from './text'
 
 export default function Layout({ children }) {
+  const {employerId} = useParams()
   const [isNavOpen, setIsNavOpen] = useState(false)
+
+  const navStatusStyle = ({ isActive, isPending, isTransitioning }) =>
+  {
+    return  [
+      isPending ? "pending" : "text-bg-secondary",
+      isActive ? "active" : "text-white",
+      isTransitioning ? "transitioning" : "text-secondary",
+    ].join(" ")
+  }
 
   return (
     <div className='flex flex-col justify-start items-start w-full min-h-screen'>
@@ -33,16 +44,20 @@ export default function Layout({ children }) {
                 : 'hidden'
             } order-first lg:order-none shrink-0 lg:flex lg:flex-row flex-col justify-center items-center xl:gap-12 lg:gap-4 gap-3`}
           >
-            <Text size='sm' white>
+            <Text size='sm'>
+            <NavLink to={`/${employerId}/proposals`} className={navStatusStyle}>
               JOBS
+            </NavLink>
             </Text>
-            <Text size='sm' white>
+            <Text size='sm'>
+            <NavLink to={`/${employerId}/proposals`} className={navStatusStyle}>
               PROPOSALS
+            </NavLink>
             </Text>
-            <Text size='sm' white>
+            <Text size='sm' white faded>
               COMMUNITY
             </Text>
-            <Text size='sm' white>
+            <Text size='sm' white faded>
               HELP
             </Text>
             <div className='lg:hidden block w-full md:px-8 px-4'>
