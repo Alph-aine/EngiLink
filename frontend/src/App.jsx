@@ -41,16 +41,16 @@ const router = createBrowserRouter([
     element: <EditProfile />,
   },
   {
-    path: 'employer/:employerId/job/create',
+    path: 'employer/:employerId/jobs/create',
     element: <CreateJob />,
   },
   {
-    path: 'employer/:employerId/job/:jobId/proposals',
+    path: 'employer/:employerId/jobs/:jobId/proposals',
     loader: proposalsLoader,
     element: <Proposals />,
   },
   {
-    path: 'employer/:employerId/job/:jobId/proposals/proposal/:proposalId',
+    path: 'employer/:employerId/jobs/:jobId/proposals/:proposalId',
     loader: proposalLoader,
     element: <Proposal />,
   },

@@ -45,6 +45,15 @@ export default function Layout({ children }) {
             <Text size='sm' white>
               COMMUNITY
             </Text>
+            <div className='lg:hidden block w-full md:px-8 px-4'>
+              <Button
+                cx='bg-bg-secondary w-full'
+                onClick={() => console.log('Job created!')}
+                textBlack
+              >
+                Post a job
+              </Button>
+            </div>
           </div>
           <div className='shrink-0 flex justify-end items-center gap-3'>
             <Button
