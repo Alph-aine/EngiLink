@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Landing from './pages/lander'
 import SignIn from './pages/auth/signin'
 import SignUp from './pages/auth/signup'
 import ForgotPassword from './pages/auth/forgotpsw'
@@ -9,11 +8,12 @@ import EditProfile from './pages/profile/edit'
 import Proposals, { proposalsLoader } from './pages/proposals/page'
 import CreateJob from './pages/jobs/job/create'
 import Proposal, { proposalLoader } from './pages/proposals/proposal'
+import Lander from './pages/lander'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Landing />,
+    element: <Lander />,
   },
   {
     path: 'employer/auth/signin',
