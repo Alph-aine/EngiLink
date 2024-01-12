@@ -126,7 +126,7 @@ export default function Lander() {
             <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
               <div className='md:text-left text-center grow flex flex-col justify-between md:items-start items-center gap-5'>
                 <Text size='xl' copy>
-                  Find top talent faster
+                  Find Top Talent Faster
                 </Text>
                 <div className='md:text-left text-center flex justify-start gap-2'>
                   <Text size='md'>
@@ -156,7 +156,7 @@ export default function Lander() {
             <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
               <div className='md:text-left text-center grow flex flex-col justify-between md:items-start items-center gap-5'>
                 <Text size='xl' copy>
-                  Land your dream job
+                  Land Your Dream Job
                 </Text>
                 <div className='md:text-left text-center flex justify-start gap-2'>
                   <Text size='md'>
