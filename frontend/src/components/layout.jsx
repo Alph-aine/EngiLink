@@ -37,13 +37,13 @@ export default function Layout({ children }) {
               JOBS
             </Text>
             <Text size='sm' white>
-              ENGINEERS
-            </Text>
-            <Text size='sm' white>
               PROPOSALS
             </Text>
             <Text size='sm' white>
               COMMUNITY
+            </Text>
+            <Text size='sm' white>
+              HELP
             </Text>
             <div className='lg:hidden block w-full md:px-8 px-4'>
               <Button
