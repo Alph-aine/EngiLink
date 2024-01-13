@@ -4,14 +4,17 @@ import Button from '../../../components/button'
 import Input from '../../../components/input'
 import Layout from '../../../components/layout'
 import Text from '../../../components/text'
+import { useState } from 'react'
 
 export default function CreateJob() {
   const { employerId } = useParams()
+  const [skills, setSkills] = useState(['Engineer'])
+  const [newSkill, setNewSkill] = useState('Engineer')
 
   const postJob = (e) => {
     e.preventDefault()
 
-    const formData = new FormData(e.target)
+    const formData = new FormData(e.currentTarget)
     const postedAt = new Date()
     formData['postedAt'] = postedAt
 
@@ -55,12 +58,30 @@ export default function CreateJob() {
             <Text size='sm' faded>
               Skills Required
             </Text>
+      <div className='flex justify-start items-center gap-4 flex-wrap'>
+        {skills.map((skill) => (
+          <div key={skill} className='md:px-4 px-3 md:py-2 py-1 rounded-md border border-bg-primary bg-white text-black'>
+            <Text size='sm'>{skill}</Text>
+          </div>
+        ))}
+      </div>
+      <div className='flex items-center gap-2'>
             <Input
               type='text'
-              name='skillsRequired'
+              id='addSkill'
+              value={newSkill}
+              onChange={(e) => setNewSkill(e.target.value)}
               placeholder='Skills Required'
               required
             />
+            <Button onClick={() => {
+              const newList = [...skills.filter(item => item !== newSkill), newSkill]
+              setNewSkill('Engineer')
+              setSkills(newList)
+            }}>
+              Add
+            </Button>
+            </div>
           </div>
           <div className='flex flex-col gap-2 text-left'>
             <Text size='sm' faded>
