@@ -60,7 +60,7 @@ export default function Profile() {
     setLoggingOut(true)
 
     axios
-      .delete(`http://localhost:3000/api/v1/logout`, {
+      .get(`http://localhost:3000/api/v1/logout`, {
         withCredentials: true,
       })
       .then(() => redirect('/employer/auth/signin'))
