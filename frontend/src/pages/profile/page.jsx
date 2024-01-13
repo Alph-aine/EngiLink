@@ -111,9 +111,7 @@ export default function Profile() {
               </Text>
             </Button>
             <Button cx='bg-bg-secondary' outline>
-              <Text size='sm'>
-                Log out
-              </Text>
+              <Text size='sm'>Log out</Text>
             </Button>
           </div>
         </div>
