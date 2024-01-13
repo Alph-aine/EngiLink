@@ -11,8 +11,10 @@ import { TfiArrowRight } from 'react-icons/tfi'
 import { BsSendCheck } from 'react-icons/bs'
 import { TbFilterBolt } from 'react-icons/tb'
 import { TiGroupOutline } from 'react-icons/ti'
+import { useNavigate } from 'react-router-dom'
 
 export default function Lander() {
+  const navigate = useNavigate()
   const [isNavOpen, setIsNavOpen] = useState(false)
 
   return (
@@ -49,35 +51,38 @@ export default function Lander() {
             <div className='lg:hidden flex flex-col gap-3 w-full md:px-8 px-4'>
               <Button
                 cx='bg-bg-secondary w-full'
-                onClick={() => console.log('Job created!')}
+                onClick={() => navigate('/engineer/auth/signup')}
                 textBlack
               >
                 Find a Job
               </Button>
               <Button
                 cx='bg-bg-secondary w-full'
-                onClick={() => console.log('Job created!')}
+                onClick={() => navigate('/employer/auth/signup')}
                 textBlack
               >
                 Post a Job
               </Button>
             </div>
           </div>
-          <div className='shrink-0 flex justify-end items-center xl:gap-6 gap-3'>
-            <Button
-              cx='bg-bg-secondary lg:block hidden'
-              onClick={() => console.log('Job created!')}
-              textBlack
-            >
-              Find a job
-            </Button>
-            <Button
-              cx='bg-bg-secondary lg:block hidden'
-              onClick={() => console.log('Job created!')}
-              textBlack
-            >
-              Post a job
-            </Button>
+          <div className='shrink-0'>
+            <div className='shrink-0 lg:flex hidden xl:gap-6 gap-5 justify-end items-center'>
+              <Button
+                cx='bg-bg-secondary'
+                onClick={() => navigate('/engineer/auth/signup')}
+                textBlack
+              >
+                Find a job
+              </Button>
+              <span className='lg:block hidden border border-bg-secondary self-stretch' />
+              <Button
+                cx='bg-bg-secondary'
+                onClick={() => navigate('/employer/auth/signup')}
+                textBlack
+              >
+                Post a job
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -126,7 +131,7 @@ export default function Lander() {
             <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
               <div className='md:text-left text-center grow flex flex-col justify-between md:items-start items-center gap-5'>
                 <Text size='xl' copy>
-                  Find top talent faster
+                  Find Top Talent Faster
                 </Text>
                 <div className='md:text-left text-center flex justify-start gap-2'>
                   <Text size='md'>
@@ -136,7 +141,7 @@ export default function Lander() {
                 </div>
                 <Button
                   cx='bg-primary md:w-fit w-full'
-                  onClick={() => console.log('signed up!')}
+                  onClick={() => navigate('/employer/auth/signup')}
                 >
                   Sign up as employer
                 </Button>
@@ -149,14 +154,14 @@ export default function Lander() {
           </div>
         </div>
         <div className='xl:px-32 md:px-8 px-4 lg:py-10 py-8 w-full'>
-          <div className='grid xl:grid-cols-12 lg:grid-cols-10 lg:gap-20 md:gap-10 gap-0 lg:h-[35rem] min-h-[20rem]'>
+          <div className='grid xl:grid-cols-12 lg:grid-cols-10 gap-8 lg:h-[35rem]'>
             <div
               className={`bg-[url('/imgs/login-pic.jpg')] bg-cover bg-no-repeat bg-right xl:col-span-8 lg:col-span-6 md:block hidden`}
             />
             <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
               <div className='md:text-left text-center grow flex flex-col justify-between md:items-start items-center gap-5'>
                 <Text size='xl' copy>
-                  Land your dream job
+                  Land Your Dream Job
                 </Text>
                 <div className='md:text-left text-center flex justify-start gap-2'>
                   <Text size='md'>
@@ -165,11 +170,11 @@ export default function Lander() {
                 </div>
                 <Button
                   cx='bg-primary md:w-fit w-full'
-                  onClick={() => console.log('signed up!')}
+                  onClick={() => navigate('engineer/auth/signup')}
                 >
                   Sign up as engineer
                 </Button>
-                <TextLink to='/signup'>Learn more</TextLink>
+                <TextLink to='/employee/auth/signup'>Learn more</TextLink>
               </div>
             </div>
           </div>

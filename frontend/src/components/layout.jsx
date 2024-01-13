@@ -5,11 +5,12 @@ import {
   RiTwitterXLine,
 } from 'react-icons/ri'
 import { RxHamburgerMenu } from 'react-icons/rx'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import Button from './button'
 import Text from './text'
 
-export default function Layout({ children }) {
+export default function Layout({ companyName, children }) {
+  const navigate = useNavigate()
   const { employerId } = useParams()
   const [isNavOpen, setIsNavOpen] = useState(false)
 
@@ -45,7 +46,7 @@ export default function Layout({ children }) {
           >
             <Text size='sm'>
               <NavLink
-                to={`/${employerId}/proposals`}
+                to={`/employer/${employerId}/jobs`}
                 className={navStatusStyle}
               >
                 JOBS
@@ -53,7 +54,7 @@ export default function Layout({ children }) {
             </Text>
             <Text size='sm'>
               <NavLink
-                to={`/${employerId}/proposals`}
+                to={`/employer/${employerId}/proposals`}
                 className={navStatusStyle}
               >
                 PROPOSALS
@@ -68,35 +69,31 @@ export default function Layout({ children }) {
             <div className='lg:hidden block w-full md:px-8 px-4'>
               <Button
                 cx='bg-bg-secondary w-full'
-                onClick={() => console.log('Job created!')}
+                onClick={() => navigate(`/employer/${employerId}/jobs/create`)}
                 textBlack
               >
                 Post a job
               </Button>
             </div>
           </div>
-          <div className='shrink-0 flex justify-end items-center gap-3'>
+          <div className='shrink-0 flex justify-end items-center gap-5'>
             <Button
               cx='bg-bg-secondary lg:block hidden'
-              onClick={() => console.log('Job created!')}
+              onClick={() => navigate(`/employer/${employerId}/jobs/create`)}
               textBlack
             >
               Post a job
             </Button>
-            <span className='lg:block hidden'>
-              <Text size='xl' white>
-                |
-              </Text>
-            </span>
+            <span className='lg:block hidden border border-bg-secondary self-stretch' />
             <div className='shrink-0 flex justify-end items-center gap-2'>
               <div className='shrink-0 flex justify-center items-center w-8 h-8 bg-black rounded-full'>
                 <Text size='sm' white>
-                  LT
+                  {companyName?.[0] ?? 'EN'}
                 </Text>
               </div>
               <span className='lg:block hidden'>
                 <Text size='sm' white>
-                  L. Thompson
+                  {companyName}
                 </Text>
               </span>
             </div>
