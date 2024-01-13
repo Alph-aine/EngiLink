@@ -119,7 +119,7 @@ export default function Profile() {
             </div>
           </div>
           <div className='flex flex-wrap gap-8 items-center pt-8'>
-            <Button cx='bg-red-500' disabled={deleting}>
+            <Button cx='bg-red-500' disabled={deleting} onClick={deleteAcct}>
               <Text size='sm' white>
                 {deleting ? 'Deleting' : 'Delete Account'}
               </Text>
