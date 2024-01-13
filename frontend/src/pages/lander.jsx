@@ -65,21 +65,24 @@ export default function Lander() {
               </Button>
             </div>
           </div>
-          <div className='shrink-0 flex justify-end items-center xl:gap-6 gap-3'>
-            <Button
-              cx='bg-bg-secondary lg:block hidden'
-              onClick={() => navigate('/engineer/auth/signup')}
-              textBlack
-            >
-              Find a job
-            </Button>
-            <Button
-              cx='bg-bg-secondary lg:block hidden'
-              onClick={() => navigate('/employer/auth/signup')}
-              textBlack
-            >
-              Post a job
-            </Button>
+          <div className='shrink-0'>
+            <div className='shrink-0 lg:flex hidden xl:gap-6 gap-5 justify-end items-center'>
+              <Button
+                cx='bg-bg-secondary'
+                onClick={() => navigate('/engineer/auth/signup')}
+                textBlack
+              >
+                Find a job
+              </Button>
+              <span className='lg:block hidden border border-bg-secondary self-stretch' />
+              <Button
+                cx='bg-bg-secondary'
+                onClick={() => navigate('/employer/auth/signup')}
+                textBlack
+              >
+                Post a job
+              </Button>
+            </div>
           </div>
         </div>
       </header>
