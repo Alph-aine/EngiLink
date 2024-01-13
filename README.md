@@ -25,7 +25,7 @@ EngiLink is a specialized web platform designed to connect certified and profess
 
 - **Frontend:** React.js, Tailwind CSS
 - **Backend:** Node.js, Express.js
-- **Database:** MongoDB
+- **Database:** MongoDB Atlas
 
 ## Usage
 - **Clone the repository**
