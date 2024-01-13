@@ -5,11 +5,12 @@ import {
   RiTwitterXLine,
 } from 'react-icons/ri'
 import { RxHamburgerMenu } from 'react-icons/rx'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import Button from './button'
 import Text from './text'
 
 export default function Layout({ companyName, children }) {
+  const navigate = useNavigate()
   const { employerId } = useParams()
   const [isNavOpen, setIsNavOpen] = useState(false)
 
@@ -68,7 +69,7 @@ export default function Layout({ companyName, children }) {
             <div className='lg:hidden block w-full md:px-8 px-4'>
               <Button
                 cx='bg-bg-secondary w-full'
-                onClick={() => console.log('Job created!')}
+                onClick={() => navigate(`/employer/${employerId}/job/create`)}
                 textBlack
               >
                 Post a job
@@ -78,7 +79,7 @@ export default function Layout({ companyName, children }) {
           <div className='shrink-0 flex justify-end items-center gap-5'>
             <Button
               cx='bg-bg-secondary lg:block hidden'
-              onClick={() => console.log('Job created!')}
+              onClick={() => navigate(`/employer/${employerId}/job/create`)}
               textBlack
             >
               Post a job
