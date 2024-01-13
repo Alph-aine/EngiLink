@@ -11,7 +11,6 @@ import Text from './text'
 
 export default function Layout({ companyName, children }) {
   const { employerId } = useParams()
-  console.log("Employer Id: ", employerId)
   const [isNavOpen, setIsNavOpen] = useState(false)
 
   const navStatusStyle = ({ isActive, isPending, isTransitioning }) => {
