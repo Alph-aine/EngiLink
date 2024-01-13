@@ -7,8 +7,12 @@ import { useLoaderData, redirect } from 'react-router-dom'
 import Button from '../../components/button'
 import Text from '../../components/text'
 import Layout from '../../components/layout'
+import { getLoggedInEmployer } from '../../lib/auth'
 
 export const profileLoader = async ({ params }) => {
+  const user = getLoggedInEmployer()
+  if (!user) return redirect('/employer/auth/signin')
+  
   let profileData = null
 
   try {
@@ -22,7 +26,6 @@ export const profileLoader = async ({ params }) => {
     console.log('Error loading data')
   }
 
-  if (!profileData) return redirect('/employer/auth/signin')
   return profileData
 }
 
