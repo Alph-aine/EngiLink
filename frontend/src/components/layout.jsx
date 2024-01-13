@@ -9,7 +9,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import Button from './button'
 import Text from './text'
 
-export default function Layout({ children }) {
+export default function Layout({ companyName, children }) {
   const { employerId } = useParams()
   const [isNavOpen, setIsNavOpen] = useState(false)
 
@@ -91,12 +91,12 @@ export default function Layout({ children }) {
             <div className='shrink-0 flex justify-end items-center gap-2'>
               <div className='shrink-0 flex justify-center items-center w-8 h-8 bg-black rounded-full'>
                 <Text size='sm' white>
-                  LT
+                  {companyName[0]}
                 </Text>
               </div>
               <span className='lg:block hidden'>
                 <Text size='sm' white>
-                  L. Thompson
+                  {companyName}
                 </Text>
               </span>
             </div>

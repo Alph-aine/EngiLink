@@ -33,7 +33,7 @@ export default function Profile() {
   const profileData = useLoaderData()
 
   return (
-    <Layout>
+    <Layout companyName={profileData.companyName}>
       <div className='grid md:grid-cols-12 grid-cols-1 place-items-stretch gap-16 lg:px-20 px-0'>
         <div className='xl:col-span-10 col-span-full'>
           <div className='grid md:grid-cols-7 grid-cols-1 place-items-between gap-16'>
