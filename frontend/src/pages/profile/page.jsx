@@ -3,7 +3,7 @@ import { TfiStar } from 'react-icons/tfi'
 import { RiMailLine } from 'react-icons/ri'
 import { HiOutlinePencilSquare } from 'react-icons/hi2'
 import axios from 'axios'
-import { useLoaderData, redirect } from 'react-router-dom'
+import { useLoaderData, useNavigate, redirect } from 'react-router-dom'
 import Button from '../../components/button'
 import Text from '../../components/text'
 import Layout from '../../components/layout'
@@ -32,6 +32,7 @@ export const profileLoader = async ({ params }) => {
 
 export default function Profile() {
   const profileData = useLoaderData()
+  const navigate = useNavigate()
   const [deleting, setDeleting] = useState(false)
   const [loggingOut, setLoggingOut] = useState(false)
   const {
@@ -51,7 +52,7 @@ export default function Profile() {
       .delete(`http://localhost:3000/api/v1/employer/id/${params.employerId}`, {
         withCredentials: true,
       })
-      .then(() => redirect('/employer/auth/signup'))
+      .then(() => navigate('/employer/auth/signup'))
       .catch(() => console.log('error deleting acct'))
       .finally(() => setDeleting(false))
   }
@@ -63,7 +64,7 @@ export default function Profile() {
       .get(`http://localhost:3000/api/v1/logout`, {
         withCredentials: true,
       })
-      .then(() => redirect('/employer/auth/signin'))
+      .then(() => navigate('/employer/auth/signin'))
       .catch(() => console.log('An error occurred while logging out your acct'))
       .finally(() => setLoggingOut(false))
   }
