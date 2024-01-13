@@ -8,6 +8,7 @@ import Button from '../../components/button'
 import Text from '../../components/text'
 import Layout from '../../components/layout'
 import { getLoggedInEmployer } from '../../lib/auth'
+import { useState } from 'react'
 
 export const profileLoader = async ({ params }) => {
   const user = getLoggedInEmployer()
@@ -31,6 +32,7 @@ export const profileLoader = async ({ params }) => {
 
 export default function Profile() {
   const profileData = useLoaderData()
+  const [deleting, setDeleting] = useState(false)
   const {
     _id,
     companyName,
@@ -40,6 +42,15 @@ export default function Profile() {
     phoneNumber,
     jobPosted,
   } = profileData
+
+  const deleteAcct = () => {
+    setDeleting(true)
+
+    axios.delete(
+      `http://localhost:3000/api/v1/employer/id/${params.employerId}`,
+      { withCredentials: true }
+    ).then(() => redirect('/employer/auth/signup')).catch(() => console.log('error deleting acct')).finally(() => setDeleting(false))
+  }
 
   return (
     <Layout companyName={companyName}>
@@ -105,9 +116,9 @@ export default function Profile() {
             </div>
           </div>
           <div className='flex flex-wrap gap-8 items-center pt-8'>
-            <Button cx='bg-red-500'>
+            <Button cx='bg-red-500' disabled={deleting}>
               <Text size='sm' white>
-                Delete Account
+                {deleting ? 'Deleting' : 'Delete Account'}
               </Text>
             </Button>
             <Button cx='bg-bg-secondary' outline>
