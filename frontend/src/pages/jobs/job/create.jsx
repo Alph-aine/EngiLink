@@ -11,19 +11,26 @@ export default function CreateJob() {
   const [skills, setSkills] = useState(['Engineer'])
   const [newSkill, setNewSkill] = useState('Engineer')
 
+  const formDataToJSON = (formData) => {
+    const obj = {}
+    for (const [key, value] of formData.entries()) {
+      obj[key] = value
+    }
+    return obj
+  }
+
   const postJob = (e) => {
     e.preventDefault()
 
     const formData = new FormData(e.currentTarget)
-
+    const jsonData = formDataToJSON(formData)
     const postedAt = new Date()
-    formData['postedAt'] = postedAt
 
-    formData.append('postedAt', postedAt)
-    formData.append('skillsRequired', skills)
+    jsonData['skillsRequired'] = skills.join(', ')
+    jsonData['postedAt'] = postedAt
 
     axios
-      .post('http://localhost:3000/api/v1/jobs/', formData, {
+      .post('http://localhost:3000/api/v1/jobs/', jsonData, {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/${employerId}/jobs`))
@@ -52,6 +59,7 @@ export default function CreateJob() {
             </Text>
             <textarea
               rows={4}
+              name='description'
               className='block w-full px-4 py-2 md:text-base text-sm border border-primary/40 rounded-lg focus:outline-none focus:border-2 focus:border-primary'
               placeholder='Description'
               required
@@ -62,7 +70,7 @@ export default function CreateJob() {
             <Text size='sm' faded>
               Skills Required
             </Text>
-            <div className='flex justify-start items-center gap-4 flex-wrap'>
+            <div className='flex justify-start items-center gap-2 flex-wrap'>
               {skills.map((skill) => (
                 <div
                   key={skill}
@@ -106,9 +114,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='xp'
+                  name='experienceLevel'
                   id='entry Level'
-                  value='entry Level'
+                  value='Entry Level'
                   defaultChecked
                 />
                 <Text size='sm'>Entry Level</Text>
@@ -119,9 +127,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='xp'
+                  name='experienceLevel'
                   id='mid Level'
-                  value='mid Level'
+                  value='Mid Level'
                 />
                 <Text size='sm'>Mid Level</Text>
               </label>
@@ -131,9 +139,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='xp'
+                  name='experienceLevel'
                   id='senior Level'
-                  value='senior Level'
+                  value='Senior Level'
                 />
                 <Text size='sm'>Senior Level</Text>
               </label>
@@ -150,9 +158,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='full time'
-                  value='full time'
+                  value='Full Time'
                   defaultChecked
                 />
                 <Text size='sm'>Full Time</Text>
@@ -163,9 +171,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='part time'
-                  value='part time'
+                  value='Part Time'
                 />
                 <Text size='sm'>Part Time</Text>
               </label>
@@ -175,9 +183,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='contract'
-                  value='contract'
+                  value='Contract'
                 />
                 <Text size='sm'>Contract</Text>
               </label>
@@ -187,9 +195,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='internship'
-                  value='internship'
+                  value='Internship'
                 />
                 <Text size='sm'>Internship</Text>
               </label>
@@ -199,9 +207,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='remote'
-                  value='remote'
+                  value='Remote'
                 />
                 <Text size='sm'>Remote</Text>
               </label>
