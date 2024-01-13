@@ -65,7 +65,7 @@ export default function Profile() {
       .get(`http://localhost:3000/api/v1/logout`, {
         withCredentials: true,
       })
-      .then(() => navigate('/employer/auth/signin', { replace: true }))
+      .then(() => navigate('/', { replace: true }))
       .catch(() => console.log('An error occurred while logging out your acct'))
       .finally(() => setLoggingOut(false))
   }
