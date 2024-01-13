@@ -13,9 +13,12 @@ export const jobsLoader = async ({ params }) => {
   let jobs = null
 
   try {
-    const res = await axios.get(`http://localhost:3000/api/v1/employer/${employerId}/jobs`, {
-      withCredentials: true,
-    })
+    const res = await axios.get(
+      `http://localhost:3000/api/v1/employer/${employerId}/jobs`,
+      {
+        withCredentials: true,
+      }
+    )
 
     jobs = res.data
   } catch (e) {
@@ -33,16 +36,23 @@ export default function Jobs() {
     <Layout companyName={user.companyName}>
       {jobs.length > 0 ? (
         <div className='flex flex-col'>
-        {jobs.map((job) => (
-          <Link to={`/empolyer/${user._id}/jobs/${job._id}`}>
-            <JobCard key={job._id} job={job} />
-          </Link>
-        ))}
-      </div>
+          {jobs.map((job) => (
+            <Link to={`/empolyer/${user._id}/jobs/${job._id}`}>
+              <JobCard key={job._id} job={job} />
+            </Link>
+          ))}
+        </div>
       ) : (
         <div className='flex justify-center items-center gap-3'>
           <Text size='md'>No jobs yet</Text>
-          <Text size='md'><Link to={`/employer/${user._id}/jobs/create`} className='text-primary underline hover:underline-none underline-offset-4'>Create now!</Link></Text>
+          <Text size='md'>
+            <Link
+              to={`/employer/${user._id}/jobs/create`}
+              className='text-primary underline hover:underline-none underline-offset-4'
+            >
+              Create now!
+            </Link>
+          </Text>
         </div>
       )}
     </Layout>
