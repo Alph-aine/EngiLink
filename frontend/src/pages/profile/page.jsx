@@ -12,11 +12,12 @@ export const profileLoader = async ({ params }) => {
   let profileData = null
 
   try {
-    res = await axios.get(
-      `http://localhost:3000/api/v1/employer/id/${params.employerId}`
+    const res = await axios.get(
+      `http://localhost:3000/api/v1/employer/id/${params.employerId}`,
+      { withCredentials: true }
     )
 
-    profileData = res.data?.user
+    profileData = res.data?.employer
   } catch (e) {
     console.log('Error loading data')
   }
