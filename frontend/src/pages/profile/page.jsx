@@ -27,6 +27,7 @@ export const profileLoader = async ({ params }) => {
     console.log('Error loading data')
   }
 
+  if (!profileData) redirect('/employer/auth/signin')
   return profileData
 }
 
