@@ -6,7 +6,7 @@ import UpdatePassword from './pages/auth/updatepsw'
 import Profile, { profileLoader } from './pages/profile/page'
 import EditProfile from './pages/profile/edit'
 import Proposals, { proposalsLoader } from './pages/proposals/page'
-import CreateJob from './pages/jobs/job/create'
+import CreateJob, { jobCreateLoader } from './pages/jobs/job/create'
 import Proposal, { proposalLoader } from './pages/proposals/proposal'
 import Lander from './pages/lander'
 import Jobs, { jobsLoader } from './pages/jobs/page'
@@ -49,6 +49,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'employer/:employerId/jobs/create',
+    loader: jobCreateLoader,
     element: <CreateJob />,
   },
   {

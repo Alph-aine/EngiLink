@@ -1,13 +1,25 @@
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useLoaderData, redirect, useNavigate } from 'react-router-dom'
 import Button from '../../../components/button'
 import Input from '../../../components/input'
 import Layout from '../../../components/layout'
 import Text from '../../../components/text'
 import { useState } from 'react'
+import { getLoggedInEmployer } from '../../../lib/auth'
+
+export const jobCreateLoader = async ({ params }) => {
+  const { employerId } = params
+  const user = await getLoggedInEmployer()
+  if (!user) return redirect('/employer/auth/signin')
+  if (user._id !== employerId)
+    return redirect(`/employer/${user._id}/jobs/create`)
+
+  return user
+}
 
 export default function CreateJob() {
-  const { employerId } = useParams()
+  const user = useLoaderData()
+  const navigate = useNavigate()
   const [skills, setSkills] = useState(['Engineer'])
   const [newSkill, setNewSkill] = useState('Engineer')
 
@@ -33,12 +45,12 @@ export default function CreateJob() {
       .post('http://localhost:3000/api/v1/jobs/', jsonData, {
         withCredentials: true,
       })
-      .then(() => navigate(`/employer/${employerId}/jobs`))
+      .then(() => navigate(`/employer/${user._id}/jobs`))
       .catch(() => console.error('An error occured'))
   }
 
   return (
-    <Layout>
+    <Layout companyName={user.companyName}>
       <div className='flex flex-col lg:gap-10 gap-5 w-full text-center'>
         <Text size='xl'>Create A Job</Text>
 
