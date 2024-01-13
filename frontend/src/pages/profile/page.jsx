@@ -33,6 +33,7 @@ export const profileLoader = async ({ params }) => {
 export default function Profile() {
   const profileData = useLoaderData()
   const [deleting, setDeleting] = useState(false)
+  const [loggingOut, setLoggingOut] = useState(false)
   const {
     _id,
     companyName,
@@ -53,6 +54,18 @@ export default function Profile() {
       .then(() => redirect('/employer/auth/signup'))
       .catch(() => console.log('error deleting acct'))
       .finally(() => setDeleting(false))
+  }
+
+  const logOut = () => {
+    setLoggingOut(true)
+
+    axios
+      .delete(`http://localhost:3000/api/v1/logout`, {
+        withCredentials: true,
+      })
+      .then(() => redirect('/employer/auth/signin'))
+      .catch(() => console.log('An error occurred while logging out your acct'))
+      .finally(() => setLoggingOut(false))
   }
 
   return (
@@ -124,8 +137,8 @@ export default function Profile() {
                 {deleting ? 'Deleting' : 'Delete Account'}
               </Text>
             </Button>
-            <Button cx='bg-bg-secondary' outline>
-              <Text size='sm'>Log out</Text>
+            <Button cx='bg-bg-secondary' disabled={loggingOut} onClick={logOut} outline>
+              <Text size='sm'>{loggingOut ? 'Logging out' : 'Log out'}</Text>
             </Button>
           </div>
         </div>
