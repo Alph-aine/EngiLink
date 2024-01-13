@@ -1,11 +1,37 @@
+import { useLoaderData, useNavigate, redirect } from 'react-router-dom'
+import axios from 'axios'
 import { IoLocationOutline, IoTrashBinOutline } from 'react-icons/io5'
 import Text from '../../../components/text'
 import Layout from '../../../components/layout'
 import { BsCurrencyDollar } from 'react-icons/bs'
 import { RiEditBoxLine, RiUserSettingsLine } from 'react-icons/ri'
 import Button from '../../../components/button'
+import { formatMoney, formatTimeAgo } from '../../../lib/utils'
+
+export const jobLoader = async ({ params }) => {
+  const { employerId, jobId } = params
+  const user = await getLoggedInEmployer()
+  if (!user) return redirect('/employer/auth/signin')
+
+  let job = null
+
+  try {
+    const res = await axios.get(`http://localhost:3000/api/v1/job/${jobId}`, {
+      withCredentials: true,
+    })
+
+    job = res.data
+  } catch (e) {
+    console.log('Error loading data')
+  }
+
+  if (!job) return redirect(`/employer/${employerId}/profile`)
+  return { job, user }
+}
 
 export default function Job() {
+  const job = useLoaderData()
+
   return (
     <Layout>
       <div className='flex flex-col w-full'>
@@ -30,33 +56,29 @@ export default function Job() {
         <div className='md:px-16 px-0 flex flex-col'>
           <div className='flex flex-col w-full gap-6 md:py-16 py-8 border-b border-bg-primary/40'>
             <Text size='lg' copy>
-              Build A Bridge That Spans From Lagos Island To Lekki and VI
+              {job.title}
             </Text>
             <div className='flex items-center gap-8'>
-              <Text size='sm'>Posted 4 hours ago</Text>
+              <Text size='sm'>Posted {formatTimeAgo(job.postedAt)}</Text>
               <div className='flex items-center gap-2'>
                 <IoLocationOutline className='text-xl text-black/60' />
-                <Text size='sm'>Enugu Ezike</Text>
+                <Text size='sm'>{job.location}</Text>
               </div>
             </div>
           </div>
           <span className='w-full md:py-16 py-8 border-b border-bg-primary/40'>
             <Text size='sm' copy>
-              In this exciting role as a [job title] at our dynamic company,
-              you'll play a pivotal role in [briefly describe main
-              responsibility]. You'll leverage your [mention relevant skills] to
-              [describe specific task] and [another task], ensuring [desired
-              outcome]. If you're a self-starter who thrives on challenges and
-              enjoys collaborating with a talented team, we encourage you to
-              apply! In return, you'll receive [mention attractive benefits] and
-              the opportunity to [highlight career growth potential].
+              {job.description}
             </Text>
           </span>
           <div className='flex md:flex-row flex-col md:items-center flex-wrap md:gap-16 gap-8 md:py-16 py-8 border-b border-bg-primary/40'>
             <div className='flex gap-3 items-start'>
               <BsCurrencyDollar className='text-3xl text-bg-primary' />
               <div className='flex flex-col items-start gap-1'>
-                <Text size='lg'>N200,000 &mdash; N300,000</Text>
+                <Text size='lg'>
+                  {formatMoney(job.minSalary)} &mdash;{' '}
+                  {formatMoney(job.maxSalary)}
+                </Text>
                 <Text size='sm' faded>
                   Salary
                 </Text>
@@ -65,7 +87,7 @@ export default function Job() {
             <div className='flex gap-3 items-start'>
               <RiUserSettingsLine className='text-3xl text-bg-primary' />
               <div className='flex flex-col items-start gap-1'>
-                <Text size='lg'>Intermidate</Text>
+                <Text size='lg'>{job.experienceLevel}</Text>
                 <Text size='sm' faded>
                   Level
                 </Text>
@@ -77,15 +99,15 @@ export default function Job() {
               <b>
                 <Text size='sm'>Project Type:</Text>
               </b>
-              <Text size='md'>Contract</Text>
+              <Text size='md'>{job.employmentType}</Text>
             </div>
           </div>
           <div className='md:py-16 py-8 border-b border-bg-primary/40'>
             <div className='flex flex-col items-start gap-3'>
               <Text size='lg'>Skills and Expertise</Text>
               <div className='flex flex-wrap justify-start items-center gap-4'>
-                {['Technician', 'Software', 'Architect'].map((skill) => (
-                  <div className='md:px-4 px-3 md:py-2 py-1 rounded-md bg-bg-secondary text-black'>
+                {job.skillsRequired.split(',').map((skill) => (
+                  <div className='shrink-0 md:px-4 px-3 md:py-2 py-1 rounded-md bg-bg-secondary text-black'>
                     <Text size='sm'>{skill}</Text>
                   </div>
                 ))}
@@ -100,7 +122,7 @@ export default function Job() {
                   <b>
                     <Text size='sm'>Proposals:</Text>
                   </b>
-                  <Text size='md'>20</Text>
+                  <Text size='md'>0</Text>
                 </div>
               </div>
             </div>
