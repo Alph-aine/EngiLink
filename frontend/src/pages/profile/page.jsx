@@ -137,7 +137,12 @@ export default function Profile() {
                 {deleting ? 'Deleting' : 'Delete Account'}
               </Text>
             </Button>
-            <Button cx='bg-bg-secondary' disabled={loggingOut} onClick={logOut} outline>
+            <Button
+              cx='bg-bg-secondary'
+              disabled={loggingOut}
+              onClick={logOut}
+              outline
+            >
               <Text size='sm'>{loggingOut ? 'Logging out' : 'Log out'}</Text>
             </Button>
           </div>
