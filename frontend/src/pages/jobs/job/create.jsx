@@ -15,8 +15,12 @@ export default function CreateJob() {
     e.preventDefault()
 
     const formData = new FormData(e.currentTarget)
+
     const postedAt = new Date()
     formData['postedAt'] = postedAt
+    
+    formData.append('postedAt', postedAt)
+    formData.append('skillsRequired', skills)
 
     axios
       .post('http://localhost:3000/api/v1/jobs/', formData, {
