@@ -11,6 +11,7 @@ import Text from './text'
 
 export default function Layout({ companyName, children }) {
   const { employerId } = useParams()
+  console.log("Employer Id: ", employerId)
   const [isNavOpen, setIsNavOpen] = useState(false)
 
   const navStatusStyle = ({ isActive, isPending, isTransitioning }) => {
@@ -45,7 +46,7 @@ export default function Layout({ companyName, children }) {
           >
             <Text size='sm'>
               <NavLink
-                to={`/${employerId}/proposals`}
+                to={`/employer/${employerId}/jobs`}
                 className={navStatusStyle}
               >
                 JOBS
@@ -53,7 +54,7 @@ export default function Layout({ companyName, children }) {
             </Text>
             <Text size='sm'>
               <NavLink
-                to={`/${employerId}/proposals`}
+                to={`/employer/${employerId}/proposals`}
                 className={navStatusStyle}
               >
                 PROPOSALS
@@ -87,7 +88,7 @@ export default function Layout({ companyName, children }) {
             <div className='shrink-0 flex justify-end items-center gap-2'>
               <div className='shrink-0 flex justify-center items-center w-8 h-8 bg-black rounded-full'>
                 <Text size='sm' white>
-                  {companyName[0]}
+                  {companyName?.[0] ?? 'EN'}
                 </Text>
               </div>
               <span className='lg:block hidden'>
