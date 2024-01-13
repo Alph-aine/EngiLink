@@ -12,7 +12,7 @@ import { getLoggedInEmployer } from '../../lib/auth'
 export const profileLoader = async ({ params }) => {
   const user = getLoggedInEmployer()
   if (!user) return redirect('/employer/auth/signin')
-  
+
   let profileData = null
 
   try {
