@@ -8,7 +8,7 @@ export const getLoggedInEmployer = async () => {
       withCredentials: true,
     })
 
-    user = res.data?.user
+    user = res.data?.employer
   } catch (e) {
     console.log('Error loading employer data')
   }

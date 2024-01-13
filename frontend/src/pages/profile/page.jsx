@@ -11,7 +11,7 @@ import { getLoggedInEmployer } from '../../lib/auth'
 import { useState } from 'react'
 
 export const profileLoader = async ({ params }) => {
-  const user = getLoggedInEmployer()
+  const user = await getLoggedInEmployer()
   if (!user) return redirect('/employer/auth/signin')
 
   let profileData = null
