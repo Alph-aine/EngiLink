@@ -1,4 +1,4 @@
-import {redirect, useLoaderData, useNavigate} from 'react-router-dom'
+import { redirect, useLoaderData, Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Layout from '../../components/layout'
 import { getLoggedInEmployer } from '../../lib/auth'
@@ -22,16 +22,20 @@ export const jobsLoader = async ({ params }) => {
   }
 
   if (!jobs) return redirect(`/employer/${employerId}/profile`)
-  return {jobs, user}
+  return { jobs, user }
 }
 
 export default function Jobs() {
-  const {jobs, user} = useLoaderData()
+  const { jobs, user } = useLoaderData()
 
   return (
     <Layout companyName={user.companyName}>
       <div className='flex flex-col'>
-        {jobs.map(job => <JobCard key={job._id} job={job} />)}
+        {jobs.map((job) => (
+          <Link to={`/empolyer/${user._id}/jobs/${job._id}`}>
+            <JobCard key={job._id} job={job} />
+          </Link>
+        ))}
       </div>
     </Layout>
   )
