@@ -53,7 +53,7 @@ export default function Profile() {
       .delete(`http://localhost:3000/api/v1/employer/id/${params.employerId}`, {
         withCredentials: true,
       })
-      .then(() => navigate('/employer/auth/signup', {replace: true}))
+      .then(() => navigate('/employer/auth/signup', { replace: true }))
       .catch(() => console.log('error deleting acct'))
       .finally(() => setDeleting(false))
   }
@@ -65,7 +65,7 @@ export default function Profile() {
       .get(`http://localhost:3000/api/v1/logout`, {
         withCredentials: true,
       })
-      .then(() => navigate('/employer/auth/signin', {replace: true}))
+      .then(() => navigate('/employer/auth/signin', { replace: true }))
       .catch(() => console.log('An error occurred while logging out your acct'))
       .finally(() => setLoggingOut(false))
   }
