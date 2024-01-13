@@ -75,7 +75,7 @@ export default function Layout({ companyName, children }) {
               </Button>
             </div>
           </div>
-          <div className='shrink-0 flex justify-end items-center gap-3'>
+          <div className='shrink-0 flex justify-end items-center gap-5'>
             <Button
               cx='bg-bg-secondary lg:block hidden'
               onClick={() => console.log('Job created!')}
@@ -83,10 +83,7 @@ export default function Layout({ companyName, children }) {
             >
               Post a job
             </Button>
-            <span className='lg:block hidden'>
-              <Text size='xl' white>
-                |
-              </Text>
+            <span className='lg:block hidden border border-bg-secondary self-stretch'>
             </span>
             <div className='shrink-0 flex justify-end items-center gap-2'>
               <div className='shrink-0 flex justify-center items-center w-8 h-8 bg-black rounded-full'>
