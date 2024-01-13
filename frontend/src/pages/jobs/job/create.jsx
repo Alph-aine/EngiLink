@@ -16,10 +16,10 @@ export default function CreateJob() {
     formData['postedAt'] = postedAt
 
     axios
-      .post('http://localhost:3000/api/v1/jobs/', formData)
-      .then((response) => {
-        navigate(`/employer/${employerId}/jobs`)
+      .post('http://localhost:3000/api/v1/jobs/', formData, {
+        withCredentials: true,
       })
+      .then(() => navigate(`/employer/${employerId}/jobs`))
       .catch(() => console.error('An error occured'))
   }
 
@@ -74,7 +74,7 @@ export default function CreateJob() {
                   name='xp'
                   id='entry Level'
                   value='entry Level'
-                  defaultValue={true}
+                  defaultChecked
                 />
                 <Text size='sm'>Entry Level</Text>
               </label>
@@ -118,7 +118,7 @@ export default function CreateJob() {
                   name='employment'
                   id='full time'
                   value='full time'
-                  defaultValue={true}
+                  defaultChecked
                 />
                 <Text size='sm'>Full Time</Text>
               </label>
