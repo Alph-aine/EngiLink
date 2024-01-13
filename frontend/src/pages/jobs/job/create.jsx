@@ -222,6 +222,7 @@ export default function CreateJob() {
                 <div className='flex justify-center items-center gap-1'>
                   <Text size='sm'>$</Text>
                   <Input
+                    type='number'
                     name='minSalary'
                     id='minSalary'
                     placeholder='eg: 500'
@@ -244,6 +245,7 @@ export default function CreateJob() {
                 <div className='flex justify-center items-center gap-1'>
                   <Text size='sm'>$</Text>
                   <Input
+                    type='number'
                     name='maxSalary'
                     id='maxSalary'
                     placeholder='eg: 500'
