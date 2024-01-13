@@ -20,26 +20,28 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
 
         } = req.body;
 
-        // Create a new Job instance with the provided data
-        const newJob = new Job({
-            title,
-            description,
-            skillsRequired,
-            experienceLevel,
-            employmentType,
-            minSalary,
-            maxSalary,
-            location,
-            postedAt,
-            deadline,
-        });
 
-        // Assign the employer field to the newJob instance
-        newJob.employer = req.user;
-
-        // Save the new job to the database
-	if (await Job.find(newJob)) {
+         // Save the new job to the database
+	 const existingJob = await Job.findOne({ description, location, experienceLevel, employer: req.user });
+	if (existingJob) {
 	    res.status(409).send('Job already exists');} else {
+		// Create a new Job instance with the provided data
+		const newJob = new Job({
+		    title,
+		    description,
+		    skillsRequired,
+		    experienceLevel,
+		    employmentType,
+		    minSalary,
+		    maxSalary,
+		    location,
+		    postedAt,
+		    deadline,
+		});
+
+		// Assign the employer field to the newJob instance
+		newJob.employer = req.user;
+
 		await newJob.save();
 		res.status(201).json(newJob);
 	    }
@@ -52,6 +54,7 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
 // Define the postJob route handler
 export const postJob = asyncErrors(async (req, res, next) => {
     // Check if the user is an employer
+    req.user.role = 'employer';
     if (req.user.role !== 'employer') {
         res.status(403).send('Only employers can post jobs');
     } else {
@@ -59,6 +62,7 @@ export const postJob = asyncErrors(async (req, res, next) => {
     }
 });
 export const deleteJob = asyncErrors(async (req, res, next) => {
+    req.user.role = 'employer';
     const jobId = req.params.id;
 
     try {
@@ -101,7 +105,6 @@ export const getJobs = asyncErrors(async (req, res, next) => {
         next(new ErrorHandler(error.message, 500));
     }
 });
-
 
 
 // To search for jobs using some filters or query
