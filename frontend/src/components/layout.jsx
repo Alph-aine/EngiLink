@@ -83,8 +83,7 @@ export default function Layout({ companyName, children }) {
             >
               Post a job
             </Button>
-            <span className='lg:block hidden border border-bg-secondary self-stretch'>
-            </span>
+            <span className='lg:block hidden border border-bg-secondary self-stretch' />
             <div className='shrink-0 flex justify-end items-center gap-2'>
               <div className='shrink-0 flex justify-center items-center w-8 h-8 bg-black rounded-full'>
                 <Text size='sm' white>
