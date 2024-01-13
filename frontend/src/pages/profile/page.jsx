@@ -104,6 +104,18 @@ export default function Profile() {
               </div>
             </div>
           </div>
+          <div className='flex flex-wrap gap-8 items-center pt-8'>
+            <Button cx='bg-red-500'>
+              <Text size='sm' white>
+                Delete Account
+              </Text>
+            </Button>
+            <Button cx='bg-bg-secondary' outline>
+              <Text size='sm'>
+                Log out
+              </Text>
+            </Button>
+          </div>
         </div>
       </div>
     </Layout>
