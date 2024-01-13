@@ -69,7 +69,7 @@ export default function Layout({ companyName, children }) {
             <div className='lg:hidden block w-full md:px-8 px-4'>
               <Button
                 cx='bg-bg-secondary w-full'
-                onClick={() => navigate(`/employer/${employerId}/job/create`)}
+                onClick={() => navigate(`/employer/${employerId}/jobs/create`)}
                 textBlack
               >
                 Post a job
@@ -79,7 +79,7 @@ export default function Layout({ companyName, children }) {
           <div className='shrink-0 flex justify-end items-center gap-5'>
             <Button
               cx='bg-bg-secondary lg:block hidden'
-              onClick={() => navigate(`/employer/${employerId}/job/create`)}
+              onClick={() => navigate(`/employer/${employerId}/jobs/create`)}
               textBlack
             >
               Post a job
