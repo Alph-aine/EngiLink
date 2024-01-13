@@ -24,6 +24,12 @@ export default function Layout({ companyName, children }) {
 
   return (
     <div className='flex flex-col justify-start items-start w-full min-h-screen'>
+      <div
+        className={`fixed inset-0 bg-black/10 ${
+          isNavOpen ? 'block' : 'hidden'
+        }`}
+        onClick={() => setIsNavOpen((prev) => !prev)}
+      />
       <header className='relative bg-primary md:px-8 px-4 py-5 w-full'>
         <div className='flex justify-between items-center gap-5'>
           <span className=''>
