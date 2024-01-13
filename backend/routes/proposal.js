@@ -4,10 +4,10 @@ import * as proposalController from '../controllers/proposalController.js';
 
 const router = express.Router();
 const {
-    applyJob,
-    getProposal,
-    getProposals,
-    deleteProposal,
+  applyJob,
+  getProposal,
+  getProposals,
+  deleteProposal
 } = proposalController;
 
 // Apply for a job

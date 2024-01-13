@@ -8,7 +8,7 @@ export const applyJob = asyncErrors(async (req, res, next) => {
   try {
     const jobId = req.params.id;
     const job = await Job.findById(jobId);
-    
+
     if (!job) {
       return res.status(404).send('Job not found');
     }
@@ -25,7 +25,7 @@ export const applyJob = asyncErrors(async (req, res, next) => {
         job: jobId,
         engineer: req.user.id,
         coverLetter,
-        price,
+        price
       });
 
       await proposal.save();
@@ -38,7 +38,7 @@ export const applyJob = asyncErrors(async (req, res, next) => {
   }
 });
 
-//Delete a proposal
+// Delete a proposal
 export const deleteProposal = asyncErrors(async (req, res, next) => {
   try {
     const proposalId = req.params.id;
@@ -48,7 +48,7 @@ export const deleteProposal = asyncErrors(async (req, res, next) => {
       return res.status(404).send('Proposal not found');
     }
 
-    if (req.user.role === 'engineer' && req.user.id == proposal.engineer.toString()) {
+    if (req.user.role === 'engineer' && req.user.id === proposal.engineer.toString()) {
       await proposal.deleteOne();
       return res.status(204).send('Proposal deleted successfully');
     } else {
@@ -59,7 +59,7 @@ export const deleteProposal = asyncErrors(async (req, res, next) => {
   }
 });
 
-//get applications for a job
+// get applications for a job
 export const getProposals = asyncErrors(async (req, res, next) => {
   try {
     const jobId = req.params.id;
@@ -80,7 +80,7 @@ export const getProposals = asyncErrors(async (req, res, next) => {
   }
 });
 
-//get a particular application
+// get a particular application
 export const getProposal = asyncErrors(async (req, res, next) => {
   try {
     const proposalId = req.params.id;

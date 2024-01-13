@@ -5,6 +5,8 @@ import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
 import Button from '../../components/button'
 
+axios.defaults.withCredentials = true;
+
 export default function SignIn() {
   const navigate = useNavigate()
   const [form, setForm] = useState({
