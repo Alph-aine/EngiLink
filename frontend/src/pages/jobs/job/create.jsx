@@ -36,7 +36,7 @@ export default function CreateJob() {
             <Text size='sm' faded>
               Title
             </Text>
-            <Input type='text' name='title' placeholder='Title' />
+            <Input type='text' name='title' placeholder='Title' required />
           </div>
 
           <div className='flex flex-col gap-2 text-left'>
@@ -47,6 +47,7 @@ export default function CreateJob() {
               rows={4}
               className='block w-full px-4 py-2 md:text-base text-sm border border-primary/40 rounded-lg focus:outline-none focus:border-2 focus:border-primary'
               placeholder='Description'
+              required
             />
           </div>
 
@@ -58,6 +59,7 @@ export default function CreateJob() {
               type='text'
               name='skillsRequired'
               placeholder='Skills Required'
+              required
             />
           </div>
           <div className='flex flex-col gap-2 text-left'>
@@ -190,6 +192,7 @@ export default function CreateJob() {
                     name='minSalary'
                     id='minSalary'
                     placeholder='eg: 500'
+                    required
                   />
                 </div>
               </label>
@@ -211,6 +214,7 @@ export default function CreateJob() {
                     name='maxSalary'
                     id='maxSalary'
                     placeholder='eg: 500'
+                    required
                   />
                 </div>
               </label>
@@ -220,13 +224,13 @@ export default function CreateJob() {
             <Text size='sm' faded>
               Location
             </Text>
-            <Input type='text' name='location' placeholder='Location' />
+            <Input type='text' name='location' placeholder='Location' required />
           </div>
           <div className='flex flex-col gap-2 text-left'>
             <Text size='sm' faded>
               Deadline
             </Text>
-            <Input type='date' name='location' placeholder='Location' />
+            <Input type='date' name='location' placeholder='Location' required />
           </div>
           <Button type='submit' cx='bg-primary md:w-fit w-full mx-auto mt-10'>
             Post Job
