@@ -44,6 +44,6 @@ router.route('/employer/id/:id').delete(isAuthenticated, deleteEmployerAccount);
 router.route('/employer/company/:companyName').get(isAuthenticated, getEmployerByCompanyName);
 
 // get all jobs posted by an employer
-router.route('/employer/jobs').get(isAuthenticated, getAllJobs);
+router.route('/employer/:id/jobs').get(isAuthenticated, getAllJobs);
 
 export default router;
