@@ -46,10 +46,13 @@ export default function Profile() {
   const deleteAcct = () => {
     setDeleting(true)
 
-    axios.delete(
-      `http://localhost:3000/api/v1/employer/id/${params.employerId}`,
-      { withCredentials: true }
-    ).then(() => redirect('/employer/auth/signup')).catch(() => console.log('error deleting acct')).finally(() => setDeleting(false))
+    axios
+      .delete(`http://localhost:3000/api/v1/employer/id/${params.employerId}`, {
+        withCredentials: true,
+      })
+      .then(() => redirect('/employer/auth/signup'))
+      .catch(() => console.log('error deleting acct'))
+      .finally(() => setDeleting(false))
   }
 
   return (
