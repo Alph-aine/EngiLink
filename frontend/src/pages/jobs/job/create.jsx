@@ -18,7 +18,7 @@ export default function CreateJob() {
 
     const postedAt = new Date()
     formData['postedAt'] = postedAt
-    
+
     formData.append('postedAt', postedAt)
     formData.append('skillsRequired', skills)
 
@@ -66,7 +66,7 @@ export default function CreateJob() {
               {skills.map((skill) => (
                 <div
                   key={skill}
-                  className='md:px-4 px-3 md:py-2 py-1 rounded-md border border-bg-primary bg-white text-black'
+                  className='md:px-4 px-3 md:py-2 py-1 rounded-md border border-bg-primary/40 bg-white text-black'
                 >
                   <Text size='sm'>{skill}</Text>
                 </div>
