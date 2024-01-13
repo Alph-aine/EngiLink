@@ -28,7 +28,7 @@ export default function JobCard({ job }) {
           {job.skillsRequired.split(', ').map((skill, id) => (
             <div
               key={job._id + id}
-              className='md:px-4 px-3 md:py-2 py-1 rounded-md border border-bg-primary bg-white text-black'
+              className='shrink-0 md:px-4 px-3 md:py-2 py-1 rounded-md border border-bg-primary bg-white text-black line-clamp-1'
             >
               <Text size='sm'>{skill}</Text>
             </div>
