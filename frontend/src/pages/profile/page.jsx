@@ -1,4 +1,4 @@
-import { BsGlobe } from 'react-icons/bs'
+import { BsGlobe, BsPhone } from 'react-icons/bs'
 import { TfiStar } from 'react-icons/tfi'
 import { RiMailLine } from 'react-icons/ri'
 import { HiOutlinePencilSquare } from 'react-icons/hi2'
@@ -31,9 +31,18 @@ export const profileLoader = async ({ params }) => {
 
 export default function Profile() {
   const profileData = useLoaderData()
+  const {
+    _id,
+    companyName,
+    industry,
+    email,
+    location,
+    phoneNumber,
+    jobPosted,
+  } = profileData
 
   return (
-    <Layout companyName={profileData.companyName}>
+    <Layout companyName={companyName}>
       <div className='grid md:grid-cols-12 grid-cols-1 place-items-stretch gap-16 lg:px-20 px-0'>
         <div className='xl:col-span-10 col-span-full'>
           <div className='grid md:grid-cols-7 grid-cols-1 place-items-between gap-16'>
@@ -46,7 +55,11 @@ export default function Profile() {
             </div>
             <div className='relative md:col-span-4 col-span-full self-stretch'>
               <div className='absolute top-0 right-0'>
-                <Button cx='bg-bg-secondary'>
+                <Button
+                  cx='bg-bg-secondary'
+                  disabled
+                  onClick={() => navigate(`/employer/${_id}/profile/edit`)}
+                >
                   <div className='flex gap-2 justify-start items-center'>
                     <HiOutlinePencilSquare className='text-black text-xl' />
                     {
@@ -59,71 +72,35 @@ export default function Profile() {
               </div>
               <div className='flex flex-col w-full gap-8'>
                 <div className='flex flex-col gap-3 w-full'>
-                  <Text size='xl'>Jennie Yen</Text>
-                  <Text size='sm'>Personnel Manager, Microsoft Corp.</Text>
-                  <Text size='sm'>
-                    Interested in solving the world's toughest problems. We
-                    thrive on creativity, collaboration, and a healthy dose of
-                    caffeine (and puns).
-                  </Text>
+                  <Text size='xl'>{companyName}</Text>
+                  <Text size='sm'>{industry}</Text>
                 </div>
                 <div className='flex flex-col gap-3 w-full'>
                   <div className='flex justify-start items-center gap-3'>
                     <RiMailLine className='text-lg text-black/70' />
                     <Text size='sm' faded>
-                      jennieyenatwork@micrmail.com
+                      {email}
                     </Text>
                   </div>
                   <div className='flex justify-start items-center gap-3'>
                     <BsGlobe className='text-lg text-black/70' />
                     <Text size='sm' faded>
-                      English, Spanish
+                      {location}
+                    </Text>
+                  </div>
+                  <div className='flex justify-start items-center gap-3'>
+                    <BsPhone className='text-lg text-black/70' />
+                    <Text size='sm' faded>
+                      {phoneNumber}
                     </Text>
                   </div>
                   <div className='flex justify-start items-center gap-3'>
                     <TfiStar className='text-lg text-black/70' />
                     <Text size='sm' faded>
-                      4.9 (139 reviews, 200 contracts)
+                      {jobPosted.length} contracts
                     </Text>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className='flex flex-col gap-16 mt-10 w-full'>
-            <div className='flex flex-col gap-3'>
-              <Text size='lg'>About</Text>
-              <Text size='sm' faded copy>
-                Hey there, I'm Jennie, the Personnel Manager here at Microsoft
-                Corp. When I'm not building robots that can dance (seriously!),
-                I'm leading our amazing team of engineers to solve the world's
-                toughest problems. We thrive on creativity, collaboration, and a
-                healthy dose of caffeine (and puns). If you're an engineer who
-                loves tackling challenges with a smile, come join us and let's
-                make magic happen!
-              </Text>
-            </div>
-            <div className='flex flex-col gap-3'>
-              <Text size='lg'>Topics</Text>
-              <div className='flex flex-wrap gap-6 items-center justify-start'>
-                <Button outline textBlack>
-                  Electronics Engr
-                </Button>
-                <Button outline textBlack>
-                  Software
-                </Button>
-                <Button outline textBlack>
-                  Architecture
-                </Button>
-                <Button outline textBlack>
-                  Wireframing
-                </Button>
-                <Button outline textBlack>
-                  Prototype
-                </Button>
-                <Button outline textBlack>
-                  Civil Engr
-                </Button>
               </div>
             </div>
           </div>
