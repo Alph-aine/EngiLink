@@ -1,67 +1,82 @@
-import { redirect, useLoaderData } from 'react-router-dom'
+import { Link, redirect, useLoaderData } from 'react-router-dom'
 import axios from 'axios'
-import Button from '../../components/button'
 import Text from '../../components/text'
 import ProposalCard from './card'
 import DropDown, { DropItem } from '../../components/dropdown'
 import Layout from '../../components/layout'
+import { useState } from 'react'
 
 export const proposalsLoader = async ({ params }) => {
-  let proposalsData = null
+  const { employerId } = params
+  const user = await getLoggedInEmployer()
+  if (!user) return redirect('/employer/auth/signin')
+
+  let jobs = null
 
   try {
-    res = await axios.get(
-      `http://localhost:3000/api/v1/job/${params.jobId}/proposals`
+    const res = await axios.get(
+      `http://localhost:3000/api/v1/employer/${employerId}/jobs`,
+      {
+        withCredentials: true,
+      }
     )
 
-    proposalsData = res.data?.proposals
+    jobs = res.data
   } catch (e) {
     console.log('Error loading data')
   }
 
-  if (!proposalsData) return redirect(`/employer/${params.employerId}/profile`)
-  return proposalsData
+  if (!jobs) return redirect(`/employer/${employerId}/jobs/create`)
+  return { jobs, user }
 }
 
 export default function Proposals() {
-  const proposalsData = useLoaderData()
+  const {jobs, user} = useLoaderData()
+  const [selectedJob, setSelectedJob] = useState(jobs[0]._id)
+  const [proposals, setProposals] = useState([])
+  const [loadingProposals, setLoadingProposals] = useState(true)
+
+  useEffect(() => {
+    setLoadingProposals(true)
+
+    axios.get(
+      `http://localhost:3000/api/v1/job/${selectedJob}/proposals`,
+      {
+        withCredentials: true,
+      }
+    ).then((res) => setProposals(res.data)).catch(() => console.log('An error occurred while loading proposals')).finally(() => setLoadingProposals(false))
+  }, [selectedJob])
 
   return (
-    <Layout>
+    <Layout companyName={user.companyName}>
       <div className='flex flex-col gap-20'>
         <div className='flex flex-col gap-3'>
           <Text size='md'>Select a Job</Text>
           <DropDown
             title='Choose from your posted jobs'
-            initialActive='Name (asc)'
+            initialActive={selectedJob}
           >
-            <DropItem
-              value='Name (asc)'
-              onClick={() => console.log('Selected a value')}
-            >
-              DRAW THE FOUNDATIONS PLAN OF A SEWAGE SYSTEM FOR A RURAL VILLAGE
-            </DropItem>
-            <DropItem
-              value='Name (desc)'
-              onClick={() => setSort('Name (desc)')}
-            >
-              JOIN A WELL SUPHISTICATED TEAM TO PRODUCE THE WORLD BEST
-              ELECTRONICS
-            </DropItem>
+            {
+              jobs.map(job => (
+                <DropItem
+                key={job._Id}
+                  value={job._id}
+                  onClick={() => setSelectedJob(job._id)}
+                >
+                  {job.title}
+                </DropItem>))
+            }
           </DropDown>
         </div>
         <div className='flex flex-col gap-24'>
-          <div className='flex'>
-            <Text size='md' faded>
-              Filters
-            </Text>
-          </div>
+          {loadingProposals ? (
+            <div className='flex justify-center items-center'>
+              <Text size='md'>Loading Proposals</Text>
+            </div>
+          ) : (
           <div className='flex flex-col gap-10'>
-            <ProposalCard />
-            <ProposalCard />
-            <ProposalCard />
-          </div>
-          <Button cx='bg-primary lg:w-fit w-full mx-auto '>LOAD MORE</Button>
+            {proposals.map(proposal => (<Link key={proposal._id} to={`/employer/{user._Id}/jobs/${selectedJob}/proposal/${proposal._id}`}><ProposalCard /></Link>))}
+          </div>)}
         </div>
       </div>
     </Layout>
