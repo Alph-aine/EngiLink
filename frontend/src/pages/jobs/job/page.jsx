@@ -50,7 +50,7 @@ export default function Job() {
   return (
     <Layout companyName={user.companyName}>
       <div className='flex flex-col w-full'>
-        <div className='flex md:justify-start justify-center items-center gap-4'>
+        <div className='md:px-16 px-0 flex md:justify-start justify-center items-center gap-4'>
           <Button
             onClick={() =>
               navigate(`/employer/${user._id}/jobs/${job._id}/edit`)
