@@ -14,7 +14,7 @@ export const jobsLoader = async ({ params }) => {
 
   try {
     const res = await axios.get(
-      `http://localhost:3000/api/v1/employer/${employerId}/jobs`,
+      `http://localhost:3000/api/v1/jobs`,
       {
         withCredentials: true,
       }
@@ -26,7 +26,7 @@ export const jobsLoader = async ({ params }) => {
   }
 
   if (!jobs) return redirect(`/employer/${employerId}/profile`)
-  return { jobs, user }
+  return { jobs: jobs.filter(job => job.employer === user._id), user }
 }
 
 export default function Jobs() {
@@ -44,8 +44,8 @@ export default function Jobs() {
         </div>
       ) : (
         <div className='flex justify-center items-center gap-3'>
-          <Text size='md'>No jobs yet</Text>
-          <Text size='md'>
+          <Text size='sm'>No jobs yet</Text>
+          <Text size='sm'>
             <Link
               to={`/employer/${user._id}/jobs/create`}
               className='text-primary underline hover:underline-none underline-offset-4'
