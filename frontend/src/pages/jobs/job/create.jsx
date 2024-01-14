@@ -292,8 +292,8 @@ export default function CreateJob() {
             </Text>
             <Input
               type='date'
-              name='location'
-              placeholder='Location'
+              name='deadline'
+              placeholder='Deadline'
               required
             />
           </div>
