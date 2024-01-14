@@ -5,6 +5,8 @@ import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
 import Button from '../../components/button'
 
+axios.defaults.withCredentials = true;
+
 export default function SignIn() {
   const navigate = useNavigate()
   const [form, setForm] = useState({
@@ -16,7 +18,7 @@ export default function SignIn() {
 
   const submit = () => {
     axios
-      .post('http://localhost:3000/api/v1/employer/login/', form)
+      .post('http://localhost:3000/api/v1/employer/login/', form, {withCredentials: true})
       .then((response) => {
         const employerId = response.data?.user._id
         navigate(`/employer/${employerId}/profile`)

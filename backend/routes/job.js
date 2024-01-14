@@ -4,18 +4,17 @@ import * as jobController from '../controllers/jobController.js';
 
 const router = express.Router();
 const {
-    postJob,
-    getJob,
-    getJobs,
-    deleteJob,
-    updateJob,
-    searchJobs
+  postJob,
+  getJobs,
+  deleteJob,
+  updateJob,
+  searchJobs
 } = jobController;
 
 // post a job
 router.route('/jobs').post(isAuthenticated, postJob);
 
-// get jobs 
+// get jobs
 router.route('/jobs').get(isAuthenticated, getJobs);
 
 // get a job usng id
