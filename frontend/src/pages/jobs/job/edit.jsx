@@ -64,7 +64,9 @@ export default function EditJob() {
   return (
     <Layout companyName={user.companyName}>
       <div className='flex flex-col lg:gap-10 gap-5 w-full text-center'>
-        <Text size='xl'>Edit Job: {job._id}</Text>
+        <Text size='xl'>
+          Edit Job: <span className='break-words'>{job._id}</span>
+        </Text>
 
         <form
           onSubmit={postJob}
