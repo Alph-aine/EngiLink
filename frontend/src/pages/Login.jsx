@@ -11,7 +11,7 @@ import Button from "../components/Button/Button"
 const Login = () => {
   const [error, setError] = useState(false)
   const [authError, setAuthError] = useState(false)
-  const { setSharedToken } = useContext(AuthContext) // Destructure setSharedToken from the AuthContext using useContext
+  // const { setSharedToken } = useContext(AuthContext) // Destructure setSharedToken from the AuthContext using useContext
   const [buttonText, setButtonText] = useState("Log In")
 
   const navigate = useNavigate()
@@ -48,11 +48,11 @@ const Login = () => {
         console.log(token)
 
         // set token in app wide token state value and navigate to home page
-        setSharedToken(token)
+        // setSharedToken(token)
         
         toast.success('You have logged in')
         console.log('Navigated to Home page')
-        navigate('/discover')
+        navigate('/engineer/discover')
       }
       catch (error) {
         setAuthError(true)
@@ -69,7 +69,7 @@ const Login = () => {
   return (
     <>
       <div className={css(styles.loginWrapper)}>
-        <h2>Login to your account</h2>
+        <h2 className={css(styles.formTitle)}>Login to your account</h2>
         <form className={css(styles.form)} onSubmit={loginEngineer}>
           <div className={css(styles.formInputs)}>
             { error && <span className={css(styles.error)}>Please fill in all your details to continue.</span> }
@@ -85,8 +85,7 @@ const Login = () => {
             <Button text={buttonText} type="submit" />
           </div>
         </form>
-        <span>Don't have an account? <Link to='/register'>Sign up</Link> </span>
-        <button type="button" onClick={showToast}>Get</button>
+        <span>Don't have an account? <Link to='/engineer/register'>Sign up</Link> </span>
       </div>
       <ToastContainer />
     </>
@@ -107,6 +106,12 @@ const styles = StyleSheet.create({
     padding: '2em 2em',
     backgroundColor: '#fff',
     boxShadow: '0 3px 3px 0 rgba(0,0,0,0.1)'
+  },
+
+  formTitle: {
+    marginBottom: '1em',
+    fontWeight: 'bold',
+    fontSize: '1.3em'
   },
 
   form: {

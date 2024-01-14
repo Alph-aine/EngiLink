@@ -1,5 +1,5 @@
 import { StyleSheet, css } from "aphrodite"
-import { AuthContext } from "../../auth/AppContext"
+// import { AuthContext } from "../../auth/AppContext"
 import { useContext } from "react"
 import axios from 'axios'
 import image from '/engineers.jpg'
@@ -8,18 +8,19 @@ import LandingNav from "../components/LandingNav/LandingNav"
 
 const Home = () => {
 
-  const { sharedToken } = useContext(AuthContext)
+  // const { sharedToken } = useContext(AuthContext)
 
   const getProfile = async () => {
     try {
       const url = 'http://localhost:3000/api/v1/engineer/me'
-      console.log(`token=${sharedToken}`)
+      // console.log(`token=${sharedToken}`)
 
       const response = await axios.get(url, {
         withCredentials: true
       })
       console.log(response.data)
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error.response.data)
     }
   }

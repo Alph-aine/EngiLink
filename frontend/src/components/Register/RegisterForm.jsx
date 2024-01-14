@@ -85,18 +85,18 @@ const RegisterForm = ({ onStepChange, formData, handleInputChange }) => {
 
   return (
     <div className={css(styles.loginWrapper)}>
-      <h2>Login to your account</h2>
+      <h2 className={css(styles.formTitle)}>Login to your account</h2>
       <form className={css(styles.form)}>
         <div className={css(styles.formInputs)}>
           { errorData.error && <span className={css(styles.error)}>Please fill in all your details to continue.</span> }
           { errorData.authError && <span className={css(styles.error)}>Something went wrong! Please check your details and try again :(</span> }
           {/* Firstname */}
-          <div className={css(styles.formInput, styles.rowInput)}>
+          <div className={css(styles.rowInput)}>
             <label className={css(styles.label)} htmlFor="firstname">Firstname</label>
             <input className={css(styles.input)} type="text" name="firstname" value={formData.firstName} onChange={handleInputChange} />
           </div>
           {/* Surname */}
-          <div className={css(styles.formInput, styles.rowInput)}>
+          <div className={css(styles.rowInput)}>
             <label className={css(styles.label)} htmlFor="">Surname</label>
             <input className={css(styles.input)} type="text" name="surname" value={formData.lastName} onChange={handleInputChange} />
           </div>
@@ -135,7 +135,7 @@ const RegisterForm = ({ onStepChange, formData, handleInputChange }) => {
             onClick={nextSection}>Continue</button>
         </div>
       </form>
-      <span>Already have an account? <Link to='/login'>Log in</Link> </span>
+      <span>Already have an account? <Link to='/engineer/login'>Log in</Link> </span>
     </div>
   )
 }
@@ -153,22 +153,28 @@ const styles = StyleSheet.create({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '20%',
+    // width: '30%',
     minWidth: '25rem',
     padding: '2em 2em',
     backgroundColor: '#fff',
-    boxShadow: '0 3px 3px 0 rgba(0,0,0,0.1)'
+    boxShadow: '0 3px 3px 0 rgba(0,0,0,0.1)',
   },
 
   form: {
-    marginBottom: '1em'
+    marginBottom: '1em',
+  },
+
+  formTitle: {
+    marginBottom: '1em',
+    fontWeight: 'bold',
+    fontSize: '1.3em'
   },
 
   formInputs: {
     display: 'grid',
     // flexDirection: 'column',
     gridTemplateColumns: '1fr 1fr',
-    gap: '1em'
+    gap: '0.6em',
   },
 
   formInput: {
@@ -184,7 +190,8 @@ const styles = StyleSheet.create({
   },
 
   rowInput: {
-    gridColumn: 'auto / auto'
+    display: 'flex',
+    flexDirection: 'column',
   },
 
   input: {

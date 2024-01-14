@@ -5,7 +5,7 @@ import ExperienceSection from "../components/Experience/ExperienceSection"
 import CertificationsSection from "../components/Register/CertificationsSection"
 import EducationSection from "../components/Register/EducationSection"
 
-const Register = ({ setAuth }) => {
+const Register = () => {
   const [step, setStep] = useState(1)
 
   const changeStep = change => setStep(currentStep => currentStep + change)
