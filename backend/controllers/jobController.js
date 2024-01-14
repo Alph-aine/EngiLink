@@ -135,10 +135,12 @@ export const searchJobs = asyncErrors(async (req, res, next) => {
   } catch (error) {
     next(new ErrorHandler(error.message, 500));
   }
+})
 
 // Update job controller
 export const updateJob = asyncErrors(async (req, res, next) => {
-  try {
+    try {
+	req.user.role = 'employer';
     const jobId = req.params.id;
     const job = await Job.findById(jobId);
     if (!job) {
