@@ -35,11 +35,12 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
 		    maxSalary,
 		    location,
 		    postedAt,
-		    deadline
+		    deadline,
+        employer: req.user
       });
 
-      // Assign the employer field to the newJob instance
-      newJob.employer = req.user;
+      // // Assign the employer field to the newJob instance
+      // newJob.employer = req.user;
 
       await newJob.save();
       res.status(201).json(newJob);
@@ -134,7 +135,6 @@ export const searchJobs = asyncErrors(async (req, res, next) => {
   } catch (error) {
     next(new ErrorHandler(error.message, 500));
   }
-});
 
 // Update job controller
 export const updateJob = asyncErrors(async (req, res, next) => {
