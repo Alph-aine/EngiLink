@@ -3,7 +3,7 @@ import axios from 'axios'
 import { IoLocationOutline, IoTrashBinOutline } from 'react-icons/io5'
 import Text from '../../../components/text'
 import Layout from '../../../components/layout'
-import { BsCurrencyDollar } from 'react-icons/bs'
+import { BsBriefcase, BsCurrencyDollar } from 'react-icons/bs'
 import { RiEditBoxLine, RiUserSettingsLine } from 'react-icons/ri'
 import Button from '../../../components/button'
 import { formatMoney, formatTimeAgo } from '../../../lib/utils'
@@ -42,7 +42,7 @@ export default function Job() {
       .delete(`http://localhost:3000/api/v1/jobs/${job._id}`, {
         withCredentials: true,
       })
-      .then(() => navigate( `/employer/${user._id}/jobs`, { replace: true }))
+      .then(() => navigate(`/employer/${user._id}/jobs`, { replace: true }))
       .catch(() => console.log('error deleting acct'))
       .finally(() => setDeleting(false))
   }
@@ -51,7 +51,11 @@ export default function Job() {
     <Layout companyName={user.companyName}>
       <div className='flex flex-col w-full'>
         <div className='flex md:justify-start justify-center items-center gap-4'>
-          <Button onClick={() => navigate(`/employer/${user._id}/jobs/${job._id}/edit`)}>
+          <Button
+            onClick={() =>
+              navigate(`/employer/${user._id}/jobs/${job._id}/edit`)
+            }
+          >
             <span className='flex gap-2 justify-center items-center'>
               <RiEditBoxLine className='text-lg text-white' />
               <Text size='sm' white>
@@ -108,13 +112,14 @@ export default function Job() {
                 </Text>
               </div>
             </div>
-          </div>
-          <div className='md:py-16 py-8 border-b border-bg-primary/40'>
-            <div className='flex items-center gap-3'>
-              <b>
-                <Text size='sm'>Employment Type:</Text>
-              </b>
-              <Text size='md'>{job.employmentType}</Text>
+            <div className='flex gap-3 items-start'>
+              <BsBriefcase className='text-3xl text-bg-primary' />
+              <div className='flex flex-col items-start gap-1'>
+                <Text size='lg'>{job.employmentType}</Text>
+                <Text size='sm' faded>
+                  Employment
+                </Text>
+              </div>
             </div>
           </div>
           <div className='md:py-16 py-8'>
