@@ -15,7 +15,7 @@ export const proposalLoader = async ({ params }) => {
 
     proposal = res.data?.proposal
   } catch (e) {
-    console.log('Error loading data')
+    console.log('An error occurred while loading proposal data')
   }
 
   if (!proposal)
