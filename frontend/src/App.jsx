@@ -11,6 +11,7 @@ import Proposal, { proposalLoader } from './pages/proposals/proposal'
 import Lander from './pages/lander'
 import Jobs, { jobsLoader } from './pages/jobs/page'
 import Job, { jobLoader } from './pages/jobs/job/page'
+import EditJob, { jobEditLoader } from './pages/jobs/job/edit'
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
     path: 'employer/:employerId/jobs/:jobId',
     loader: jobLoader,
     element: <Job />,
+  },
+  {
+    path: 'employer/:employerId/jobs/:jobId/edit',
+    loader: jobEditLoader,
+    element: <EditJob />,
   },
   {
     path: 'employer/:employerId/jobs/:jobId/proposals',
