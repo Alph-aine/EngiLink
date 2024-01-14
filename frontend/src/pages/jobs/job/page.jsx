@@ -30,7 +30,7 @@ export const jobLoader = async ({ params }) => {
 }
 
 export default function Job() {
-  const {job, user} = useLoaderData()
+  const { job, user } = useLoaderData()
 
   return (
     <Layout companyName={user.companyName}>
@@ -107,7 +107,10 @@ export default function Job() {
               <Text size='lg'>Skills and Expertise</Text>
               <div className='flex flex-wrap justify-start items-center gap-4'>
                 {job.skillsRequired.split(',').map((skill) => (
-                  <div key={skill} className='shrink-0 md:px-4 px-3 md:py-2 py-1 rounded-md bg-bg-secondary text-black'>
+                  <div
+                    key={skill}
+                    className='shrink-0 md:px-4 px-3 md:py-2 py-1 rounded-md bg-bg-secondary text-black'
+                  >
                     <Text size='sm'>{skill}</Text>
                   </div>
                 ))}
