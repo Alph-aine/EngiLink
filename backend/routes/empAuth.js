@@ -13,7 +13,8 @@ const {
   updatePassword,
   getEmployerById,
   getEmployerByCompanyName,
-  deleteEmployerAccount
+  deleteEmployerAccount,
+  getAllJobs
 } = authController;
 
 // Register employer
@@ -41,5 +42,8 @@ router.route('/employer/id/:id').delete(isAuthenticated, deleteEmployerAccount);
 
 // get employer by companyName
 router.route('/employer/company/:companyName').get(isAuthenticated, getEmployerByCompanyName);
+
+// get all jobs posted by an employer
+router.route('/employer/:id/jobs').get(isAuthenticated, getAllJobs);
 
 export default router;

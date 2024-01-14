@@ -1,23 +1,56 @@
-import Button from '../../components/button'
-import Input from '../../components/input'
-import Layout from '../../components/layout'
-import Text from '../../components/text'
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
+import Button from '../../../components/button'
+import Input from '../../../components/input'
+import Layout from '../../../components/layout'
+import Text from '../../../components/text'
+import { useState } from 'react'
 
 export default function CreateJob() {
+  const { employerId } = useParams()
+  const [skills, setSkills] = useState(['Engineer'])
+  const [newSkill, setNewSkill] = useState('Engineer')
+
+  const formDataToJSON = (formData) => {
+    const obj = {}
+    for (const [key, value] of formData.entries()) {
+      obj[key] = value
+    }
+    return obj
+  }
+
+  const postJob = (e) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.currentTarget)
+    const jsonData = formDataToJSON(formData)
+    const postedAt = new Date()
+
+    jsonData['skillsRequired'] = skills.join(', ')
+    jsonData['postedAt'] = postedAt
+
+    axios
+      .post('http://localhost:3000/api/v1/jobs/', jsonData, {
+        withCredentials: true,
+      })
+      .then(() => navigate(`/employer/${employerId}/jobs`))
+      .catch(() => console.error('An error occured'))
+  }
+
   return (
     <Layout>
       <div className='flex flex-col lg:gap-10 gap-5 w-full text-center'>
         <Text size='xl'>Create A Job</Text>
 
         <form
-          onSubmit={() => console.log('Job created!')}
+          onSubmit={postJob}
           className='flex flex-col gap-7 lg:px-20 px-0 py-10'
         >
           <div className='flex flex-col gap-2 text-left'>
             <Text size='sm' faded>
               Title
             </Text>
-            <Input type='text' name='title' placeholder='Title' />
+            <Input type='text' name='title' placeholder='Title' required />
           </div>
 
           <div className='flex flex-col gap-2 text-left'>
@@ -26,8 +59,10 @@ export default function CreateJob() {
             </Text>
             <textarea
               rows={4}
+              name='description'
               className='block w-full px-4 py-2 md:text-base text-sm border border-primary/40 rounded-lg focus:outline-none focus:border-2 focus:border-primary'
               placeholder='Description'
+              required
             />
           </div>
 
@@ -35,11 +70,38 @@ export default function CreateJob() {
             <Text size='sm' faded>
               Skills Required
             </Text>
-            <Input
-              type='text'
-              name='skillsRequired'
-              placeholder='Skills Required'
-            />
+            <div className='flex justify-start items-center gap-2 flex-wrap'>
+              {skills.map((skill) => (
+                <div
+                  key={skill}
+                  className='md:px-4 px-3 md:py-2 py-1 rounded-md border border-bg-primary/40 bg-white text-black'
+                >
+                  <Text size='sm'>{skill}</Text>
+                </div>
+              ))}
+            </div>
+            <div className='flex items-center gap-2'>
+              <Input
+                type='text'
+                id='addSkill'
+                value={newSkill}
+                onChange={(e) => setNewSkill(e.target.value)}
+                placeholder='Skills Required'
+                required
+              />
+              <Button
+                onClick={() => {
+                  const newList = [
+                    ...skills.filter((item) => item !== newSkill),
+                    newSkill,
+                  ]
+                  setNewSkill('Engineer')
+                  setSkills(newList)
+                }}
+              >
+                Add
+              </Button>
+            </div>
           </div>
           <div className='flex flex-col gap-2 text-left'>
             <Text size='sm' faded>
@@ -52,10 +114,10 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='xp'
+                  name='experienceLevel'
                   id='entry Level'
-                  value='entry Level'
-                  defaultValue={true}
+                  value='Entry Level'
+                  defaultChecked
                 />
                 <Text size='sm'>Entry Level</Text>
               </label>
@@ -65,9 +127,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='xp'
+                  name='experienceLevel'
                   id='mid Level'
-                  value='mid Level'
+                  value='Mid Level'
                 />
                 <Text size='sm'>Mid Level</Text>
               </label>
@@ -77,9 +139,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='xp'
+                  name='experienceLevel'
                   id='senior Level'
-                  value='senior Level'
+                  value='Senior Level'
                 />
                 <Text size='sm'>Senior Level</Text>
               </label>
@@ -96,10 +158,10 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='full time'
-                  value='full time'
-                  defaultValue={true}
+                  value='Full Time'
+                  defaultChecked
                 />
                 <Text size='sm'>Full Time</Text>
               </label>
@@ -109,9 +171,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='part time'
-                  value='part time'
+                  value='Part Time'
                 />
                 <Text size='sm'>Part Time</Text>
               </label>
@@ -121,9 +183,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='contract'
-                  value='contract'
+                  value='Contract'
                 />
                 <Text size='sm'>Contract</Text>
               </label>
@@ -133,9 +195,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='internship'
-                  value='internship'
+                  value='Internship'
                 />
                 <Text size='sm'>Internship</Text>
               </label>
@@ -145,9 +207,9 @@ export default function CreateJob() {
               >
                 <input
                   type='radio'
-                  name='employment'
+                  name='employmentType'
                   id='remote'
-                  value='remote'
+                  value='Remote'
                 />
                 <Text size='sm'>Remote</Text>
               </label>
@@ -168,9 +230,11 @@ export default function CreateJob() {
                 <div className='flex justify-center items-center gap-1'>
                   <Text size='sm'>$</Text>
                   <Input
+                    type='number'
                     name='minSalary'
                     id='minSalary'
                     placeholder='eg: 500'
+                    required
                   />
                 </div>
               </label>
@@ -189,9 +253,11 @@ export default function CreateJob() {
                 <div className='flex justify-center items-center gap-1'>
                   <Text size='sm'>$</Text>
                   <Input
+                    type='number'
                     name='maxSalary'
                     id='maxSalary'
                     placeholder='eg: 500'
+                    required
                   />
                 </div>
               </label>
@@ -201,13 +267,23 @@ export default function CreateJob() {
             <Text size='sm' faded>
               Location
             </Text>
-            <Input type='text' name='location' placeholder='Location' />
+            <Input
+              type='text'
+              name='location'
+              placeholder='Location'
+              required
+            />
           </div>
           <div className='flex flex-col gap-2 text-left'>
             <Text size='sm' faded>
               Deadline
             </Text>
-            <Input type='date' name='location' placeholder='Location' />
+            <Input
+              type='date'
+              name='location'
+              placeholder='Location'
+              required
+            />
           </div>
           <Button type='submit' cx='bg-primary md:w-fit w-full mx-auto mt-10'>
             Post Job

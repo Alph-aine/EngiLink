@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-// import Landing from './pages/Landing'
+import Landing from './pages/Landing'
 import SignIn from './pages/auth/signin'
 import SignUp from './pages/auth/signup'
 import ForgotPassword from './pages/auth/forgotpsw'
@@ -7,8 +7,11 @@ import UpdatePassword from './pages/auth/updatepsw'
 import Profile, { profileLoader } from './pages/profile/page'
 import EditProfile from './pages/profile/edit'
 import Proposals, { proposalsLoader } from './pages/proposals/page'
-import CreateJob from './pages/job/create'
+import CreateJob from './pages/jobs/job/create'
 import Proposal, { proposalLoader } from './pages/proposals/proposal'
+import Lander from './pages/lander'
+import Jobs, { jobsLoader } from './pages/jobs/page'
+import Job from './pages/jobs/job/page'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
@@ -17,7 +20,7 @@ import Discover from './pages/Discover'
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <Lander />,
   },
   {
     path: 'employer/auth/signin',
@@ -45,16 +48,25 @@ const router = createBrowserRouter([
     element: <EditProfile />,
   },
   {
-    path: 'employer/:employerId/job/create',
+    path: 'employer/:employerId/jobs/',
+    loader: jobsLoader,
+    element: <Jobs />,
+  },
+  {
+    path: 'employer/:employerId/jobs/create',
     element: <CreateJob />,
   },
   {
-    path: 'employer/:employerId/job/:jobId/proposals',
+    path: 'employer/:employerId/jobs/:jobId',
+    element: <Job />,
+  },
+  {
+    path: 'employer/:employerId/jobs/:jobId/proposals',
     loader: proposalsLoader,
     element: <Proposals />,
   },
   {
-    path: 'employer/:employerId/job/:jobId/proposals/proposal/:proposalId',
+    path: 'employer/:employerId/jobs/:jobId/proposals/:proposalId',
     loader: proposalLoader,
     element: <Proposal />,
   },

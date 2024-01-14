@@ -1,27 +1,25 @@
 import mongoose from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
+
 // set various values for enum used later on in the model
 const enumExperienceLevel = {
-  ENTRY_LEVEL: 'Entry Level',
-  MID_LEVEL: 'Mid Level',
-  SENIOR_LEVEL: 'Senior Level'
+    ENTRY_LEVEL: 'Entry Level',
+    MID_LEVEL: 'Mid Level',
+    SENIOR_LEVEL: 'Senior Level'
 };
 
 const enumEmploymentType = {
-  FULL_TIME: 'Full Time',
-  PART_TIME: 'Part Time',
-  CONTRACT: 'Contract',
-  INTERNSHIP: 'Internship',
-  REMOTE: 'Remote'
+    FULL_TIME: 'Full Time',
+    PART_TIME: 'Part Time',
+    CONTRACT: 'Contract',
+    INTERNSHIP: 'Internship',
+    REMOTE: 'Remote'
 };
 
 /**
  * Job Model
  */
 const jobSchema = new mongoose.Schema({
-    _id: {
-	type: String,
-	default: uuidv4() },
+<<<<<<< HEAD
     title: {
 	type: String,
 	required: true },
@@ -34,13 +32,12 @@ const jobSchema = new mongoose.Schema({
     experienceLevel: {
 	type: String,
 	enum: Object.values(enumExperienceLevel)
-  },
+    },
     employmentType: {
 	type: String,
 	enum: Object.values(enumEmploymentType)
     },
 
-  // I made a change here, using min and max salary and changed type to Number
     minSalary: {
 	type: Number,
 	required: true },
@@ -50,11 +47,51 @@ const jobSchema = new mongoose.Schema({
     location: String,
     postedAt: { type: Date, default: Date.now },
     deadline: Date,
-
-    // added employer, applications(from applicants for each job
     employer: {
 	type: mongoose.Schema.Types.ObjectId,
 	ref: "Employer" },
+=======
+  // removed _id as it is set by default
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  skillsRequired: {
+    type: String,
+    required: true
+  },
+  experienceLevel: {
+    type: String,
+    enum: Object.values(enumExperienceLevel)
+  },
+  employmentType: {
+    type: String,
+    enum: Object.values(enumEmploymentType)
+  },
+
+  // I made a change here, using min and max salary and changed type to Number
+  minSalary: {
+    type: Number,
+    required: true
+  },
+  maxSalary: {
+    type: Number,
+    required: true
+  },
+  location: String,
+  postedAt: { type: Date, default: Date.now },
+  deadline: Date,
+
+  // added employer, applications(from applicants for each job
+  employer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Employer'
+  }
+>>>>>>> 5125f2fa4e7d279495b52ef76894f5eb0bbd9f2f
 });
 
 const Job = mongoose.model('Job', jobSchema);

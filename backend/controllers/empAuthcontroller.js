@@ -196,3 +196,20 @@ export const deleteEmployerAccount = asyncErrors(async (req, res, next) => {
     message: 'Account deleted successfully'
   });
 });
+
+// get all jobs posted by employer
+export const getAllJobs = asyncErrors(async (req, res, next) => {
+  try {
+    const employer = await Employer.findById(req.params.id).populate('jobPosted');
+    if (!employer) {
+      return next(new ErrorHandler('Employer not found', 404));
+    }
+    const jobsPosted = employer.jobPosted;
+    res.status(200).json({
+      success: true,
+      jobsPosted
+    });
+  } catch (err) {
+    next(new ErrorHandler(err.message, 400));
+  }
+});
