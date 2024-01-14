@@ -34,8 +34,7 @@ export default function EditJob() {
   const navigate = useNavigate()
   const [skills, setSkills] = useState(job.skillsRequired.split(', '))
   const [newSkill, setNewSkill] = useState('Engineer')
-  console.log('Deadline: ', job.deadline)
-  const deadline = new Date(job.deadline).toISOString().substring(0, 10)
+  const deadline = job.deadline ? new Date(job.deadline).toISOString().substring(0, 10) : new Date()
 
   const formDataToJSON = (formData) => {
     const obj = {}
@@ -326,7 +325,7 @@ export default function EditJob() {
               type='date'
               name='deadline'
               placeholder='Deadline'
-              value={deadline}
+              defaultValue={deadline}
               required
             />
           </div>

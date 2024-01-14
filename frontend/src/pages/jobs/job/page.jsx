@@ -3,7 +3,7 @@ import axios from 'axios'
 import { IoLocationOutline, IoTrashBinOutline } from 'react-icons/io5'
 import Text from '../../../components/text'
 import Layout from '../../../components/layout'
-import { BsBriefcase, BsCurrencyDollar } from 'react-icons/bs'
+import { BsBriefcase, BsCurrencyDollar, BsHourglass } from 'react-icons/bs'
 import { RiEditBoxLine, RiUserSettingsLine } from 'react-icons/ri'
 import Button from '../../../components/button'
 import { formatMoney, formatTimeAgo } from '../../../lib/utils'
@@ -118,6 +118,15 @@ export default function Job() {
                 <Text size='lg'>{job.employmentType}</Text>
                 <Text size='sm' faded>
                   Employment
+                </Text>
+              </div>
+            </div>
+            <div className='flex gap-3 items-start'>
+              <BsHourglass className='text-3xl text-bg-primary' />
+              <div className='flex flex-col items-start gap-1'>
+                <Text size='lg'>{newDate(job.dealine).toLocaleString()}</Text>
+                <Text size='sm' faded>
+                  Deadline
                 </Text>
               </div>
             </div>
