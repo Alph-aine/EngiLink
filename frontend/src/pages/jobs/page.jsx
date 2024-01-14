@@ -13,12 +13,9 @@ export const jobsLoader = async ({ params }) => {
   let jobs = null
 
   try {
-    const res = await axios.get(
-      `http://localhost:3000/api/v1/jobs`,
-      {
-        withCredentials: true,
-      }
-    )
+    const res = await axios.get(`http://localhost:3000/api/v1/jobs`, {
+      withCredentials: true,
+    })
 
     jobs = res.data
   } catch (e) {
@@ -26,7 +23,7 @@ export const jobsLoader = async ({ params }) => {
   }
 
   if (!jobs) return redirect(`/employer/${employerId}/profile`)
-  return { jobs: jobs.filter(job => job.employer === user._id), user }
+  return { jobs: jobs.filter((job) => job.employer === user._id), user }
 }
 
 export default function Jobs() {
