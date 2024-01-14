@@ -7,6 +7,7 @@ import { BsCurrencyDollar } from 'react-icons/bs'
 import { RiEditBoxLine, RiUserSettingsLine } from 'react-icons/ri'
 import Button from '../../../components/button'
 import { formatMoney, formatTimeAgo } from '../../../lib/utils'
+import { getLoggedInEmployer } from '../../../lib/auth'
 
 export const jobLoader = async ({ params }) => {
   const { employerId, jobId } = params
@@ -16,24 +17,23 @@ export const jobLoader = async ({ params }) => {
   let job = null
 
   try {
-    const res = await axios.get(`http://localhost:3000/api/v1/job/${jobId}`, {
+    const res = await axios.get(`http://localhost:3000/api/v1/jobs/${jobId}`, {
       withCredentials: true,
     })
-
     job = res.data
   } catch (e) {
     console.log('Error loading data')
   }
 
-  if (!job) return redirect(`/employer/${employerId}/profile`)
+  if (!job) return redirect(`/employer/${employerId}/jobs`)
   return { job, user }
 }
 
 export default function Job() {
-  const job = useLoaderData()
+  const {job, user} = useLoaderData()
 
   return (
-    <Layout>
+    <Layout companyName={user.companyName}>
       <div className='flex flex-col w-full'>
         <div className='flex md:justify-start justify-center items-center gap-4'>
           <Button>
@@ -89,7 +89,7 @@ export default function Job() {
               <div className='flex flex-col items-start gap-1'>
                 <Text size='lg'>{job.experienceLevel}</Text>
                 <Text size='sm' faded>
-                  Level
+                  Experience
                 </Text>
               </div>
             </div>
@@ -97,33 +97,20 @@ export default function Job() {
           <div className='md:py-16 py-8 border-b border-bg-primary/40'>
             <div className='flex items-center gap-3'>
               <b>
-                <Text size='sm'>Project Type:</Text>
+                <Text size='sm'>Employment Type:</Text>
               </b>
               <Text size='md'>{job.employmentType}</Text>
             </div>
           </div>
-          <div className='md:py-16 py-8 border-b border-bg-primary/40'>
+          <div className='md:py-16 py-8'>
             <div className='flex flex-col items-start gap-3'>
               <Text size='lg'>Skills and Expertise</Text>
               <div className='flex flex-wrap justify-start items-center gap-4'>
                 {job.skillsRequired.split(',').map((skill) => (
-                  <div className='shrink-0 md:px-4 px-3 md:py-2 py-1 rounded-md bg-bg-secondary text-black'>
+                  <div key={skill} className='shrink-0 md:px-4 px-3 md:py-2 py-1 rounded-md bg-bg-secondary text-black'>
                     <Text size='sm'>{skill}</Text>
                   </div>
                 ))}
-              </div>
-            </div>
-          </div>
-          <div className='md:py-16 py-8 border-b border-bg-primary/40'>
-            <div className='flex flex-col items-start gap-3'>
-              <Text size='lg'>Activity on this job</Text>
-              <div className='flex flex-col w-full gap-4'>
-                <div className='flex items-center gap-3'>
-                  <b>
-                    <Text size='sm'>Proposals:</Text>
-                  </b>
-                  <Text size='md'>0</Text>
-                </div>
               </div>
             </div>
           </div>
