@@ -99,8 +99,9 @@ export const getProposal = asyncErrors(async (req, res, next) => {
     }
 });
 
-export const YNProposal = asyncErrors(async (req, res, next) => {
+export const changeProposalStatus = asyncErrors(async (req, res, next) => {
     try {
+	req.user.role = 'employer';
 	const proposalId = req.params.id;
 	const proposal = await Proposal.findById(proposalId);
 
@@ -116,9 +117,27 @@ export const YNProposal = asyncErrors(async (req, res, next) => {
 	    proposal.status = status;
 	    await proposal.save()
 	} else {
-	    return res.status(403).send('Permission denied to view this proposal');
+	    return res.status(403).send('Permission denied to change the status of this proposal');
 	}
     } catch (error) {
 	next(new ErrorHandler(error.message, 500));
     }
+});
+
+//get applications by an engineer
+export const myProposals = asyncErrors(async (req, res, next) => {
+    try {
+	req.user.role === 'engineer';
+	if (req.user.role === 'engineer') {
+	    const proposals = await Proposal.find({engineer: req.user.id });
+	    if (proposals.length === 0) {
+	    res.send('You have not posted any proposals.yet');
+	} else {
+	    return res.json(proposals);}
+    } else {
+	return res.status(403).send('Permission denied to list proposals, you are not an Engineer');
+    }
+    } catch (error) {
+      next(new ErrorHandler(error.message, 500));
+  }
 });

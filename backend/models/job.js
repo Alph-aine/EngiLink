@@ -37,7 +37,6 @@ const jobSchema = new mongoose.Schema({
 	enum: Object.values(enumEmploymentType)
     },
 
-    // I made a change here, using min and max salary and changed type to Number
     minSalary: {
 	type: Number,
 	required: true },
@@ -47,8 +46,6 @@ const jobSchema = new mongoose.Schema({
     location: String,
     postedAt: { type: Date, default: Date.now },
     deadline: Date,
-
-    // added employer, applications(from applicants for each job
     employer: {
 	type: mongoose.Schema.Types.ObjectId,
 	ref: "Employer" },
