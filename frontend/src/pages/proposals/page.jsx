@@ -71,7 +71,7 @@ export default function Proposals() {
         <div className='flex flex-col gap-24'>
           {loadingProposals ? (
             <div className='flex justify-center items-center'>
-              <Text size='md'>Loading Proposals</Text>
+              <Text size='sm'>Loading Proposals. Please wait...</Text>
             </div>
           ) : (
             <div className='flex flex-col gap-10'>
