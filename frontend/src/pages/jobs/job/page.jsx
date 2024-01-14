@@ -38,12 +38,12 @@ export default function Job() {
     setDeleting(true)
 
     axios
-    .delete(`http://localhost:3000/api/v1/jobs/${job._id}`, {
-      withCredentials: true,
-    })
-    .then(() => navigate('/employer/auth/signup', { replace: true }))
-    .catch(() => console.log('error deleting acct'))
-    .finally(() => setDeleting(false))
+      .delete(`http://localhost:3000/api/v1/jobs/${job._id}`, {
+        withCredentials: true,
+      })
+      .then(() => navigate('/employer/auth/signup', { replace: true }))
+      .catch(() => console.log('error deleting acct'))
+      .finally(() => setDeleting(false))
   }
 
   return (
