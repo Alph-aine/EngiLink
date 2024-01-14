@@ -31,6 +31,7 @@ export const jobLoader = async ({ params }) => {
 }
 
 export default function Job() {
+  const navigate = useNavigate()
   const { job, user } = useLoaderData()
   const [deleting, setDeleting] = useState(false)
 
@@ -50,7 +51,7 @@ export default function Job() {
     <Layout companyName={user.companyName}>
       <div className='flex flex-col w-full'>
         <div className='flex md:justify-start justify-center items-center gap-4'>
-          <Button>
+          <Button onClick={() => navigate(`/employer/${user._id}/jobs/${job._id}/edit`)}>
             <span className='flex gap-2 justify-center items-center'>
               <RiEditBoxLine className='text-lg text-white' />
               <Text size='sm' white>
