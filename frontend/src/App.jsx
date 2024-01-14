@@ -1,36 +1,59 @@
-import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { AuthProvider } from '../auth/AppContext'
-import Header from './components/Header/Header'
-import Register from './pages/Register'
-import Login from './pages/Login'
-import Discover from './pages/Discover'
-import Home from './pages/Home'
-import SkillsSection from './components/Register/SkillsSection'
-import ProtectedRoute from '../auth/ProtectedRoute'
+import { createBrowserRouter } from 'react-router-dom'
+import Landing from './pages/Landing'
+import SignIn from './pages/auth/signin'
+import SignUp from './pages/auth/signup'
+import ForgotPassword from './pages/auth/forgotpsw'
+import UpdatePassword from './pages/auth/updatepsw'
+import Profile, { profileLoader } from './pages/profile/page'
+import EditProfile from './pages/profile/edit'
+import Proposals, { proposalsLoader } from './pages/proposals/page'
+import CreateJob from './pages/job/create'
+import Proposal, { proposalLoader } from './pages/proposals/proposal'
 
-const App = () => {
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Landing />,
+  },
+  {
+    path: 'employer/auth/signin',
+    element: <SignIn />,
+  },
+  {
+    path: 'employer/auth/signup',
+    element: <SignUp />,
+  },
+  {
+    path: 'employer/auth/forgotpassword',
+    element: <ForgotPassword />,
+  },
+  {
+    path: 'employer/auth/updatepassword',
+    element: <UpdatePassword />,
+  },
+  {
+    path: 'employer/:employerId/profile',
+    loader: profileLoader,
+    element: <Profile />,
+  },
+  {
+    path: 'employer/:employerId/profile/edit',
+    element: <EditProfile />,
+  },
+  {
+    path: 'employer/:employerId/job/create',
+    element: <CreateJob />,
+  },
+  {
+    path: 'employer/:employerId/job/:jobId/proposals',
+    loader: proposalsLoader,
+    element: <Proposals />,
+  },
+  {
+    path: 'employer/:employerId/job/:jobId/proposals/proposal/:proposalId',
+    loader: proposalLoader,
+    element: <Proposal />,
+  },
+])
 
-  return (
-    <AuthProvider>
-      <div>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login />} />
-            <Route exact path='/' element={<Home />} />
-            <Route exact path='/discover' element={<Discover />} />
-            <Route exact path='/skills' element={
-              <ProtectedRoute>
-                <SkillsSection />
-              </ProtectedRoute>
-            } />
-          </Routes>
-        </Router>
-      </div>
-    </AuthProvider>
-  )
-}
-
-export default App
+export default router

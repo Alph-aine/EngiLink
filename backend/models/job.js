@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
-
 // set various values for enum used later on in the model
 const enumExperienceLevel = {
   ENTRY_LEVEL: 'Entry Level',
@@ -20,22 +19,42 @@ const enumEmploymentType = {
  * Job Model
  */
 const jobSchema = new mongoose.Schema({
-  _id: { type: String, default: uuidv4() },
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  skillsRequired: { type: String, required: true },
-  experienceLevel: {
-    type: String,
-    enum: Object.values(enumExperienceLevel)
+    _id: {
+	type: String,
+	default: uuidv4() },
+    title: {
+	type: String,
+	required: true },
+    description: {
+	type: String,
+	required: true },
+    skillsRequired: {
+	type: String,
+	required: true },
+    experienceLevel: {
+	type: String,
+	enum: Object.values(enumExperienceLevel)
   },
-  employmentType: {
-    type: String,
-    enum: Object.values(enumEmploymentType)
-  },
-  salaryRange: { type: String, required: true },
-  location: String,
-  postedAt: { type: Date, default: Date.now },
-  deadline: Date
+    employmentType: {
+	type: String,
+	enum: Object.values(enumEmploymentType)
+    },
+
+  // I made a change here, using min and max salary and changed type to Number
+    minSalary: {
+	type: Number,
+	required: true },
+    maxSalary: {
+	type: Number,
+	required: true },
+    location: String,
+    postedAt: { type: Date, default: Date.now },
+    deadline: Date,
+
+    // added employer, applications(from applicants for each job
+    employer: {
+	type: mongoose.Schema.Types.ObjectId,
+	ref: "Employer" },
 });
 
 const Job = mongoose.model('Job', jobSchema);
