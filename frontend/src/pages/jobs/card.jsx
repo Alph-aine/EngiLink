@@ -1,6 +1,7 @@
 import { IoLocationOutline } from 'react-icons/io5'
 import Text from '../../components/text'
 import { formatMoney, formatTimeAgo } from '../../lib/utils'
+import { BsCurrencyDollar } from 'react-icons/bs'
 
 export default function JobCard({ job }) {
   return (
@@ -10,9 +11,10 @@ export default function JobCard({ job }) {
       </Text>
       <Text size='lg'>{job.title}</Text>
       <div className='flex justify-start items-center gap-5'>
-        <Text size='sm'>
-          Salary: {formatMoney(job.minSalary)} - {formatMoney(job.maxSalary)}
-        </Text>
+        <div className='flex justify-start items-center gap-1'>
+          <BsCurrencyDollar className='text-xl text-black/40' />
+          <Text size='sm'>{formatMoney(job.minSalary)} - {formatMoney(job.maxSalary)}</Text>
+        </div>
         <div className='flex justify-start items-center gap-1'>
           <IoLocationOutline className='text-xl text-black/40' />
           <Text size='sm'>{job.location}</Text>
