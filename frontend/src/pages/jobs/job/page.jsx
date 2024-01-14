@@ -124,7 +124,7 @@ export default function Job() {
             <div className='flex gap-3 items-start'>
               <BsHourglass className='text-3xl text-bg-primary' />
               <div className='flex flex-col items-start gap-1'>
-                <Text size='lg'>{newDate(job.dealine).toLocaleString()}</Text>
+                <Text size='lg'>{newDate(job.deadline).toLocaleString()}</Text>
                 <Text size='sm' faded>
                   Deadline
                 </Text>
