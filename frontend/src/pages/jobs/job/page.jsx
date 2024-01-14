@@ -79,8 +79,8 @@ export default function Job() {
             </Text>
             <div className='flex items-center gap-8'>
               <Text size='sm'>Posted {formatTimeAgo(job.postedAt)}</Text>
-              <div className='flex items-center gap-2'>
-                <IoLocationOutline className='text-xl text-black/60' />
+              <div className='flex items-center gap-1'>
+                <IoLocationOutline className='md:text-lg text-base text-black/60' />
                 <Text size='sm'>{job.location}</Text>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function Job() {
             <div className='flex gap-3 items-start'>
               <BsHourglass className='text-3xl text-bg-primary' />
               <div className='flex flex-col items-start gap-1'>
-                <Text size='lg'>{newDate(job.deadline).toLocaleString()}</Text>
+                <Text size='lg'>{new Date(job.deadline).toLocaleString()}</Text>
                 <Text size='sm' faded>
                   Deadline
                 </Text>
