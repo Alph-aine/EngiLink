@@ -42,7 +42,7 @@ export default function Job() {
       .delete(`http://localhost:3000/api/v1/jobs/${job._id}`, {
         withCredentials: true,
       })
-      .then(() => navigate('/employer/auth/signup', { replace: true }))
+      .then(() => navigate( `/employer/${user._id}/jobs`, { replace: true }))
       .catch(() => console.log('error deleting acct'))
       .finally(() => setDeleting(false))
   }
