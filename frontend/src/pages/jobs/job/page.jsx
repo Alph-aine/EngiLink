@@ -8,6 +8,7 @@ import { RiEditBoxLine, RiUserSettingsLine } from 'react-icons/ri'
 import Button from '../../../components/button'
 import { formatMoney, formatTimeAgo } from '../../../lib/utils'
 import { getLoggedInEmployer } from '../../../lib/auth'
+import { useState } from 'react'
 
 export const jobLoader = async ({ params }) => {
   const { employerId, jobId } = params
@@ -31,6 +32,19 @@ export const jobLoader = async ({ params }) => {
 
 export default function Job() {
   const { job, user } = useLoaderData()
+  const [deleting, setDeleting] = useState(false)
+
+  const deleteJob = () => {
+    setDeleting(true)
+
+    axios
+    .delete(`http://localhost:3000/api/v1/jobs/${job._id}`, {
+      withCredentials: true,
+    })
+    .then(() => navigate('/employer/auth/signup', { replace: true }))
+    .catch(() => console.log('error deleting acct'))
+    .finally(() => setDeleting(false))
+  }
 
   return (
     <Layout companyName={user.companyName}>
@@ -44,11 +58,11 @@ export default function Job() {
               </Text>
             </span>
           </Button>
-          <Button cx='bg-red-500'>
+          <Button cx='bg-red-500' onClick={deleteJob}>
             <span className='flex gap-2 justify-center items-center'>
               <IoTrashBinOutline className='text-lg text-white' />
               <Text size='sm' white>
-                Delete
+                {deleting ? 'Deleting' : 'Delete'}
               </Text>
             </span>
           </Button>
