@@ -34,7 +34,7 @@ export default function Jobs() {
       {jobs.length > 0 ? (
         <div className='flex flex-col'>
           {jobs.map((job) => (
-            <Link to={`/empolyer/${user._id}/jobs/${job._id}`}>
+            <Link to={`/employer/${user._id}/jobs/${job._id}`}>
               <JobCard key={job._id} job={job} />
             </Link>
           ))}
