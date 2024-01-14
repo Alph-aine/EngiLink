@@ -5,15 +5,6 @@ import ErrorHandler from '../utils/errorHandler.js';
 
 // apply for jobs
 export const applyJob = asyncErrors(async (req, res, next) => {
-<<<<<<< HEAD
-    try {
-	const jobId = req.params.id;
-	const job = await Job.findById(jobId);
-	if (!job) {
-	    return res.status(404).send('Jo0b not found');
-	}
-	const existingApplication = await Proposal.findOne({ job: jobId, engineer: req.user.id });
-=======
   try {
     const jobId = req.params.id;
     const job = await Job.findById(jobId);
@@ -23,7 +14,6 @@ export const applyJob = asyncErrors(async (req, res, next) => {
     }
 
     const existingApplication = await Proposal.findOne({ job: jobId, engineer: req.user.id });
->>>>>>> 5125f2fa4e7d279495b52ef76894f5eb0bbd9f2f
 
 	if (existingApplication) {
 	return next(new ErrorHandler('You have already applied to this job', 400));
