@@ -31,7 +31,7 @@ export const proposalsLoader = async ({ params }) => {
 }
 
 export default function Proposals() {
-  const {jobs, user} = useLoaderData()
+  const { jobs, user } = useLoaderData()
   const [selectedJob, setSelectedJob] = useState(jobs[0]._id)
   const [proposals, setProposals] = useState([])
   const [loadingProposals, setLoadingProposals] = useState(true)
@@ -39,12 +39,13 @@ export default function Proposals() {
   useEffect(() => {
     setLoadingProposals(true)
 
-    axios.get(
-      `http://localhost:3000/api/v1/job/${selectedJob}/proposals`,
-      {
+    axios
+      .get(`http://localhost:3000/api/v1/job/${selectedJob}/proposals`, {
         withCredentials: true,
-      }
-    ).then((res) => setProposals(res.data)).catch(() => console.log('An error occurred while loading proposals')).finally(() => setLoadingProposals(false))
+      })
+      .then((res) => setProposals(res.data))
+      .catch(() => console.log('An error occurred while loading proposals'))
+      .finally(() => setLoadingProposals(false))
   }, [selectedJob])
 
   return (
@@ -56,16 +57,15 @@ export default function Proposals() {
             title='Choose from your posted jobs'
             initialActive={selectedJob}
           >
-            {
-              jobs.map(job => (
-                <DropItem
+            {jobs.map((job) => (
+              <DropItem
                 key={job._Id}
-                  value={job._id}
-                  onClick={() => setSelectedJob(job._id)}
-                >
-                  {job.title}
-                </DropItem>))
-            }
+                value={job._id}
+                onClick={() => setSelectedJob(job._id)}
+              >
+                {job.title}
+              </DropItem>
+            ))}
           </DropDown>
         </div>
         <div className='flex flex-col gap-24'>
@@ -74,9 +74,17 @@ export default function Proposals() {
               <Text size='md'>Loading Proposals</Text>
             </div>
           ) : (
-          <div className='flex flex-col gap-10'>
-            {proposals.map(proposal => (<Link key={proposal._id} to={`/employer/{user._Id}/jobs/${selectedJob}/proposal/${proposal._id}`}><ProposalCard /></Link>))}
-          </div>)}
+            <div className='flex flex-col gap-10'>
+              {proposals.map((proposal) => (
+                <Link
+                  key={proposal._id}
+                  to={`/employer/{user._Id}/jobs/${selectedJob}/proposal/${proposal._id}`}
+                >
+                  <ProposalCard />
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Layout>
