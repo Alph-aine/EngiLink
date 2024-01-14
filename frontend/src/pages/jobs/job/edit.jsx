@@ -14,7 +14,7 @@ export const jobEditLoader = async ({ params }) => {
   if (user._id !== employerId)
     return redirect(`/employer/${user._id}/jobs/create`)
 
-    let job = null
+  let job = null
 
   try {
     const res = await axios.get(`http://localhost:3000/api/v1/jobs/${jobId}`, {
@@ -30,7 +30,7 @@ export const jobEditLoader = async ({ params }) => {
 }
 
 export default function EditJob() {
-  const {job, user} = useLoaderData()
+  const { job, user } = useLoaderData()
   const navigate = useNavigate()
   const [skills, setSkills] = useState(job.skillsRequired.split(', '))
   const [newSkill, setNewSkill] = useState('Engineer')
@@ -74,7 +74,13 @@ export default function EditJob() {
             <Text size='sm' faded>
               Title
             </Text>
-            <Input type='text' name='title' placeholder='Title' defaultValue={job.title} required />
+            <Input
+              type='text'
+              name='title'
+              placeholder='Title'
+              defaultValue={job.title}
+              required
+            />
           </div>
 
           <div className='flex flex-col gap-2 text-left'>
