@@ -12,6 +12,11 @@ const proposalSchema = new mongoose.Schema({
     coverLetter: { type: String,
 		   required: true },
     price: { type: Number },
+    status: {
+        type: String,
+        enum: ['pending', 'accepted', 'rejected'],
+        default: 'pending'
+    }
 });
 
 const Proposal = mongoose.model('Proposal', proposalSchema);

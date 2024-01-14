@@ -2,26 +2,23 @@ import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 // set various values for enum used later on in the model
 const enumExperienceLevel = {
-  ENTRY_LEVEL: 'Entry Level',
-  MID_LEVEL: 'Mid Level',
-  SENIOR_LEVEL: 'Senior Level'
+    ENTRY_LEVEL: 'Entry Level',
+    MID_LEVEL: 'Mid Level',
+    SENIOR_LEVEL: 'Senior Level'
 };
 
 const enumEmploymentType = {
-  FULL_TIME: 'Full Time',
-  PART_TIME: 'Part Time',
-  CONTRACT: 'Contract',
-  INTERNSHIP: 'Internship',
-  REMOTE: 'Remote'
+    FULL_TIME: 'Full Time',
+    PART_TIME: 'Part Time',
+    CONTRACT: 'Contract',
+    INTERNSHIP: 'Internship',
+    REMOTE: 'Remote'
 };
 
 /**
  * Job Model
  */
 const jobSchema = new mongoose.Schema({
-    _id: {
-	type: String,
-	default: uuidv4() },
     title: {
 	type: String,
 	required: true },
@@ -34,13 +31,13 @@ const jobSchema = new mongoose.Schema({
     experienceLevel: {
 	type: String,
 	enum: Object.values(enumExperienceLevel)
-  },
+    },
     employmentType: {
 	type: String,
 	enum: Object.values(enumEmploymentType)
     },
 
-  // I made a change here, using min and max salary and changed type to Number
+    // I made a change here, using min and max salary and changed type to Number
     minSalary: {
 	type: Number,
 	required: true },

@@ -133,7 +133,12 @@ export const searchJobs = asyncErrors(async (req, res, next) => {
         if (employer) filter.employer = new RegExp(employer, 'i');
 
         const jobs = await Job.find(filter);
-        res.json(jobs);
+	console.log(jobs);
+	if (jobs.length === 0) {
+	    res.status(404).send('No matching job found')
+	} else {
+	    res.json(jobs);
+	}
     } catch (error) {
         next(new ErrorHandler(error.message, 500));
     }

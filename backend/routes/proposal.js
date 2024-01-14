@@ -11,14 +11,14 @@ const {
 } = proposalController;
 
 // Apply for a job
-router.route('/job/:id/apply').post(isAuthenticated, applyJob);
+router.route('/jobs/:id/apply').post(isAuthenticated, applyJob);
 
 // get proposals for a job
-router.route('/job/:id/proposals').get(isAuthenticated, getProposals);
+router.route('/jobs/:id/proposals').get(isAuthenticated, getProposals);
 
 // get a specific proposal
-router.route('/proposal/:id').get(isAuthenticated, getProposal);
+router.route('/proposals/:id').get(isAuthenticated, getProposal);
 
 // delete a job based on id
-router.route('/proposal/:id').delete(isAuthenticated, deleteProposal);
+router.route('/proposals/:id').delete(isAuthenticated, deleteProposal);
 export default router;

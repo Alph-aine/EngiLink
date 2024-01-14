@@ -28,6 +28,6 @@ router.route('/jobs/:id').delete(isAuthenticated, deleteJob);
 router.route('/jobs/:id').put(isAuthenticated, updateJob);
 
 // search for jibs using filters (search query)
-router.route('/jobs/search').get(isAuthenticated, searchJobs);
+router.route('/search').get(isAuthenticated, searchJobs);
 
 export default router;
