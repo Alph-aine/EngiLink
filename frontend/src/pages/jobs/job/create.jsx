@@ -6,6 +6,7 @@ import Layout from '../../../components/layout'
 import Text from '../../../components/text'
 import { useState } from 'react'
 import { getLoggedInEmployer } from '../../../lib/auth'
+import { formDataToJSON } from '../../../lib/utils'
 
 export const jobCreateLoader = async ({ params }) => {
   const { employerId } = params
@@ -22,14 +23,6 @@ export default function CreateJob() {
   const navigate = useNavigate()
   const [skills, setSkills] = useState(['Engineer'])
   const [newSkill, setNewSkill] = useState('Engineer')
-
-  const formDataToJSON = (formData) => {
-    const obj = {}
-    for (const [key, value] of formData.entries()) {
-      obj[key] = value
-    }
-    return obj
-  }
 
   const postJob = (e) => {
     e.preventDefault()

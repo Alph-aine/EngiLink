@@ -29,3 +29,11 @@ export function formatMoney(number, dp = 0) {
 
   return formatter.format(number)
 }
+
+export const formDataToJSON = (formData) => {
+  const obj = {}
+  for (const [key, value] of formData.entries()) {
+    obj[key] = value
+  }
+  return obj
+}

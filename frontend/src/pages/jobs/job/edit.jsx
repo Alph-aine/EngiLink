@@ -6,6 +6,7 @@ import Layout from '../../../components/layout'
 import Text from '../../../components/text'
 import { useState } from 'react'
 import { getLoggedInEmployer } from '../../../lib/auth'
+import { formDataToJSON } from '../../../lib/utils'
 
 export const jobEditLoader = async ({ params }) => {
   const { employerId, jobId } = params
@@ -35,14 +36,6 @@ export default function EditJob() {
   const [skills, setSkills] = useState(job.skillsRequired.split(', '))
   const [newSkill, setNewSkill] = useState('Engineer')
   const deadline = job.deadline ? new Date(job.deadline).toISOString().substring(0, 10) : new Date()
-
-  const formDataToJSON = (formData) => {
-    const obj = {}
-    for (const [key, value] of formData.entries()) {
-      obj[key] = value
-    }
-    return obj
-  }
 
   const postJob = (e) => {
     e.preventDefault()
