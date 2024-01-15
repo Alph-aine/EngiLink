@@ -10,6 +10,7 @@ import { formatMoney, formatTimeAgo } from '../../../lib/utils'
 import { getLoggedInEmployer } from '../../../lib/auth'
 import { useState } from 'react'
 import useNotification from '../../../hooks/usenotification'
+import Notification from '../../../components/notification'
 
 export const jobLoader = async ({ params }) => {
   const { employerId, jobId } = params
