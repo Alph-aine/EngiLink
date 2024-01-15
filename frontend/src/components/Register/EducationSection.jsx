@@ -51,7 +51,7 @@ const EducationSection = ({ formData, handleInputChange, onChangeDegree }) => {
       
       toast.success('You have successfully created an account.')
       console.log('Navigated to Home page')
-      navigate('/engineer/discover')
+      navigate('/engineer/profile')
     }
     catch (error) {
       setAuthError(true)

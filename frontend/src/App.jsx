@@ -17,6 +17,7 @@ import Register from './pages/Register'
 import Home from './pages/Home'
 import Discover from './pages/Discover'
 import EngineerProfile from './pages/EngineerProfile'
+import EditEngineerProfile from './pages/EditEngineerProfile'
 
 const router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
   {
     path: 'engineer/profile',
     element: <EngineerProfile />,
+  },
+  {
+    path: 'engineer/profile/edit',
+    element: <EditEngineerProfile />,
   },
 ])
 

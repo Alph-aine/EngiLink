@@ -52,7 +52,7 @@ const Login = () => {
         
         toast.success('You have logged in')
         console.log('Navigated to Home page')
-        navigate('/engineer/discover')
+        navigate('/engineer/profile')
       }
       catch (error) {
         setAuthError(true)
