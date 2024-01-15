@@ -6,7 +6,7 @@ import { RiUserSettingsLine } from 'react-icons/ri'
 
 export default function JobCard({ job }) {
   return (
-    <div className='flex flex-col gap-5 w-full overflow-hidden py-12 border-b last:border-none border-bg-primary/40'>
+    <div className='flex flex-col gap-5 w-full overflow-hidden'>
       <Text size='xs' faded>
         posted {formatTimeAgo(job.postedAt)}
       </Text>
