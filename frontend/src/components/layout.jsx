@@ -91,13 +91,13 @@ export default function Layout({ companyName, children }) {
               Post a job
             </Button>
             <span className='lg:block hidden border border-bg-secondary self-stretch' />
-            <div className='shrink-0 flex justify-end items-center gap-2'>
+            <div className='shrink-0 flex justify-end items-center gap-2 cursor-pointer group' onClick={() => navigate(`/employer/${employerId}/profile`)}>
               <div className='shrink-0 flex justify-center items-center w-8 h-8 bg-black rounded-full'>
                 <Text size='sm' white>
                   {companyName?.[0] ?? 'EN'}
                 </Text>
               </div>
-              <span className='lg:block hidden'>
+              <span className='lg:block hidden group-hover:bg-primary/60'>
                 <Text size='sm' white>
                   {companyName}
                 </Text>
