@@ -30,7 +30,7 @@ export default function Layout({ companyName, children }) {
         }`}
         onClick={() => setIsNavOpen((prev) => !prev)}
       />
-      <header className='relative bg-primary md:px-8 px-4 py-5 w-full'>
+      <header className='z-40 relative bg-primary md:px-8 px-4 py-5 w-full'>
         <div className='flex justify-between items-center gap-5'>
           <span className=''>
             <Text size='lg' white>
