@@ -33,7 +33,7 @@ const employerSchema = new mongoose.Schema({
   // role is to assign level of authorization
   role: {
     type: String,
-    default: 'user'
+    default: 'employer'
   },
   website: String,
   location: {
