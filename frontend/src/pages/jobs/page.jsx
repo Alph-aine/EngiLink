@@ -1,4 +1,4 @@
-import { redirect, useLoaderData, Link, useNavigate } from 'react-router-dom'
+import { redirect, useLoaderData, Link } from 'react-router-dom'
 import axios from 'axios'
 import Layout from '../../components/layout'
 import { getLoggedInEmployer } from '../../lib/auth'
