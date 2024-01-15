@@ -37,7 +37,7 @@ export default function Proposal() {
     proposal: { job, coverLetter, price },
     user,
   } = useLoaderData()
-  const { notifications, removeNotif, addNotif } = useNotification()
+  const { notifications, removeNotif } = useNotification()
 
   return (
     <Layout companyName={user.companyName}>
