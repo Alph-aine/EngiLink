@@ -48,7 +48,7 @@ export default function Job() {
     setDeleting(true)
 
     axios
-      .delete(`http://localhost:3000/api/v1/jobs/${job._id}`, {
+      .delete(`https://engilink.vercel.app/api/v1/jobs/${job._id}`, {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/${user._id}/jobs`, { replace: true }))
