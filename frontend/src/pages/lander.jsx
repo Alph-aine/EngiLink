@@ -86,7 +86,7 @@ export default function Lander() {
           </div>
         </div>
       </header>
-      <main className='grow w-full'>
+      <main className='grow w-full bg-white'>
         <div
           className={`w-full bg-[url('/imgs/team.jpg')] bg-cover bg-no-repeat bg-center bg-blend-darken`}
         >
