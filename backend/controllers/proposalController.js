@@ -5,19 +5,19 @@ import ErrorHandler from '../utils/errorHandler.js';
 
 // apply for jobs
 export const applyJob = asyncErrors(async (req, res, next) => {
-  try {
-    const jobId = req.params.id;
-    const job = await Job.findById(jobId);
+    try {
+	const jobId = req.params.id;
+	const job = await Job.findById(jobId);
 
-    if (!job) {
-      return res.status(404).send('Job not found');
-    }
+	if (!job) {
+	    return res.status(404).send('Job not found');
+	}
 
-    const existingApplication = await Proposal.findOne({ job: jobId, engineer: req.user.id });
+	const existingApplication = await Proposal.findOne({ job: jobId, engineer: req.user.id });
 
 	if (existingApplication) {
-	return next(new ErrorHandler('You have already applied to this job', 400));
-	    }
+	    return next(new ErrorHandler('You have already applied to this job', 400));
+	}
 	if (req.user.role === 'engineer') {
 	    const { coverLetter, price } = req.body;
 	    const proposal = new Proposal({
@@ -35,27 +35,6 @@ export const applyJob = asyncErrors(async (req, res, next) => {
     } catch (error) {
 	next(new ErrorHandler(error.message, 500));
     }
-<<<<<<< HEAD
-=======
-
-    if (req.user.role === 'engineer') {
-      const { coverLetter, price } = req.body;
-      const proposal = new Proposal({
-        job: jobId,
-        engineer: req.user.id,
-        coverLetter,
-        price
-      });
-
-      await proposal.save();
-      return res.status(201).json(proposal);
-    } else {
-      return res.status(403).send('Permission denied to apply for the job');
-    }
-  } catch (error) {
-    next(new ErrorHandler(error.message, 500));
-  }
->>>>>>> 5125f2fa4e7d279495b52ef76894f5eb0bbd9f2f
 });
 
 // Delete a proposal
@@ -67,23 +46,16 @@ export const deleteProposal = asyncErrors(async (req, res, next) => {
 	if (!proposal) {
 	return res.status(404).send('Proposal not found');
     }
-<<<<<<< HEAD
-	
-	if (req.user.role === 'engineer' && req.user.id == proposal.engineer.toString()) {
-	await proposal.deleteOne();
-	return res.status(201).send('Proposal deleted successfully');
-=======
 
-    if (req.user.role === 'engineer' && req.user.id === proposal.engineer.toString()) {
-      await proposal.deleteOne();
-      return res.status(204).send('Proposal deleted successfully');
->>>>>>> 5125f2fa4e7d279495b52ef76894f5eb0bbd9f2f
-    } else {
-	return res.status(403).send('Permission denied to delete proposal');
+	if (req.user.role === 'engineer' && req.user.id === proposal.engineer.toString()) {
+	    await proposal.deleteOne();
+	    return res.status(204).send('Proposal deleted successfully');
+	} else {
+	    return res.status(403).send('Permission denied to delete proposal');
+	}
+    } catch (error) {
+	next(new ErrorHandler(error.message, 500));
     }
-  } catch (error) {
-      next(new ErrorHandler(error.message, 500));
-  }
 });
 
 // get applications for a job
