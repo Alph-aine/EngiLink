@@ -60,8 +60,8 @@ export default function useNotification(message, signal) {
   useEffect(() => {
     const [initNotifications, initTimeOutIds] = init()
 
-    setNotifications(prev => [...prev, ...initNotifications])
-    setTimeoutIds(prev => [...prev, initTimeOutIds])
+    setNotifications((prev) => [...prev, ...initNotifications])
+    setTimeoutIds((prev) => [...prev, initTimeOutIds])
   }, [message, signal])
 
   return {
