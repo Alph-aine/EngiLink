@@ -1,5 +1,4 @@
 import { redirect, useLoaderData, Link } from 'react-router-dom'
-import axios from 'axios'
 import Layout from '../../components/layout'
 import { getLoggedInEmployer } from '../../lib/auth'
 import JobCard from './card'
