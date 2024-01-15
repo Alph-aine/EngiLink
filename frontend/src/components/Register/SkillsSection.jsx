@@ -27,21 +27,21 @@ const SkillsSection = ({ onStepChange, formData, onSaveExperience, onRemoveExper
   }
 
   const nextSection = () => {
-    if (formData.experiences.length === 0) {
+    if (formData.skills.length === 0) {
       setInputError(true)
       return
     }
-    // onSaveExperience(experiences)
+    // onSaveExperience(skills)
     onStepChange(1)
   }
 
   return (
     <div className={css(styles.skillsSection)}>
       <h2>Your skills</h2>
-      <label className={css(styles.label)} htmlFor="experience">List your experiences, enter a comma or press the Enter key to enter a new one</label>
+      <label className={css(styles.label)} htmlFor="experience">List your skills, enter a comma or press the Enter key to enter a new one</label>
       <div className={css(styles.skillsWrapper)} style={{border: inputError ? '1px solid red': '2px solid #2a5468'}}>
         <Skills
-          skillsList={formData.experiences}
+          skillsList={formData.skills}
           onRemoveExperience={removeExperienceHandler}
         />
         <input 
@@ -52,7 +52,7 @@ const SkillsSection = ({ onStepChange, formData, onSaveExperience, onRemoveExper
           onChange={handleSkillInput}
           onKeyDown={handleNewExperience} />
       </div>
-      { inputError && <span className={css(styles.error)}>Please provide your list of experiences.</span> }
+      { inputError && <span className={css(styles.error)}>Please provide your list of skills.</span> }
       
       <div className={css(styles.btnWrapper)}>
         <button

@@ -46,9 +46,6 @@ const Login = () => {
         
         const { token } = response.data
         console.log(token)
-
-        
-
         // set token in app wide token state value and navigate to home page
         // setSharedToken(token)
         

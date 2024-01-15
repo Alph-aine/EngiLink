@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
 
   highlight: {
     backgroundColor: 'var(--grey-white)',
-    backgroundColor: '#e5def0',
     borderRadius: '5px',
     color: 'var(--blue-gray)',
     padding: '0.3em',
