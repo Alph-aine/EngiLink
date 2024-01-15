@@ -17,12 +17,12 @@ const JobCard = ({ job }) => {
 
 const styles = StyleSheet.create({
   jobCard: {
-    border: '1px solid #7c3aed',
+    border: '1px solid var(--complimentary-green)',
     borderRadius: '5px',
     margin: '2em 0',
     padding: '1em',
-    backgroundColor: '#e2e2e2',
-    borderBottom: '5px solid #7c3aed',
+    backgroundColor: 'var(--card-bg)',
+    borderBottom: '7px solid var(--complimentary-green)',
   },
 
   jobTitle: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
 
   apply: {
-    backgroundColor: '#7c3aed',
+    backgroundColor: 'var(--complimentary-green)',
     border: 'none',
     borderRadius: '5px',
     color: 'white',

@@ -36,7 +36,7 @@ const FilterPane = ({ location, employmentType, experienceLevel, filterTypes, ha
 
 const styles = StyleSheet.create({
   filter: {
-    border: '1px solid #7c3aed',
+    border: '1px solid var(--complimentary-green)',
     borderRadius: '5px',
     margin: '2em 0',
     padding: '1em',
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
 
   resetFilter: {
-    backgroundColor: '#7c3aed',
+    backgroundColor: 'var(--complimentary-green)',
     border: 'none',
     borderRadius: '5px',
     color: 'white',

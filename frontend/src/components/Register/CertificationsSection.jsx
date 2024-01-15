@@ -36,7 +36,7 @@ const CertificationsSection = ({ onStepChange, formData, onSaveCertification, on
 
   return (
     <div className={css(styles.certificationsSection)}>
-      <h2>Your certifications</h2>
+      <h2 className={css(styles.title)}>Your certifications</h2>
       <label className={css(styles.label)} htmlFor="experience">Enter your certifications, press Enter, or use a comma to add a new one.</label>
       <div className={css(styles.certWrapper)} style={{border: inputError ? '1px solid red': '2px solid #2a5468'}}>
         <Skills
@@ -76,6 +76,12 @@ const CertificationsSection = ({ onStepChange, formData, onSaveCertification, on
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontWeight: 'bold',
+    fontFamily: 'var(--main-font)',
+    marginBottom: '1em',
+  },
+  
   error: {
     color: 'red',
     fontSize: '0.75rem'

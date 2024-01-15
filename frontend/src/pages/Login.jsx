@@ -1,12 +1,13 @@
+import axios from 'axios'
+import Button from "../components/Button/Button"
+import Cookies from 'js-cookie';
 import { StyleSheet, css } from "aphrodite"
-import { useContext, useState } from "react"
+import { useState, useEffect } from "react"
 import { AuthContext } from "../../auth/AppContext"
 import { Link } from "react-router-dom" 
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css'
-import axios from 'axios'
-import Button from "../components/Button/Button"
 
 const Login = () => {
   const [error, setError] = useState(false)
@@ -64,6 +65,17 @@ const Login = () => {
     const showToast = () => {
       toast.error("Success Notification !");
     }
+
+    // If logged in already, redirect to home
+    useEffect(() => {
+      // Fetch the token from the cookie when the component mounts
+      const storedToken = Cookies.get('token');
+      console.log('storedToken')
+      console.log(storedToken)
+      if (storedToken) { // token exists redirect to discover page
+        navigate("/engineer/discover")
+      }
+    }, [])
 
   return (
     <div className={css(styles.login)}>
