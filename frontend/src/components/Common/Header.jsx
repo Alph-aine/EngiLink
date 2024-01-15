@@ -105,6 +105,15 @@ const Header = () => {
               >
                 Discover Employers
               </Button>
+              {isLoggedIn && (
+                <Button
+                  cx='bg-bg-secondary w-full'
+                  onClick={() => navigate('/engineer/profile')}
+                  textBlack
+                >
+                  Profile
+                </Button>
+              )}
               <Button
                 cx='bg-bg-secondary w-full'
                 onClick={logout}
@@ -130,6 +139,15 @@ const Header = () => {
               >
                 Discover Employers
               </Button>
+              {isLoggedIn && (
+                <Button
+                  cx='bg-bg-secondary'
+                  onClick={() => navigate('/engineer/profile')}
+                  textBlack
+                >
+                  Profile
+                </Button>
+              )}
               <Button
                 cx='bg-bg-secondary'
                 onClick={logout}

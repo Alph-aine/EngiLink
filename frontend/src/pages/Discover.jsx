@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react"
 import { StyleSheet, css } from "aphrodite"
 import JobCard from "../components/Jobs/JobCard"
-import Header from "../components/Header/Header"
+import Header from "../components/Common/Header"
+import Footer from "../components/Common/Footer"
 import axios from 'axios' 
 import FilterPane from "../components/Jobs/FilterPane"
+import { useNavigate } from "react-router-dom"
+import Cookies from 'js-cookie';
 
 const Discover = () => {
-  
+  const navigate = useNavigate()
+
   const [jobs, setJobs] = useState([])
   const [filterJobs, setFilterJobs] = useState([])
 
@@ -55,6 +59,18 @@ const Discover = () => {
     fetchData()
   }, [])
 
+  // If not logged in, redirect to login page
+  useEffect(() => {
+    // Fetch the token from the cookie when the component mounts
+    const storedToken = Cookies.get('token');
+    console.log('storedToken')
+    console.log(storedToken)
+    if (!storedToken) {
+      toast.error('Please login to continue')
+      navigate("/engineer/auth/signin")
+    }
+  }, [])
+
   return (
     <>
       <Header />
@@ -79,6 +95,7 @@ const Discover = () => {
           />
         </div>
       </div>
+      <Footer />
     </>
   )
 }
@@ -97,7 +114,7 @@ const styles = StyleSheet.create({
   },
 
   discoverContent: {
-    border: '1px solid #7c3aed',
+    border: '1px solid var(--complimentary-green)',
     borderRadius: '5px',
     margin: '2em 0',
     padding: '1em 2em',
