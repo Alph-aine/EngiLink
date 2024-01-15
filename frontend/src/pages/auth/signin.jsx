@@ -1,15 +1,14 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
 import Button from '../../components/button'
 import Notification from '../../components/notification'
 
-axios.defaults.withCredentials = true;
-
 export default function SignIn() {
   const navigate = useNavigate()
+  const [params, setSearchParams] = useSearchParams()
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -19,18 +18,23 @@ export default function SignIn() {
 
   const submit = () => {
     axios
-      .post('http://localhost:3000/api/v1/employer/login/', form, {withCredentials: true})
+      .post('http://localhost:3000/api/v1/employer/login/', form, {
+        withCredentials: true,
+      })
       .then((response) => {
         const employerId = response.data?.user._id
         navigate(`/employer/${employerId}/profile`)
       })
-      .catch(() => console.error("An error occured"))
+      .catch((e) => setSearchParams({ msg: e.response.data.message, msgType: 'BAD' }))
   }
 
   return (
     <div className='grid xl:grid-cols-12 lg:grid-cols-10 gap-0 min-h-screen'>
       <div className='relative lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
-        <Notification message='This is a message' signal='TIP' />
+        <Notification
+          message={params.get('msg')}
+          signal={params.get('msgType')}
+        />
         <div className='grow flex flex-col justify-between md:items-start items-center gap-5 md:p-10 p-5'>
           <Text size='xl'>Sign in</Text>
           <div className='flex justify-start items-center gap-2'>

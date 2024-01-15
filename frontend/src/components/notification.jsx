@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Text from './text'
 
 const Notification = ({ message, signal }) => {
   const [notifications, setNotifications] = useState([])
@@ -11,9 +12,12 @@ const Notification = ({ message, signal }) => {
   useEffect(() => {
     // Add notification only if message is different from the last one
     if (
-      (!notifications.length && message) ||
-      notifications[notifications.length - 1].message !== message
-    ) {
+        message &&
+          signal &&
+          (!notifications.length ||
+            notifications[notifications.length - 1].message !== message)
+      )
+      {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
         { message, signal },
@@ -29,8 +33,6 @@ const Notification = ({ message, signal }) => {
 
     return () => clearTimeout(timeoutId) // Cleanup function to clear timeout when component unmounts
   }, [message, signal])
-
-  useEffect(() => {}, [notifications])
 
   const borderClasses = {
     TIP: 'border-yellow-500',
@@ -49,13 +51,13 @@ const Notification = ({ message, signal }) => {
       {notifications.map((notification, index) => (
         <div
           key={notification.message + index}
-          className={`flex justify-between items-center gap-3 p-4 w-full rounded-lg shadow-md bg-white border ${
+          className={`flex justify-between items-center gap-3 p-2 w-full rounded-lg shadow-md bg-white border ${
             borderClasses[notification.signal]
           }`}
         >
-          <span className={textClasses[notification.signal]}>
+          <Text size='sm'><span className={textClasses[notification.signal]}>
             {notification.message}
-          </span>
+          </span></Text>
           <button
             type='button'
             className='text-gray-400 hover:text-gray-500'
