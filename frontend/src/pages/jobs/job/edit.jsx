@@ -1,10 +1,5 @@
 import axios from 'axios'
-import {
-  useLoaderData,
-  redirect,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom'
+import { useLoaderData, redirect, useNavigate } from 'react-router-dom'
 import Button from '../../../components/button'
 import Input from '../../../components/input'
 import Layout from '../../../components/layout'
@@ -15,8 +10,8 @@ import { formDataToJSON } from '../../../lib/utils'
 import useNotification from '../../../hooks/usenotification'
 import Notification from '../../../components/notification'
 
-export const jobCreateLoader = async ({ params }) => {
-  const { employerId } = params
+export const jobEditLoader = async ({ params }) => {
+  const { employerId, jobId } = params
   const user = await getLoggedInEmployer()
   if (!user)
     return redirect(
@@ -29,19 +24,33 @@ export const jobCreateLoader = async ({ params }) => {
       }/jobs/create?msg=${'switched to logged in account'}msgType=${'MSG'}`
     )
 
-  return user
+  let job = null
+
+  try {
+    const res = await axios.get(`http://localhost:3000/api/v1/jobs/${jobId}`, {
+      withCredentials: true,
+    })
+    job = res.data
+  } catch (e) {
+    console.log('Error loading data')
+  }
+
+  if (!job)
+    return redirect(
+      `/employer/${employerId}/jobs?msg=${'Error loading job'}&msgType=${'BAD'}`
+    )
+  return { job, user }
 }
 
-export default function CreateJob() {
-  const user = useLoaderData()
+export default function EditJob() {
+  const { job, user } = useLoaderData()
   const navigate = useNavigate()
-  const [params, setSearchParams] = useSearchParams()
-  const { notifications, removeNotif, addNotif } = useNotification(
-    params.get('msg'),
-    params.get('msgType')
-  )
-  const [skills, setSkills] = useState(['Engineer'])
+  const { notifications, removeNotif, addNotif } = useNotification()
+  const [skills, setSkills] = useState(job.skillsRequired.split(', '))
   const [newSkill, setNewSkill] = useState('Engineer')
+  const deadline = job.deadline
+    ? new Date(job.deadline).toISOString().substring(0, 10)
+    : new Date()
 
   const postJob = (e) => {
     e.preventDefault()
@@ -54,16 +63,15 @@ export default function CreateJob() {
     jsonData['postedAt'] = postedAt
 
     axios
-      .post('http://localhost:3000/api/v1/jobs/', jsonData, {
+      .put(`http://localhost:3000/api/v1/jobs/${job._id}`, jsonData, {
         withCredentials: true,
       })
-      .then(() => navigate(`/employer/${user._id}/jobs`))
-      .catch(() => {
+      .then(() => navigate(`/employer/${user._id}/jobs/${job._id}`))
+      .catch((e) => {
         addNotif({
           message: e.response.data.message ?? e.response.statusText,
           signal: 'BAD',
         })
-        setSearchParams({ msg: e.response.data.message, msgType: 'BAD' })
       })
   }
 
@@ -71,7 +79,9 @@ export default function CreateJob() {
     <Layout companyName={user.companyName}>
       <Notification notifications={notifications} remove={removeNotif} />
       <div className='flex flex-col lg:gap-10 gap-5 w-full text-center'>
-        <Text size='xl'>Create A Job</Text>
+        <Text size='xl'>
+          Edit Job: <span className='break-words'>{job._id}</span>
+        </Text>
 
         <form
           onSubmit={postJob}
@@ -81,7 +91,13 @@ export default function CreateJob() {
             <Text size='sm' faded>
               Title
             </Text>
-            <Input type='text' name='title' placeholder='Title' required />
+            <Input
+              type='text'
+              name='title'
+              placeholder='Title'
+              defaultValue={job.title}
+              required
+            />
           </div>
 
           <div className='flex flex-col gap-2 text-left'>
@@ -93,6 +109,7 @@ export default function CreateJob() {
               name='description'
               className='block w-full px-4 py-2 md:text-base text-sm border border-primary/40 rounded-lg focus:outline-none focus:border-2 focus:border-primary'
               placeholder='Description'
+              defaultValue={job.description}
               required
             />
           </div>
@@ -148,7 +165,7 @@ export default function CreateJob() {
                   name='experienceLevel'
                   id='entry Level'
                   value='Entry Level'
-                  defaultChecked
+                  defaultChecked={job.experienceLevel === 'Entry Level'}
                 />
                 <Text size='sm'>Entry Level</Text>
               </label>
@@ -161,6 +178,7 @@ export default function CreateJob() {
                   name='experienceLevel'
                   id='mid Level'
                   value='Mid Level'
+                  defaultChecked={job.experienceLevel === 'Mid Level'}
                 />
                 <Text size='sm'>Mid Level</Text>
               </label>
@@ -173,6 +191,7 @@ export default function CreateJob() {
                   name='experienceLevel'
                   id='senior Level'
                   value='Senior Level'
+                  defaultChecked={job.experienceLevel === 'Senior Level'}
                 />
                 <Text size='sm'>Senior Level</Text>
               </label>
@@ -192,7 +211,7 @@ export default function CreateJob() {
                   name='employmentType'
                   id='full time'
                   value='Full Time'
-                  defaultChecked
+                  defaultChecked={job.employmentType === 'Full Time'}
                 />
                 <Text size='sm'>Full Time</Text>
               </label>
@@ -205,6 +224,7 @@ export default function CreateJob() {
                   name='employmentType'
                   id='part time'
                   value='Part Time'
+                  defaultChecked={job.employmentType === 'Part Time'}
                 />
                 <Text size='sm'>Part Time</Text>
               </label>
@@ -217,6 +237,7 @@ export default function CreateJob() {
                   name='employmentType'
                   id='contract'
                   value='Contract'
+                  defaultChecked={job.employmentType === 'Contract'}
                 />
                 <Text size='sm'>Contract</Text>
               </label>
@@ -229,6 +250,7 @@ export default function CreateJob() {
                   name='employmentType'
                   id='internship'
                   value='Internship'
+                  defaultChecked={job.employmentType === 'Internship'}
                 />
                 <Text size='sm'>Internship</Text>
               </label>
@@ -241,6 +263,7 @@ export default function CreateJob() {
                   name='employmentType'
                   id='remote'
                   value='Remote'
+                  defaultChecked={job.employmentType === 'Remote'}
                 />
                 <Text size='sm'>Remote</Text>
               </label>
@@ -265,6 +288,7 @@ export default function CreateJob() {
                     name='minSalary'
                     id='minSalary'
                     placeholder='eg: 500'
+                    defaultValue={job.minSalary}
                     required
                   />
                 </div>
@@ -288,6 +312,7 @@ export default function CreateJob() {
                     name='maxSalary'
                     id='maxSalary'
                     placeholder='eg: 500'
+                    defaultValue={job.maxSalary}
                     required
                   />
                 </div>
@@ -302,6 +327,7 @@ export default function CreateJob() {
               type='text'
               name='location'
               placeholder='Location'
+              defaultValue={job.location}
               required
             />
           </div>
@@ -313,11 +339,12 @@ export default function CreateJob() {
               type='date'
               name='deadline'
               placeholder='Deadline'
+              defaultValue={deadline}
               required
             />
           </div>
           <Button type='submit' cx='bg-primary md:w-fit w-full mx-auto mt-10'>
-            Post Job
+            Update Job
           </Button>
         </form>
       </div>

@@ -24,7 +24,13 @@ export default function Layout({ companyName, children }) {
 
   return (
     <div className='flex flex-col justify-start items-start w-full min-h-screen'>
-      <header className='relative bg-primary md:px-8 px-4 py-5 w-full'>
+      <div
+        className={`fixed inset-0 bg-black/10 ${
+          isNavOpen ? 'block' : 'hidden'
+        }`}
+        onClick={() => setIsNavOpen((prev) => !prev)}
+      />
+      <header className='z-40 relative bg-primary md:px-8 px-4 py-5 w-full'>
         <div className='flex justify-between items-center gap-5'>
           <span className=''>
             <Text size='lg' white>
@@ -100,7 +106,7 @@ export default function Layout({ companyName, children }) {
           </div>
         </div>
       </header>
-      <main className='grow w-full bg-white xl:px-32 md:px-8 px-4 py-10'>
+      <main className='grow relative w-full bg-white xl:px-32 md:px-8 px-4 py-10'>
         {children}
       </main>
       <footer className='bg-bg-primary w-full xl:px-32 lg:px-24 md:px-8 px-4'>

@@ -1,67 +1,108 @@
-import { redirect, useLoaderData } from 'react-router-dom'
+import {
+  Link,
+  redirect,
+  useLoaderData,
+  useSearchParams,
+} from 'react-router-dom'
 import axios from 'axios'
-import Button from '../../components/button'
 import Text from '../../components/text'
 import ProposalCard from './card'
 import DropDown, { DropItem } from '../../components/dropdown'
 import Layout from '../../components/layout'
+import { useEffect, useState } from 'react'
+import { getLoggedInEmployer } from '../../lib/auth'
+import { fetchEmployerJobs } from '../../lib/job'
+import useNotification from '../../hooks/usenotification'
+import Notification from '../../components/notification'
 
 export const proposalsLoader = async ({ params }) => {
-  let proposalsData = null
+  const { employerId } = params
 
-  try {
-    res = await axios.get(
-      `http://localhost:3000/api/v1/job/${params.jobId}/proposals`
+  const user = await getLoggedInEmployer()
+  if (!user)
+    return redirect(
+      `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
     )
 
-    proposalsData = res.data?.proposals
-  } catch (e) {
-    console.log('Error loading data')
-  }
+  const jobs = await fetchEmployerJobs(user._id)
+  if (!jobs)
+    return redirect(
+      `/employer/${employerId}/profile?msg=${'Error loading proposals'}&msgType=${'BAD'}`
+    )
 
-  if (!proposalsData) return redirect(`/employer/${params.employerId}/profile`)
-  return proposalsData
+  return { jobs, user }
 }
 
 export default function Proposals() {
-  const proposalsData = useLoaderData()
+  const { jobs, user } = useLoaderData()
+  const [params, setSearchParams] = useSearchParams()
+  const { notifications, removeNotif, addNotif } = useNotification(
+    params.get('msg'),
+    params.get('msgType')
+  )
+  const [selectedJob, setSelectedJob] = useState(jobs[0]._id)
+  const [proposals, setProposals] = useState([])
+  const [loadingProposals, setLoadingProposals] = useState(true)
+
+  useEffect(() => {
+    setLoadingProposals(true)
+
+    axios
+      .get(`http://localhost:3000/api/v1/jobs/${selectedJob}/proposals`, {
+        withCredentials: true,
+      })
+      .then((res) => setProposals(res.data))
+      .catch(() => {
+        addNotif({
+          message: e.response.data.message ?? e.response.statusText,
+          signal: 'BAD',
+        })
+      })
+      .finally(() => setLoadingProposals(false))
+  }, [selectedJob])
 
   return (
-    <Layout>
+    <Layout companyName={user.companyName}>
+      <Notification notifications={notifications} remove={removeNotif} />
       <div className='flex flex-col gap-20'>
         <div className='flex flex-col gap-3'>
           <Text size='md'>Select a Job</Text>
           <DropDown
             title='Choose from your posted jobs'
-            initialActive='Name (asc)'
+            initialActive={selectedJob}
           >
-            <DropItem
-              value='Name (asc)'
-              onClick={() => console.log('Selected a value')}
-            >
-              DRAW THE FOUNDATIONS PLAN OF A SEWAGE SYSTEM FOR A RURAL VILLAGE
-            </DropItem>
-            <DropItem
-              value='Name (desc)'
-              onClick={() => setSort('Name (desc)')}
-            >
-              JOIN A WELL SUPHISTICATED TEAM TO PRODUCE THE WORLD BEST
-              ELECTRONICS
-            </DropItem>
+            {jobs.map((job) => (
+              <DropItem
+                key={job._id}
+                value={job._id}
+                onClick={() => setSelectedJob(job._id)}
+              >
+                {job.title}
+              </DropItem>
+            ))}
           </DropDown>
         </div>
         <div className='flex flex-col gap-24'>
-          <div className='flex'>
-            <Text size='md' faded>
-              Filters
-            </Text>
-          </div>
-          <div className='flex flex-col gap-10'>
-            <ProposalCard />
-            <ProposalCard />
-            <ProposalCard />
-          </div>
-          <Button cx='bg-primary lg:w-fit w-full mx-auto '>LOAD MORE</Button>
+          {loadingProposals ? (
+            <div className='flex justify-center items-center'>
+              <Text size='sm'>Loading Proposals. Please wait...</Text>
+            </div>
+          ) : proposals.length < 1 ? (
+            <div className='flex justify-center items-center'>
+              <Text size='sm'>No proposals found, choose another job</Text>
+            </div>
+          ) : (
+            <div className='flex flex-col gap-10'>
+              {proposals.map((proposal) => (
+                <Link
+                  key={proposal._id}
+                  to={`/employer/${user._id}/jobs/${selectedJob}/proposals/${proposal._id}`}
+                >
+                  <ProposalCard proposal={proposal} />
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Layout>

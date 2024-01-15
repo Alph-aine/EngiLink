@@ -1,16 +1,76 @@
+import { useLoaderData, useNavigate, redirect } from 'react-router-dom'
+import axios from 'axios'
 import { IoLocationOutline, IoTrashBinOutline } from 'react-icons/io5'
 import Text from '../../../components/text'
 import Layout from '../../../components/layout'
-import { BsCurrencyDollar } from 'react-icons/bs'
+import { BsBriefcase, BsCurrencyDollar, BsHourglass } from 'react-icons/bs'
 import { RiEditBoxLine, RiUserSettingsLine } from 'react-icons/ri'
 import Button from '../../../components/button'
+import { formatMoney, formatTimeAgo } from '../../../lib/utils'
+import { getLoggedInEmployer } from '../../../lib/auth'
+import { useState } from 'react'
+import useNotification from '../../../hooks/usenotification'
+import Notification from '../../../components/notification'
+
+export const jobLoader = async ({ params }) => {
+  const { employerId, jobId } = params
+  const user = await getLoggedInEmployer()
+  if (!user)
+    return redirect(
+      `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+    )
+
+  let job = null
+
+  try {
+    const res = await axios.get(`http://localhost:3000/api/v1/jobs/${jobId}`, {
+      withCredentials: true,
+    })
+    job = res.data
+  } catch (e) {
+    console.log('Error loading data')
+  }
+
+  if (!job)
+    return redirect(
+      `/employer/${employerId}/jobs?msg=${'Error loading job'}&msgType=${'BAD'}`
+    )
+  return { job, user }
+}
 
 export default function Job() {
+  const navigate = useNavigate()
+  const { job, user } = useLoaderData()
+  const [deleting, setDeleting] = useState(false)
+  const { notifications, removeNotif, addNotif } = useNotification()
+
+  const deleteJob = () => {
+    setDeleting(true)
+
+    axios
+      .delete(`http://localhost:3000/api/v1/jobs/${job._id}`, {
+        withCredentials: true,
+      })
+      .then(() => navigate(`/employer/${user._id}/jobs`, { replace: true }))
+      .catch((e) => {
+        addNotif({
+          message: e.response.data.message ?? e.response.statusText,
+          signal: 'BAD',
+        })
+      })
+      .finally(() => setDeleting(false))
+  }
+
   return (
-    <Layout>
+    <Layout companyName={user.companyName}>
+      <Notification notifications={notifications} remove={removeNotif} />
       <div className='flex flex-col w-full'>
-        <div className='flex md:justify-start justify-center items-center gap-4'>
-          <Button>
+        <div className='md:px-16 px-0 flex md:justify-start justify-center items-center gap-4'>
+          <Button
+            onClick={() =>
+              navigate(`/employer/${user._id}/jobs/${job._id}/edit`)
+            }
+          >
             <span className='flex gap-2 justify-center items-center'>
               <RiEditBoxLine className='text-lg text-white' />
               <Text size='sm' white>
@@ -18,11 +78,11 @@ export default function Job() {
               </Text>
             </span>
           </Button>
-          <Button cx='bg-red-500'>
+          <Button cx='bg-red-500' onClick={deleteJob}>
             <span className='flex gap-2 justify-center items-center'>
               <IoTrashBinOutline className='text-lg text-white' />
               <Text size='sm' white>
-                Delete
+                {deleting ? 'Deleting' : 'Delete'}
               </Text>
             </span>
           </Button>
@@ -30,33 +90,29 @@ export default function Job() {
         <div className='md:px-16 px-0 flex flex-col'>
           <div className='flex flex-col w-full gap-6 md:py-16 py-8 border-b border-bg-primary/40'>
             <Text size='lg' copy>
-              Build A Bridge That Spans From Lagos Island To Lekki and VI
+              {job.title}
             </Text>
             <div className='flex items-center gap-8'>
-              <Text size='sm'>Posted 4 hours ago</Text>
-              <div className='flex items-center gap-2'>
-                <IoLocationOutline className='text-xl text-black/60' />
-                <Text size='sm'>Enugu Ezike</Text>
+              <Text size='sm'>Posted {formatTimeAgo(job.postedAt)}</Text>
+              <div className='flex items-center gap-1'>
+                <IoLocationOutline className='md:text-lg text-base text-black/60' />
+                <Text size='sm'>{job.location}</Text>
               </div>
             </div>
           </div>
           <span className='w-full md:py-16 py-8 border-b border-bg-primary/40'>
             <Text size='sm' copy>
-              In this exciting role as a [job title] at our dynamic company,
-              you'll play a pivotal role in [briefly describe main
-              responsibility]. You'll leverage your [mention relevant skills] to
-              [describe specific task] and [another task], ensuring [desired
-              outcome]. If you're a self-starter who thrives on challenges and
-              enjoys collaborating with a talented team, we encourage you to
-              apply! In return, you'll receive [mention attractive benefits] and
-              the opportunity to [highlight career growth potential].
+              {job.description}
             </Text>
           </span>
           <div className='flex md:flex-row flex-col md:items-center flex-wrap md:gap-16 gap-8 md:py-16 py-8 border-b border-bg-primary/40'>
             <div className='flex gap-3 items-start'>
               <BsCurrencyDollar className='text-3xl text-bg-primary' />
               <div className='flex flex-col items-start gap-1'>
-                <Text size='lg'>N200,000 &mdash; N300,000</Text>
+                <Text size='lg'>
+                  {formatMoney(job.minSalary)} &mdash;{' '}
+                  {formatMoney(job.maxSalary)}
+                </Text>
                 <Text size='sm' faded>
                   Salary
                 </Text>
@@ -65,43 +121,43 @@ export default function Job() {
             <div className='flex gap-3 items-start'>
               <RiUserSettingsLine className='text-3xl text-bg-primary' />
               <div className='flex flex-col items-start gap-1'>
-                <Text size='lg'>Intermidate</Text>
+                <Text size='lg'>{job.experienceLevel}</Text>
                 <Text size='sm' faded>
-                  Level
+                  Experience
+                </Text>
+              </div>
+            </div>
+            <div className='flex gap-3 items-start'>
+              <BsBriefcase className='text-3xl text-bg-primary' />
+              <div className='flex flex-col items-start gap-1'>
+                <Text size='lg'>{job.employmentType}</Text>
+                <Text size='sm' faded>
+                  Employment
+                </Text>
+              </div>
+            </div>
+            <div className='flex gap-3 items-start'>
+              <BsHourglass className='text-3xl text-bg-primary' />
+              <div className='flex flex-col items-start gap-1'>
+                <Text size='lg'>{new Date(job.deadline).toLocaleString()}</Text>
+                <Text size='sm' faded>
+                  Deadline
                 </Text>
               </div>
             </div>
           </div>
-          <div className='md:py-16 py-8 border-b border-bg-primary/40'>
-            <div className='flex items-center gap-3'>
-              <b>
-                <Text size='sm'>Project Type:</Text>
-              </b>
-              <Text size='md'>Contract</Text>
-            </div>
-          </div>
-          <div className='md:py-16 py-8 border-b border-bg-primary/40'>
+          <div className='md:py-16 py-8'>
             <div className='flex flex-col items-start gap-3'>
               <Text size='lg'>Skills and Expertise</Text>
               <div className='flex flex-wrap justify-start items-center gap-4'>
-                {['Technician', 'Software', 'Architect'].map((skill) => (
-                  <div className='md:px-4 px-3 md:py-2 py-1 rounded-md bg-bg-secondary text-black'>
+                {job.skillsRequired.split(',').map((skill) => (
+                  <div
+                    key={skill}
+                    className='shrink-0 md:px-4 px-3 md:py-2 py-1 rounded-md bg-bg-secondary text-black'
+                  >
                     <Text size='sm'>{skill}</Text>
                   </div>
                 ))}
-              </div>
-            </div>
-          </div>
-          <div className='md:py-16 py-8 border-b border-bg-primary/40'>
-            <div className='flex flex-col items-start gap-3'>
-              <Text size='lg'>Activity on this job</Text>
-              <div className='flex flex-col w-full gap-4'>
-                <div className='flex items-center gap-3'>
-                  <b>
-                    <Text size='sm'>Proposals:</Text>
-                  </b>
-                  <Text size='md'>20</Text>
-                </div>
               </div>
             </div>
           </div>
