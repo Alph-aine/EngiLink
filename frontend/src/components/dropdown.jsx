@@ -38,7 +38,6 @@ export default function DropDown({ title, initialActive, children }) {
         <div
           className='w-full border border-bg-primary rounded-md p-5'
           onClick={() => setIsOpen((prev) => !prev)}
-          outline
         >
           <span className='flex justify-between items-center gap-4 uppercase'>
             <Text size='sm'>{title}</Text>
