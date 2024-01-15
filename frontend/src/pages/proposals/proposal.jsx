@@ -27,7 +27,7 @@ export const proposalLoader = async ({ params }) => {
 
   if (!proposal)
     return redirect(
-      `employer/${employerId}/jobs/${jobId}/proposals?msg=${'Error loading proposal'}&msgType=${'TIP'}`
+      `/employer/${employerId}/proposals?msg=${'Error loading proposal'}&msgType=${'TIP'}`
     )
   return { proposal, user }
 }
