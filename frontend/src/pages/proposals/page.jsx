@@ -70,7 +70,7 @@ export default function Proposals() {
                   key={proposal._id}
                   to={`/employer/{user._Id}/jobs/${selectedJob}/proposal/${proposal._id}`}
                 >
-                  <ProposalCard />
+                  <ProposalCard proposal={proposal} />
                 </Link>
               ))}
             </div>
