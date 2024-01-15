@@ -92,18 +92,18 @@ const RegisterForm = ({ onStepChange, formData, handleInputChange }) => {
           { errorData.authError && <span className={css(styles.error)}>Something went wrong! Please check your details and try again :(</span> }
           {/* Firstname */}
           <div className={css(styles.rowInput)}>
-            <label className={css(styles.label)} htmlFor="firstname">Firstname</label>
-            <input className={css(styles.input)} type="text" name="firstname" value={formData.firstName} onChange={handleInputChange} />
+            <label className={css(styles.label)} htmlFor="firstName">Firstname</label>
+            <input className={css(styles.input)} type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} />
           </div>
           {/* Surname */}
           <div className={css(styles.rowInput)}>
             <label className={css(styles.label)} htmlFor="">Surname</label>
-            <input className={css(styles.input)} type="text" name="surname" value={formData.lastName} onChange={handleInputChange} />
+            <input className={css(styles.input)} type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} />
           </div>
           {/* Username */}
           <div className={css(styles.formInput)}>
             <label className={css(styles.label)} htmlFor="">Username</label>
-            <input className={css(styles.input, errorData.usernameError && styles.errInput)} type="text" name="username" value={formData.userName} onChange={handleInputChange} />
+            <input className={css(styles.input, errorData.usernameError && styles.errInput)} type="text" name="userName" value={formData.userName} onChange={handleInputChange} />
             { errorData.usernameError && <span className={css(styles.error)}>Username must be at least 6 characters long.</span> }
           </div>
           {/* Email */}
@@ -115,7 +115,7 @@ const RegisterForm = ({ onStepChange, formData, handleInputChange }) => {
           {/* Phone */}
           <div className={css(styles.formInput)}>
             <label className={css(styles.label)} htmlFor="">Phone No.</label>
-            <input className={css(styles.input, errorData.emailError && styles.errInput)} type="text" name="phone" value={formData.phoneNumber} onChange={handleInputChange} />
+            <input className={css(styles.input, errorData.emailError && styles.errInput)} type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} />
             { errorData.phoneError && <span className={css(styles.error)}>Invalid phone number entered :(</span> }
           </div>
           {/* Password */}

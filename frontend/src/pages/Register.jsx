@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { StyleSheet, css } from "aphrodite"
 import RegisterForm from '../components/Register/RegisterForm'
 import SkillsSection from '../components/Register/SkillsSection'
@@ -19,20 +19,26 @@ const Register = () => {
     phoneNumber: '',
     password: '',
     confirmPassword: '',
-    experiences: [],
+    skills: [],
     certifications: [],
-    selectedLevel: '',
+    experienceLevel: '',
     highestDegree: '',
-    fieldStudy: ''
+    fieldOfStudy: ''
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
+    console.log(e.target.name)
+    console.log(e.target.value)
     setFormData((previousFormData) => ({
       ...previousFormData,
       [name]: value
     }))
   }
+
+  useEffect(() => {
+    console.log(formData)
+  }, [formData])
 
   const handleSaveCertification = (certificationInput) => {
     console.log(formData)
@@ -51,18 +57,18 @@ const Register = () => {
   }
 
   const handleSaveExperience = (skillInput) => {
-    console.log(formData.experiences)
+    console.log(formData.skills)
     setFormData(previousFormData => ({
       ...previousFormData,
-      experiences: [...formData.experiences, skillInput]
+      skills: [...formData.skills, skillInput]
     }))
   }
 
   const handleRemoveExperience = (experience) => {
-    console.log(formData.experiences)
+    console.log(formData.skills)
     setFormData(previousFormData => ({
       ...previousFormData,
-      experiences: formData.experiences.filter(exp => exp !== experience)
+      skills: formData.skills.filter(exp => exp !== experience)
     }))
   } 
 
@@ -70,7 +76,7 @@ const Register = () => {
     const {value} = e.target
     setFormData(previousFormData => ({
       ...previousFormData,
-      selectedLevel: value
+      experienceLevel: value
     }))
   }
 

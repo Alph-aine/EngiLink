@@ -1,13 +1,21 @@
+import axios from "axios"
 import { StyleSheet, css } from "aphrodite"
 import { useState } from "react"
 import Select from "react-select"
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const EducationSection = ({ formData, handleInputChange, onChangeDegree }) => {
+
+  const navigate = useNavigate()
+
+  const [authError, setAuthError] = useState(false)
+  const [buttonText, setButtonText] = useState("Submit")
 
   const handleFieldOptionChange = e => {
     setFormData(previousData => ({
       ...previousData,
-      fieldStudy: e.target.value
+      fieldOfStudy: e.target.value
     }))
   }
 
@@ -19,11 +27,47 @@ const EducationSection = ({ formData, handleInputChange, onChangeDegree }) => {
     { value: 'master', label: "Master's Degree" },
     { value: 'doctorate', label: 'Doctorate' }
   ];
+
+  async function registerEngineer() {
+    try {
+      setButtonText("Please wait...")
+      setAuthError(false)
+      const url = 'http://localhost:3000/api/v1/engineer/register'
+
+      const {confirmPassword, ...postFormData} = formData
+
+      console.log(formData)
+      console.log(postFormData)
+
+      const response = await axios.post(url, postFormData, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      })
+      
+      const { token } = response.data
+      console.log(token)
+      
+      toast.success('You have successfully created an account.')
+      console.log('Navigated to Home page')
+      navigate('/engineer/discover')
+    }
+    catch (error) {
+      setAuthError(true)
+      setButtonText("Submit")
+      console.log('error')
+      console.log(error)
+    }
+  }
   
 
   return (
     <div className={css(styles.education)}>
-      <h2>Educational Information</h2>
+      <h2 className={css(styles.title)}>Educational Information</h2>
+      {authError && (
+        <span className={css(styles.error)}>An unexpected error occurred. Please try again later :(</span>
+      )}
       <div className={css(styles.educationWrapper)}>
         <div className={css(styles.formSection)}>
           <label htmlFor="highest-degree" className={css(styles.label)}>Highest Degree</label>
@@ -31,7 +75,7 @@ const EducationSection = ({ formData, handleInputChange, onChangeDegree }) => {
         </div>
         <div className={css(styles.formSection)}>
           <label htmlFor="field-study" className={css(styles.label)}>Field of Study</label>
-          <input type="text" name="fieldStudy" value={formData.fieldStudy} className={css(styles.input)} onChange={handleInputChange} />
+          <input type="text" name="fieldOfStudy" value={formData.fieldOfStudy} className={css(styles.input)} onChange={handleInputChange} />
         </div>
         
       </div>
@@ -44,14 +88,20 @@ const EducationSection = ({ formData, handleInputChange, onChangeDegree }) => {
         <button
           type="button"
           className={css(styles.button)}
-          onClick={() => console.log(formData)}
-          >Continue</button>
+          onClick={registerEngineer}
+          >{buttonText}</button>
       </div>
     </div>
   )
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontWeight: 'bold',
+    fontFamily: 'var(--main-font)',
+    marginBottom: '1em',
+  },
+
   education: {
     fontFamily: 'var(--accent-font)',
     position: 'absolute',
@@ -113,6 +163,11 @@ const styles = StyleSheet.create({
     ':hover': {
       transform: 'scale(1.01)'
     }
+  },
+
+  error: {
+    fontSize: '0.8rem',
+    color: 'red'
   }
 })
 
