@@ -10,6 +10,7 @@ import Button from '../button'
 import Text, { TextLink } from '../text'
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { FaRegUser } from "react-icons/fa";
 
 const Header = () => {
   // const { sharedToken } = useContext(AuthContext)
@@ -41,9 +42,11 @@ const Header = () => {
     try {
       const url = 'http://localhost:3000/api/v1/logout'
 
-      const response = await axios.get(url)
+      const response = await axios.get(url, {withCredentials: true})
 
       const { success } = response.data
+      console.log('success')
+      console.log(success)
       
       if (success) { // Update Auth value in parent to display 'sign in' on navbar
         setIsLoggedIn(false)
@@ -111,16 +114,27 @@ const Header = () => {
                   onClick={() => navigate('/engineer/profile')}
                   textBlack
                 >
+                  <FaRegUser style={{display: 'inline-block', marginRight: '0.5rem', marginBottom: '0.2rem'}} />
                   Profile
                 </Button>
               )}
-              <Button
-                cx='bg-bg-secondary w-full'
-                onClick={logout}
-                textBlack
-              >
-                {isLoggedIn ? 'Sign Out' : 'Sign In'}
-              </Button>
+              {isLoggedIn ? (
+                <Button
+                  cx='bg-bg-secondary'
+                  onClick={logout}
+                  textBlack
+                >
+                  Sign Out
+                </Button>
+              ) : (
+                <Button
+                  cx='bg-bg-secondary'
+                  onClick={() => navigate('/engineer/auth/signin')}
+                  textBlack
+                >
+                  Sign In
+                </Button>
+              )}
             </div>
           </div>
           <div className='shrink-0'>
@@ -139,22 +153,35 @@ const Header = () => {
               >
                 Discover Employers
               </Button>
+              {isLoggedIn ? (
+                <Button
+                  cx='bg-bg-secondary'
+                  onClick={logout}
+                  textBlack
+                >
+                  Sign Out
+                </Button>
+              ) : (
+                <Button
+                  cx='bg-bg-secondary'
+                  onClick={() => navigate('/engineer/auth/signin')}
+                  textBlack
+                >
+                  Sign In
+                </Button>
+              )}
+              
+              <span className='lg:block hidden border border-bg-secondary self-stretch' />
               {isLoggedIn && (
                 <Button
                   cx='bg-bg-secondary'
                   onClick={() => navigate('/engineer/profile')}
                   textBlack
                 >
+                  <FaRegUser style={{display: 'inline-block', marginRight: '0.5rem', marginBottom: '0.2rem'}} />
                   Profile
                 </Button>
               )}
-              <Button
-                cx='bg-bg-secondary'
-                onClick={logout}
-                textBlack
-              >
-                {isLoggedIn ? 'Sign Out' : 'Sign In'}
-              </Button>
             </div>
           </div>
         </div>

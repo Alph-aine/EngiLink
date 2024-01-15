@@ -93,7 +93,7 @@ const Register = () => {
     console.log('storedToken')
     console.log(storedToken)
     if (storedToken) { // token exists redirect to discover page
-      navigate("/engineer/discover")
+      navigate("/engineer/profile")
     }
   }, [])
 
@@ -116,8 +116,9 @@ const styles = StyleSheet.create({
       inset: '0',
       opacity: '0.7',
       backgroundImage: 'url("/imgs/register-pic.jpg")',
-      backgroundSize: 'contain',
-      backgroundPosition: 'center'
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat'
     }
   }
 })
