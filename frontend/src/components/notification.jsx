@@ -13,9 +13,7 @@ const Notification = ({ message, signal }) => {
     // Add notification only if message is different from the last one
     if (
         message &&
-          signal &&
-          (!notifications.length ||
-            notifications[notifications.length - 1].message !== message)
+          signal
       )
       {
       setNotifications((prevNotifications) => [
