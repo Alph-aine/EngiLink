@@ -16,7 +16,9 @@ export default function SignIn() {
     params.get('msgType')
   )
 
-  const submit = () => {
+  const submit = (e) => {
+    e.preventDefault()
+
     const formData = new FormData(e.currentTarget)
     const jsonData = formDataToJSON(formData)
 

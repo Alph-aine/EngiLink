@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { getLoggedInEmployer } from '../../../lib/auth'
 import { formDataToJSON } from '../../../lib/utils'
 import useNotification from '../../../hooks/usenotification'
+import Notification from '../../../components/notification'
 
 export const jobEditLoader = async ({ params }) => {
   const { employerId, jobId } = params

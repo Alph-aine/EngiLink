@@ -28,6 +28,8 @@ export default function SignUp() {
   }, [has1num, has8chars, has1spec])
 
   const submit = (e) => {
+    e.preventDefault()
+
     const form = new FormData(e.currentTarget)
     form.append('password', password)
 
@@ -39,11 +41,7 @@ export default function SignUp() {
           'Content-Type': 'application/json',
         },
       })
-      .then((response) => {
-        const employerId = response?.data?.user._id
-
-        navigate(`/employer/${employerId}/profile`)
-      })
+      .then(() => navigate(`/employer/auth/signin`))
       .catch((e) => {
         addNotif({
           message: e.response.data.message ?? e.response.statusText,

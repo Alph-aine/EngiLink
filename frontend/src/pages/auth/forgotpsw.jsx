@@ -9,6 +9,8 @@ export default function ForgotPassword() {
   const { notifications, removeNotif, addNotif } = useNotification()
 
   const submit = (e) => {
+    e.preventDefault()
+
     const formData = new FormData(e.currentTarget)
     const jsonData = formToJSON(formData)
 
