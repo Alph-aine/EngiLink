@@ -1,9 +1,11 @@
 import { redirect, useLoaderData } from 'react-router-dom'
+import axios from 'axios'
 import Button from '../../components/button'
 import Text from '../../components/text'
 import Layout from '../../components/layout'
 import useNotification from '../../hooks/usenotification'
 import Notification from '../../components/notification'
+import { getLoggedInEmployer } from '../../lib/auth'
 
 export const proposalLoader = async ({ params }) => {
   const { employerId, proposalId, jobId } = params
