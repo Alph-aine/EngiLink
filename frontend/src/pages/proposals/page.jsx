@@ -73,7 +73,7 @@ export default function Proposals() {
           >
             {jobs.map((job) => (
               <DropItem
-                key={job._Id}
+                key={job._id}
                 value={job._id}
                 onClick={() => setSelectedJob(job._id)}
               >
