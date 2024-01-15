@@ -1,4 +1,5 @@
 import Employer from '../models/employer.js';
+import Job from '../models/job.js';
 import asyncErrors from '../middlewares/asyncError.js';
 import sendToken from '../utils/sendcookie.js';
 import ErrorHandler from '../utils/errorHandler.js';
