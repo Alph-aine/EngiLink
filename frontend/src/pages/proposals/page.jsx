@@ -4,7 +4,7 @@ import Text from '../../components/text'
 import ProposalCard from './card'
 import DropDown, { DropItem } from '../../components/dropdown'
 import Layout from '../../components/layout'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getLoggedInEmployer } from '../../lib/auth'
 import { fetchEmployerJobs } from '../../lib/job'
 
@@ -30,7 +30,7 @@ export default function Proposals() {
     setLoadingProposals(true)
 
     axios
-      .get(`http://localhost:3000/api/v1/job/${selectedJob}/proposals`, {
+      .get(`http://localhost:3000/api/v1/jobs/${selectedJob}/proposals`, {
         withCredentials: true,
       })
       .then((res) => setProposals(res.data))
