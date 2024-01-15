@@ -18,7 +18,7 @@ export const proposalLoader = async ({ params }) => {
   let proposal = null
 
   try {
-    res = await axios.get(`http://localhost:3000/api/v1/proposal/${proposalId}`)
+    res = await axios.get(`http://localhost:3000/api/v1/proposals/${proposalId}`)
 
     proposal = res.data?.proposal
   } catch (e) {
@@ -27,7 +27,7 @@ export const proposalLoader = async ({ params }) => {
 
   if (!proposal)
     return redirect(
-      `/employer/${employerId}/proposals?msg=${'Error loading proposal'}&msgType=${'TIP'}`
+      `/employer/${employerId}/proposals?msg=${'Error loading proposal'}&msgType=${'BAD'}`
     )
   return { proposal, user }
 }
