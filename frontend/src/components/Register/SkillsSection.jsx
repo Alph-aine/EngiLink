@@ -37,7 +37,7 @@ const SkillsSection = ({ onStepChange, formData, onSaveExperience, onRemoveExper
 
   return (
     <div className={css(styles.skillsSection)}>
-      <h2>Your skills</h2>
+      <h2 className={css(styles.title)}>Your skills</h2>
       <label className={css(styles.label)} htmlFor="experience">List your skills, enter a comma or press the Enter key to enter a new one</label>
       <div className={css(styles.skillsWrapper)} style={{border: inputError ? '1px solid red': '2px solid #2a5468'}}>
         <Skills
@@ -71,6 +71,12 @@ const SkillsSection = ({ onStepChange, formData, onSaveExperience, onRemoveExper
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontWeight: 'bold',
+    fontFamily: 'var(--main-font)',
+    marginBottom: '1em',
+  },
+  
   error: {
     color: 'red',
     fontSize: '0.75rem'

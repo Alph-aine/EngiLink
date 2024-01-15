@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { StyleSheet, css } from "aphrodite"
+import { useNavigate } from "react-router-dom"
+import Cookies from 'js-cookie';
 import RegisterForm from '../components/Register/RegisterForm'
 import SkillsSection from '../components/Register/SkillsSection'
 import ExperienceSection from "../components/Experience/ExperienceSection"
@@ -7,8 +9,9 @@ import CertificationsSection from "../components/Register/CertificationsSection"
 import EducationSection from "../components/Register/EducationSection"
 
 const Register = () => {
-  const [step, setStep] = useState(1)
+  const navigate = useNavigate()
 
+  const [step, setStep] = useState(1)
   const changeStep = change => setStep(currentStep => currentStep + change)
 
   const [formData, setFormData] = useState({
@@ -35,10 +38,6 @@ const Register = () => {
       [name]: value
     }))
   }
-
-  useEffect(() => {
-    console.log(formData)
-  }, [formData])
 
   const handleSaveCertification = (certificationInput) => {
     console.log(formData)
@@ -86,6 +85,17 @@ const Register = () => {
       highestDegree: selectedOption.value
     }))
   }
+
+  // If logged in already, redirect to home
+  useEffect(() => {
+    // Fetch the token from the cookie when the component mounts
+    const storedToken = Cookies.get('token');
+    console.log('storedToken')
+    console.log(storedToken)
+    if (storedToken) { // token exists redirect to discover page
+      navigate("/engineer/discover")
+    }
+  }, [])
 
   return (
     <div className={css(styles.register)}>
