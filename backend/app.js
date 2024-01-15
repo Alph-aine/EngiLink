@@ -17,13 +17,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   origin: 'http://localhost:5173',
-  methods: ['POST', 'GET', 'PUT', 'OPTIONS', 'HEAD'],
+  methods: ['DELETE, POST', 'GET', 'PUT', 'OPTIONS', 'HEAD'],
   credentials: true
 }));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
-  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, OPTIONS, HEAD');
+  res.header('Access-Control-Allow-Methods', 'DELETE, POST, GET, PUT, OPTIONS, HEAD');
   next();
 });
 
