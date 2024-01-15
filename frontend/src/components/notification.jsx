@@ -1,32 +1,6 @@
-import React, { useState, useEffect } from 'react'
 import Text from './text'
 
-const Notification = ({ message, signal }) => {
-  const [notifications, setNotifications] = useState([])
-  const handleClose = (index) =>
-    setNotifications((prevNotifications) => [
-      ...prevNotifications.slice(0, index),
-      ...prevNotifications.slice(index + 1),
-    ])
-
-  useEffect(() => {
-    // Add notification only if message is different from the last one
-    if (message && signal) {
-      setNotifications((prevNotifications) => [
-        ...prevNotifications,
-        { message, signal },
-      ])
-    }
-
-    // Remove last notification after 1 minute
-    const timeoutId = setTimeout(() => {
-      setNotifications((prevNotifications) => [
-        ...prevNotifications.slice(0, prevNotifications.length - 1),
-      ])
-    }, 6000) // 60 seconds in milliseconds
-
-    return () => clearTimeout(timeoutId) // Cleanup function to clear timeout when component unmounts
-  }, [message, signal])
+const Notification = ({ notifications, remove }) => {
 
   const borderClasses = {
     TIP: 'border-yellow-500',
@@ -57,7 +31,7 @@ const Notification = ({ message, signal }) => {
           <button
             type='button'
             className='text-gray-400 hover:text-gray-500'
-            onClick={() => handleClose(index)}
+            onClick={() => remove(index)}
           >
             <svg
               className='w-4 h-4'
