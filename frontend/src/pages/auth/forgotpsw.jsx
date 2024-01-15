@@ -1,13 +1,33 @@
+import { useState } from 'react'
 import Button from '../../components/button'
 import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
+import useNotification from '../../hooks/usenotification'
+import { formToJSON } from 'axios'
 
 export default function ForgotPassword() {
+  const { notifications, removeNotif, addNotif } = useNotification()
+  const [email, setEmail] = useState()
+
+  const submit = (e) => {
+    const formData = e.currentTarget
+    const jsonData = formToJSON(formData)
+
+    axios
+      .post('http://localhost:3000/api/v1/employer/password/forgot', jsonData, {
+        withCredentials: true,
+      })
+      .then(() => navigate(`/employer/auth/signin`))
+      .catch((e) => {
+        addNotif({ message: e.response.data.message, signal: 'BAD' })
+      })
+  }
+
   return (
     <div className='grid xl:grid-cols-12 lg:grid-cols-10 gap-0 min-h-screen'>
       <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
         <form
-          onSubmit={() => console.log('Email submitted')}
+          onSubmit={submit}
           className='grow flex flex-col justify-between md:items-start items-center gap-5 md:p-10 p-5 text-center'
         >
           <Text size='xl'>Forgot Password</Text>
