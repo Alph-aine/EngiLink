@@ -1,33 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Notification = ({ message, signal }) => {
   const [notifications, setNotifications] = useState([])
-  const notificationRef = useRef(null)
-
-  useEffect(() => {
-    const slideDown = () => {
-      notificationRef.current.style.transform = `translateY(-40px)`
-      notificationRef.current.style.opacity = 1
-    }
-
-    const autoClose = () => {
-      setTimeout(() => {
-        setNotifications((prevNotifications) => prevNotifications.slice(1))
-      }, 60000) // Close after 1 minute
-    }
-
-    slideDown()
-    autoClose()
-  }, [notifications])
-
-  const handleClose = () => {
-    setNotifications((prevNotifications) => prevNotifications.slice(1))
-  }
+  const handleClose = (index) =>
+    setNotifications((prevNotifications) => [
+      ...prevNotifications.slice(0, index),
+      ...prevNotifications.slice(index + 1),
+    ])
 
   useEffect(() => {
     // Add notification only if message is different from the last one
     if (
-      !notifications.length ||
+      (!notifications.length && message) ||
       notifications[notifications.length - 1].message !== message
     ) {
       setNotifications((prevNotifications) => [
@@ -35,29 +19,47 @@ const Notification = ({ message, signal }) => {
         { message, signal },
       ])
     }
-  }, [message, signal, notifications])
+
+    // Remove last notification after 1 minute
+    const timeoutId = setTimeout(() => {
+      setNotifications((prevNotifications) => [
+        ...prevNotifications.slice(0, prevNotifications.length - 1),
+      ])
+    }, 60000) // 60 seconds in milliseconds
+
+    return () => clearTimeout(timeoutId) // Cleanup function to clear timeout when component unmounts
+  }, [message, signal])
+
+  useEffect(() => {}, [notifications])
 
   const borderClasses = {
-    ERROR: 'border-red-500',
     TIP: 'border-yellow-500',
-    MSG: 'border-blue-500',
+    MSG: 'border-green-500',
+    BAD: 'border-red-500',
+  }
+
+  const textClasses = {
+    TIP: 'text-yellow-500',
+    MSG: 'text-green-500',
+    BAD: 'text-red-500',
   }
 
   return (
-    <div className='fixed top-0 left-0 right-0 z-50 overflow-y-auto max-h-40 flex flex-col items-start space-y-4'>
+    <div className='fixed top-0 left-0 right-0 z-50 md:px-9 px-5 mt-5 overflow-y-auto h-40 bg-transparent flex flex-col items-start space-y-4'>
       {notifications.map((notification, index) => (
         <div
-          key={index}
-          ref={notification === notifications[0] ? notificationRef : null}
-          className={`p-4 rounded-lg shadow-md bg-white ${
+          key={notification.message + index}
+          className={`flex justify-between items-center gap-3 p-4 w-full rounded-lg shadow-md bg-white border ${
             borderClasses[notification.signal]
           }`}
         >
-          <p className='text-sm font-medium'>{notification.message}</p>
+          <span className={textClasses[notification.signal]}>
+            {notification.message}
+          </span>
           <button
             type='button'
             className='text-gray-400 hover:text-gray-500'
-            onClick={handleClose}
+            onClick={() => handleClose(index)}
           >
             <svg
               className='w-4 h-4'

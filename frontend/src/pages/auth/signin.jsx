@@ -29,8 +29,8 @@ export default function SignIn() {
 
   return (
     <div className='grid xl:grid-cols-12 lg:grid-cols-10 gap-0 min-h-screen'>
-      <Notification message="This is a message" signal="TIP" />
-      <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
+      <div className='relative lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
+        <Notification message='This is a message' signal='TIP' />
         <div className='grow flex flex-col justify-between md:items-start items-center gap-5 md:p-10 p-5'>
           <Text size='xl'>Sign in</Text>
           <div className='flex justify-start items-center gap-2'>
