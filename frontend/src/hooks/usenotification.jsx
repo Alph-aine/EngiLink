@@ -19,7 +19,6 @@ export default function useNotification(message, signal) {
   ])
 
   const removeNotif = (index) => {
-    console.log('Index: ', index)
     // Remove notification with corresponding timeoutId.
     setNotifications((prevNotifications) => [
       ...prevNotifications.slice(0, index),
@@ -27,7 +26,6 @@ export default function useNotification(message, signal) {
     ])
     setTimeoutIds((prevTimeoutIds) => {
       const timeoutId = prevTimeoutIds.find((_, idx) => idx === index)
-      console.log('TimoutId: ', timeoutId)
       clearTimeout(timeoutId)
 
       return [
@@ -38,7 +36,7 @@ export default function useNotification(message, signal) {
   }
 
   const addNotif = (notification) => {
-    if (notifications.length > 2) {
+    if (notifications.length > 1) {
       removeNotif(1)
       setNotifications((prev) => [...prev, notification])
     } else setNotifications((prev) => [...prev, notification])
