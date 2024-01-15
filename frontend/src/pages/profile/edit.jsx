@@ -1,12 +1,9 @@
-import { useState } from 'react'
 import Text from '../../components/text'
 import Button from '../../components/button'
 import Input from '../../components/input'
 import Layout from '../../components/layout'
 
 export default function EditProfile({ defaultProfile }) {
-  const [profile, setProfile] = useState(defaultProfile)
-
   return (
     <Layout>
       <div className='flex flex-col gap-10 w-full'>
