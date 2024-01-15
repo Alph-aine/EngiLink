@@ -5,10 +5,15 @@ import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
 import Button from '../../components/button'
 import Notification from '../../components/notification'
+import useNotification from '../../hooks/usenotification'
 
 export default function SignIn() {
   const navigate = useNavigate()
   const [params, setSearchParams] = useSearchParams()
+  const { notifications, removeNotif, addNotif } = useNotification(
+    params.get('msg'),
+    params.get('msgType')
+  )
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -25,16 +30,16 @@ export default function SignIn() {
         const employerId = response.data?.user._id
         navigate(`/employer/${employerId}/profile`)
       })
-      .catch((e) => setSearchParams({ msg: e.response.data.message, msgType: 'BAD' }))
+      .catch((e) => {
+        addNotif({ msg: e.response.data.message, msgType: 'BAD' })
+        setSearchParams({ msg: e.response.data.message, msgType: 'BAD' })
+      })
   }
 
   return (
     <div className='grid xl:grid-cols-12 lg:grid-cols-10 gap-0 min-h-screen'>
       <div className='relative lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
-        <Notification
-          message={params.get('msg')}
-          signal={params.get('msgType')}
-        />
+        <Notification notifications={notifications} remove={removeNotif} />
         <div className='grow flex flex-col justify-between md:items-start items-center gap-5 md:p-10 p-5'>
           <Text size='xl'>Sign in</Text>
           <div className='flex justify-start items-center gap-2'>
