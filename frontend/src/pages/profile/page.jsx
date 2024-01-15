@@ -3,16 +3,26 @@ import { TfiStar } from 'react-icons/tfi'
 import { RiMailLine } from 'react-icons/ri'
 import { HiOutlinePencilSquare } from 'react-icons/hi2'
 import axios from 'axios'
-import { useLoaderData, useNavigate, redirect } from 'react-router-dom'
+import {
+  useLoaderData,
+  useNavigate,
+  redirect,
+  useSearchParams,
+} from 'react-router-dom'
 import Button from '../../components/button'
 import Text from '../../components/text'
 import Layout from '../../components/layout'
 import { getLoggedInEmployer } from '../../lib/auth'
 import { useState } from 'react'
+import useNotification from '../../hooks/usenotification'
+import Notification from '../../components/notification'
 
 export const profileLoader = async ({ params }) => {
   const user = await getLoggedInEmployer()
-  if (!user) return redirect('/employer/auth/signin')
+  if (!user)
+    return redirect(
+      `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+    )
 
   let profileData = null
 
@@ -27,13 +37,21 @@ export const profileLoader = async ({ params }) => {
     console.log('Error loading data')
   }
 
-  if (!profileData) redirect('/employer/auth/signin')
+  if (!profileData)
+    redirect(
+      `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+    )
   return profileData
 }
 
 export default function Profile() {
   const profileData = useLoaderData()
   const navigate = useNavigate()
+  const [params, setSearchParams] = useSearchParams()
+  const { notifications, removeNotif, addNotif } = useNotification(
+    params.get('msg'),
+    params.get('msgType')
+  )
   const [deleting, setDeleting] = useState(false)
   const [loggingOut, setLoggingOut] = useState(false)
   const {
@@ -53,8 +71,13 @@ export default function Profile() {
       .delete(`http://localhost:3000/api/v1/employer/id/${params.employerId}`, {
         withCredentials: true,
       })
-      .then(() => navigate('/employer/auth/signup', { replace: true }))
-      .catch(() => console.log('error deleting acct'))
+      .then(() => navigate('/employer/auth/signup?msg=account+deleted+successfully&msgType=BAD', { replace: true }))
+      .catch(() => {
+        addNotif({
+          message: e.response.data.message ?? e.response.statusText,
+          signal: 'BAD',
+        })
+      })
       .finally(() => setDeleting(false))
   }
 
@@ -66,12 +89,18 @@ export default function Profile() {
         withCredentials: true,
       })
       .then(() => navigate('/', { replace: true }))
-      .catch(() => console.log('An error occurred while logging out your acct'))
+      .catch((e) => {
+        addNotif({
+          message: e.response.data.message ?? e.response.statusText,
+          signal: 'BAD',
+        })
+      })
       .finally(() => setLoggingOut(false))
   }
 
   return (
     <Layout companyName={companyName}>
+      <Notification notifications={notifications} remove={removeNotif} />
       <div className='grid md:grid-cols-12 grid-cols-1 place-items-stretch gap-16 lg:px-20 px-0'>
         <div className='xl:col-span-10 col-span-full'>
           <div className='grid md:grid-cols-7 grid-cols-1 place-items-between gap-16'>

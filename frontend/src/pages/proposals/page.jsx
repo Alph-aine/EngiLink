@@ -1,4 +1,9 @@
-import { Link, redirect, useLoaderData } from 'react-router-dom'
+import {
+  Link,
+  redirect,
+  useLoaderData,
+  useSearchParams,
+} from 'react-router-dom'
 import axios from 'axios'
 import Text from '../../components/text'
 import ProposalCard from './card'
@@ -7,21 +12,34 @@ import Layout from '../../components/layout'
 import { useEffect, useState } from 'react'
 import { getLoggedInEmployer } from '../../lib/auth'
 import { fetchEmployerJobs } from '../../lib/job'
+import useNotification from '../../hooks/usenotification'
+import Notification from '../../components/notification'
 
 export const proposalsLoader = async ({ params }) => {
   const { employerId } = params
 
   const user = await getLoggedInEmployer()
-  if (!user) return redirect('/employer/auth/signin')
+  if (!user)
+    return redirect(
+      `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+    )
 
   const jobs = await fetchEmployerJobs(user._id)
-  if (!jobs) return redirect(`/employer/${employerId}/jobs/create`)
+  if (!jobs)
+    return redirect(
+      `/employer/${employerId}/profile?msg=${'Error loading proposals'}&msgType=${'TIP'}`
+    )
 
   return { jobs, user }
 }
 
 export default function Proposals() {
   const { jobs, user } = useLoaderData()
+  const [params, setSearchParams] = useSearchParams()
+  const { notifications, removeNotif, addNotif } = useNotification(
+    params.get('msg'),
+    params.get('msgType')
+  )
   const [selectedJob, setSelectedJob] = useState(jobs[0]._id)
   const [proposals, setProposals] = useState([])
   const [loadingProposals, setLoadingProposals] = useState(true)
@@ -40,6 +58,7 @@ export default function Proposals() {
 
   return (
     <Layout companyName={user.companyName}>
+      <Notification notifications={notifications} remove={removeNotif} />
       <div className='flex flex-col gap-20'>
         <div className='flex flex-col gap-3'>
           <Text size='md'>Select a Job</Text>

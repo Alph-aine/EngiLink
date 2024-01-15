@@ -1,14 +1,21 @@
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
 import Vetpass from '../../components/vetpass'
 import useVetPsw from '../../hooks/usevetpsw'
 import Button from '../../components/button'
+import Notification from '../../components/notification'
+import useNotification from '../../hooks/usenotification'
 
 export default function SignUp() {
   const navigate = useNavigate()
+  const [params, setSearchParams] = useSearchParams()
+  const { notifications, removeNotif, addNotif } = useNotification(
+    params.get('msg'),
+    params.get('msgType')
+  )
   const [form, setForm] = useState({
     email: '',
     phone: '',
@@ -59,12 +66,19 @@ export default function SignUp() {
 
         navigate(`/employer/${employerId}/profile`)
       })
-      .catch((error) => console.error(error))
+      .catch((e) => {
+        addNotif({
+          message: e.response.data.message ?? e.response.statusText,
+          signal: 'BAD',
+        })
+        setSearchParams({ msg: e.response.data.message, msgType: 'BAD' })
+      })
   }
 
   return (
     <div className='grid xl:grid-cols-12 lg:grid-cols-10 gap-0 min-h-screen'>
-      <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
+      <div className='relative lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
+        <Notification notifications={notifications} remove={removeNotif} />
         <div className='grow flex flex-col justify-between md:items-start items-center gap-5 md:p-10 p-5'>
           <Text size='xl'>Create an account</Text>
           <div className='flex justify-start items-center gap-2'>

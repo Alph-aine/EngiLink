@@ -1,27 +1,46 @@
-import { redirect, useLoaderData, Link } from 'react-router-dom'
+import {
+  redirect,
+  useLoaderData,
+  Link,
+  useSearchParams,
+} from 'react-router-dom'
 import Layout from '../../components/layout'
 import { getLoggedInEmployer } from '../../lib/auth'
 import JobCard from './card'
 import Text from '../../components/text'
 import { fetchEmployerJobs } from '../../lib/job'
+import Notification from '../../components/notification'
+import useNotification from '../../hooks/usenotification'
 
 export const jobsLoader = async ({ params }) => {
   const { employerId } = params
 
   const user = await getLoggedInEmployer()
-  if (!user) return redirect('/employer/auth/signin')
+  if (!user)
+    return redirect(
+      `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+    )
 
   const jobs = await fetchEmployerJobs(user._id)
-  if (!jobs) return redirect(`/employer/${employerId}/profile`)
+  if (!jobs)
+    return redirect(
+      `/employer/${employerId}/profile?msg=${'Error loading your jobs'}&msgType=${'BAD'}`
+    )
 
   return { jobs, user }
 }
 
 export default function Jobs() {
   const { jobs, user } = useLoaderData()
+  const [params, setSearchParams] = useSearchParams()
+  const { notifications, removeNotif } = useNotification(
+    params.get('msg'),
+    params.get('msgType')
+  )
 
   return (
     <Layout companyName={user.companyName}>
+      <Notification notifications={notifications} remove={removeNotif} />
       {jobs.length > 0 ? (
         <div className='flex flex-col'>
           {jobs.map((job) => (

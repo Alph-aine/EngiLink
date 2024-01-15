@@ -7,13 +7,20 @@ import Text from '../../../components/text'
 import { useState } from 'react'
 import { getLoggedInEmployer } from '../../../lib/auth'
 import { formDataToJSON } from '../../../lib/utils'
+import useNotification from '../../../hooks/usenotification'
 
 export const jobEditLoader = async ({ params }) => {
   const { employerId, jobId } = params
   const user = await getLoggedInEmployer()
-  if (!user) return redirect('/employer/auth/signin')
+  if (!user) return redirect(
+    `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+  )
   if (user._id !== employerId)
-    return redirect(`/employer/${user._id}/jobs/create`)
+    return redirect(
+      `/employer/${
+        user._id
+      }/jobs/create?msg=${'switched to logged in account'}msgType=${'MSG'}`
+    )
 
   let job = null
 
@@ -26,16 +33,19 @@ export const jobEditLoader = async ({ params }) => {
     console.log('Error loading data')
   }
 
-  if (!job) return redirect(`/employer/${employerId}/jobs`)
+  if (!job) return redirect(`/employer/${employerId}/jobs?msg=${'Error loading job'}&msgType=${'BAD'}`)
   return { job, user }
 }
 
 export default function EditJob() {
   const { job, user } = useLoaderData()
   const navigate = useNavigate()
+  const { notifications, removeNotif, addNotif } = useNotification()
   const [skills, setSkills] = useState(job.skillsRequired.split(', '))
   const [newSkill, setNewSkill] = useState('Engineer')
-  const deadline = job.deadline ? new Date(job.deadline).toISOString().substring(0, 10) : new Date()
+  const deadline = job.deadline
+    ? new Date(job.deadline).toISOString().substring(0, 10)
+    : new Date()
 
   const postJob = (e) => {
     e.preventDefault()
@@ -52,11 +62,17 @@ export default function EditJob() {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/${user._id}/jobs/${job._id}`))
-      .catch(() => console.error('An error occured'))
+      .catch((e) => {
+        addNotif({
+          message: e.response.data.message ?? e.response.statusText,
+          signal: 'BAD',
+        })
+      })
   }
 
   return (
     <Layout companyName={user.companyName}>
+      <Notification notifications={notifications} remove={removeNotif} />
       <div className='flex flex-col lg:gap-10 gap-5 w-full text-center'>
         <Text size='xl'>
           Edit Job: <span className='break-words'>{job._id}</span>

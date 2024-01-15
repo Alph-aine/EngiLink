@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { useLoaderData, redirect, useNavigate } from 'react-router-dom'
+import {
+  useLoaderData,
+  redirect,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom'
 import Button from '../../../components/button'
 import Input from '../../../components/input'
 import Layout from '../../../components/layout'
@@ -7,13 +12,21 @@ import Text from '../../../components/text'
 import { useState } from 'react'
 import { getLoggedInEmployer } from '../../../lib/auth'
 import { formDataToJSON } from '../../../lib/utils'
+import useNotification from '../../../hooks/usenotification'
+import Notification from '../../../components/notification'
 
 export const jobCreateLoader = async ({ params }) => {
   const { employerId } = params
   const user = await getLoggedInEmployer()
-  if (!user) return redirect('/employer/auth/signin')
+  if (!user) return redirect(
+    `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+  )
   if (user._id !== employerId)
-    return redirect(`/employer/${user._id}/jobs/create`)
+    return redirect(
+      `/employer/${
+        user._id
+      }/jobs/create?msg=${'switched to logged in account'}msgType=${'MSG'}`
+    )
 
   return user
 }
@@ -21,6 +34,11 @@ export const jobCreateLoader = async ({ params }) => {
 export default function CreateJob() {
   const user = useLoaderData()
   const navigate = useNavigate()
+  const [params, setSearchParams] = useSearchParams()
+  const { notifications, removeNotif, addNotif } = useNotification(
+    params.get('msg'),
+    params.get('msgType')
+  )
   const [skills, setSkills] = useState(['Engineer'])
   const [newSkill, setNewSkill] = useState('Engineer')
 
@@ -39,11 +57,18 @@ export default function CreateJob() {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/${user._id}/jobs`))
-      .catch(() => console.error('An error occured'))
+      .catch(() => {
+        addNotif({
+          message: e.response.data.message ?? e.response.statusText,
+          signal: 'BAD',
+        })
+        setSearchParams({ msg: e.response.data.message, msgType: 'BAD' })
+      })
   }
 
   return (
     <Layout companyName={user.companyName}>
+      <Notification notifications={notifications} remove={removeNotif} />
       <div className='flex flex-col lg:gap-10 gap-5 w-full text-center'>
         <Text size='xl'>Create A Job</Text>
 

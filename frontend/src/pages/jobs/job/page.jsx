@@ -9,11 +9,15 @@ import Button from '../../../components/button'
 import { formatMoney, formatTimeAgo } from '../../../lib/utils'
 import { getLoggedInEmployer } from '../../../lib/auth'
 import { useState } from 'react'
+import useNotification from '../../../hooks/usenotification'
 
 export const jobLoader = async ({ params }) => {
   const { employerId, jobId } = params
   const user = await getLoggedInEmployer()
-  if (!user) return redirect('/employer/auth/signin')
+  if (!user)
+    return redirect(
+      `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+    )
 
   let job = null
 
@@ -26,7 +30,10 @@ export const jobLoader = async ({ params }) => {
     console.log('Error loading data')
   }
 
-  if (!job) return redirect(`/employer/${employerId}/jobs`)
+  if (!job)
+    return redirect(
+      `/employer/${employerId}/jobs?msg=${'Error loading job'}&msgType=${'BAD'}`
+    )
   return { job, user }
 }
 
@@ -34,6 +41,7 @@ export default function Job() {
   const navigate = useNavigate()
   const { job, user } = useLoaderData()
   const [deleting, setDeleting] = useState(false)
+  const { notifications, removeNotif, addNotif } = useNotification()
 
   const deleteJob = () => {
     setDeleting(true)
@@ -43,12 +51,18 @@ export default function Job() {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/${user._id}/jobs`, { replace: true }))
-      .catch(() => console.log('error deleting acct'))
+      .catch((e) => {
+        addNotif({
+          message: e.response.data.message ?? e.response.statusText,
+          signal: 'BAD',
+        })
+      })
       .finally(() => setDeleting(false))
   }
 
   return (
     <Layout companyName={user.companyName}>
+      <Notification notifications={notifications} remove={removeNotif} />
       <div className='flex flex-col w-full'>
         <div className='md:px-16 px-0 flex md:justify-start justify-center items-center gap-4'>
           <Button
