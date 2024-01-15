@@ -47,6 +47,8 @@ const Login = () => {
         const { token } = response.data
         console.log(token)
 
+        
+
         // set token in app wide token state value and navigate to home page
         // setSharedToken(token)
         
@@ -67,7 +69,7 @@ const Login = () => {
     }
 
   return (
-    <>
+    <div className={css(styles.login)}>
       <div className={css(styles.loginWrapper)}>
         <h2 className={css(styles.formTitle)}>Login to your account</h2>
         <form className={css(styles.form)} onSubmit={loginEngineer}>
@@ -85,15 +87,28 @@ const Login = () => {
             <Button text={buttonText} type="submit" />
           </div>
         </form>
-        <span>Don't have an account? <Link to='/engineer/register'>Sign up</Link> </span>
+        <span>Don't have an account? <Link to='/engineer/auth/signup'>Sign up</Link> </span>
       </div>
       <ToastContainer />
-    </>
+    </div>
     
   )
 }
 
 const styles = StyleSheet.create({
+  login: {
+    ':before': {
+      content: '""',
+      position: 'absolute',
+      inset: '0',
+      opacity: '0.8',
+      backgroundImage: 'url("/engineer-login-pic-I.jpg")',
+      backgroundSize: 'cover',
+      // backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center'
+    }
+  },
+
   loginWrapper: {
     fontFamily: 'var(--accent-font)',
     // border: '1px solid',
@@ -105,7 +120,7 @@ const styles = StyleSheet.create({
     minWidth: '20rem',
     padding: '2em 2em',
     backgroundColor: '#fff',
-    boxShadow: '0 3px 3px 0 rgba(0,0,0,0.1)'
+    boxShadow: '0 5px 5px 0 rgba(0,0,0,0.4)',
   },
 
   formTitle: {

@@ -135,7 +135,7 @@ const RegisterForm = ({ onStepChange, formData, handleInputChange }) => {
             onClick={nextSection}>Continue</button>
         </div>
       </form>
-      <span>Already have an account? <Link to='/engineer/login'>Log in</Link> </span>
+      <span>Already have an account? <Link to='/engineer/auth/signin'>Log in</Link> </span>
     </div>
   )
 }

@@ -10,6 +10,7 @@ const JobCard = ({ job }) => {
       <span className={css(styles.highlight)}>${job.minSalary} - {job.maxSalary}</span>
       <p className={css(styles.muted)}>Experience Level: {job.experienceLevel}</p>
       <p className={css(styles.muted)}>Employment Type: {job.employmentType}</p>
+      <button className={css(styles.apply)}>Apply</button>
     </div>
   )
 }
@@ -50,6 +51,20 @@ const styles = StyleSheet.create({
     padding: '0.3em',
     margin: '0.5em 0.3em',
     display: 'inline-block'
+  },
+
+  apply: {
+    backgroundColor: '#7c3aed',
+    border: 'none',
+    borderRadius: '5px',
+    color: 'white',
+    padding: '0.5em 1em',
+    marginTop: '1em',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease-in-out',
+    ':hover': {
+      backgroundColor: '#6b2eae',
+    }
   }
 })
 

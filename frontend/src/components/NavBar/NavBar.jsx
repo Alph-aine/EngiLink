@@ -25,7 +25,7 @@ const NavBar = ({ isLoggedIn, setAuth }) => {
       console.log(success)
       
       if (success) { // Update Auth value in parent to display 'sign in' on navbar
-        toast.info('You are now logged out.')
+        // toast.info('You are now logged out.')
         setAuth(false)
 
         setTimeout(() => {
@@ -62,7 +62,7 @@ const NavBar = ({ isLoggedIn, setAuth }) => {
     return (
       <div>
         <NavLink url="/" text="Home" header={true} />
-        <NavLink url="/discover" text="Discover Employers" header={true} />
+        <NavLink url="/engineer/discover" text="Discover Employers" header={true} />
         { !isLoggedIn ? 
           <NavLink url="/login" text="Sign In" header={true} /> :
           // <NavLink url="/logout" text="Sign Out" header={true} /> : 

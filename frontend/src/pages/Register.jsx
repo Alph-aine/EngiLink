@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { StyleSheet, css } from "aphrodite"
 import RegisterForm from '../components/Register/RegisterForm'
 import SkillsSection from '../components/Register/SkillsSection'
 import ExperienceSection from "../components/Experience/ExperienceSection"
@@ -81,7 +82,7 @@ const Register = () => {
   }
 
   return (
-    <div>
+    <div className={css(styles.register)}>
       { step === 1 && <RegisterForm formData={formData} handleInputChange={handleInputChange} onStepChange={changeStep} /> }
       { step === 2 && <SkillsSection formData={formData} onSaveExperience={handleSaveExperience} onRemoveExperience={handleRemoveExperience} onStepChange={changeStep} /> }
       { step === 3 && <CertificationsSection formData={formData} onSaveCertification={handleSaveCertification} onRemoveCertification={handleRemoveCertification} onStepChange={changeStep} /> }
@@ -91,6 +92,18 @@ const Register = () => {
   )
 }
 
-
+const styles = StyleSheet.create({
+  register: {
+    ':before': {
+      content: '""',
+      position: 'absolute',
+      inset: '0',
+      opacity: '0.7',
+      backgroundImage: 'url("/imgs/register-pic.jpg")',
+      backgroundSize: 'contain',
+      backgroundPosition: 'center'
+    }
+  }
+})
 
 export default Register

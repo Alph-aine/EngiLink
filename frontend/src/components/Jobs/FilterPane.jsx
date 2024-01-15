@@ -45,7 +45,10 @@ const styles = StyleSheet.create({
     position: 'sticky',
     right: '3em',
     top: '3em',
-    // overflowY: 'auto',
+    '@media (max-width: 850px)': {
+      position: 'static',
+      width: '100%',
+    }
   },
 
   filterTitle: {

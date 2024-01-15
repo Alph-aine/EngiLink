@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Landing from './pages/Landing'
+// import Landing from './pages/Landing'
 import SignIn from './pages/auth/signin'
 import SignUp from './pages/auth/signup'
 import ForgotPassword from './pages/auth/forgotpsw'
@@ -16,6 +16,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
 import Discover from './pages/Discover'
+import EngineerProfile from './pages/Profile'
 
 const router = createBrowserRouter([
   {
@@ -71,11 +72,11 @@ const router = createBrowserRouter([
     element: <Proposal />,
   },
   {
-    path: 'engineer/login',
+    path: 'engineer/auth/signin',
     element: <Login />,
   },
   {
-    path: 'engineer/register',
+    path: 'engineer/auth/signup',
     element: <Register />,
   },
   {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
   {
     path: 'engineer/discover',
     element: <Discover />,
+  },
+  {
+    path: 'engineer/profile',
+    element: <EngineerProfile />,
   },
 ])
 
