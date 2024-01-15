@@ -3,11 +3,13 @@ import Cookies from 'js-cookie';
 import { FaPencil } from "react-icons/fa6";
 import { StyleSheet, css } from "aphrodite"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import avatar from "/avatar-pic.png"
 import Header from "../components/Common/Header"
 import Footer from "../components/Common/Footer"
 
 const EngineerProfile = () => {
+  const navigate = useNavigate()
   const [profileInfo, setProfileInfo] = useState({})
 
   useEffect(() => {
@@ -46,6 +48,11 @@ const EngineerProfile = () => {
           <div className={css(styles.IntroText)}>
             <h5 className={css(styles.name)}>{profileInfo.lastName} {profileInfo.firstName}</h5>
             <p>Engineer</p>
+            <button 
+              className={css(styles.discover)}
+              onClick={() => navigate("/engineer/discover")}>
+                Discover Jobs
+              </button>
           </div>
         </div>
         <div className={css(styles.personalInfo)}>
@@ -120,8 +127,8 @@ const styles = StyleSheet.create({
   },
 
   avatar: {
-    width: '6rem',
-    height: '6rem',
+    width: '9rem',
+    height: '9rem',
   },
 
   editIcon:{
@@ -132,6 +139,23 @@ const styles = StyleSheet.create({
     cursor: 'pointer',
     ':hover': {
       color: 'var(--dark-green)'
+    }
+  },
+
+  discover: {
+    backgroundColor: 'var(--dark-green)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
+    padding: '0.5em 1em',
+    marginTop: '1em',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease-in-out',
+    ':hover': {
+      backgroundColor: 'var(--light-green)',
+      color: 'var(--dark-green)',
+      border: '1px solid var(--dark-green)',
     }
   },
 
