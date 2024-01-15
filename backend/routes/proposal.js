@@ -21,10 +21,4 @@ router.route('/proposals/:id').get(isAuthenticated, getProposal);
 
 // delete a job based on id
 router.route('/proposals/:id').delete(isAuthenticated, deleteProposal);
-
-// change status of proposals
-router.route('/proposals/:id').put(isAuthenticated, changeProposalStatus);
-
-// list proposals/aplications for an engineer
-router.route('/myProposals').get(isAuthenticated, myProposals)
 export default router;
