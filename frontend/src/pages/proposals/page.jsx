@@ -87,7 +87,7 @@ export default function Proposals() {
               {proposals.map((proposal) => (
                 <Link
                   key={proposal._id}
-                  to={`/employer/{user._Id}/jobs/${selectedJob}/proposal/${proposal._id}`}
+                  to={`/employer/${user._id}/jobs/${selectedJob}/proposals/${proposal._id}`}
                 >
                   <ProposalCard proposal={proposal} />
                 </Link>
