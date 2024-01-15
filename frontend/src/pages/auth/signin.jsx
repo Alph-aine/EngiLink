@@ -31,7 +31,7 @@ export default function SignIn() {
         navigate(`/employer/${employerId}/profile`)
       })
       .catch((e) => {
-        addNotif({ msg: e.response.data.message, msgType: 'BAD' })
+        addNotif({ message: e.response.data.message, signal: 'BAD' })
         setSearchParams({ msg: e.response.data.message, msgType: 'BAD' })
       })
   }

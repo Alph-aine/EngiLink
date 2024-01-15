@@ -18,14 +18,14 @@ const Notification = ({ notifications, remove }) => {
     <div className='absolute top-0 left-0 right-0 z-50 md:px-9 px-5 mt-5 overflow-y-auto h-40 bg-transparent flex flex-col items-start space-y-4'>
       {notifications.map((notification, index) => (
         <div
-          key={notification.message + index}
+          key={notification?.message + index}
           className={`flex justify-between items-center gap-3 p-2 w-full rounded-lg shadow-md bg-white border ${
-            borderClasses[notification.signal]
+            borderClasses[notification?.signal]
           }`}
         >
           <Text size='sm'>
-            <span className={textClasses[notification.signal]}>
-              {notification.message}
+            <span className={textClasses[notification?.signal]}>
+              {notification?.message}
             </span>
           </Text>
           <button
