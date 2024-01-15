@@ -1,7 +1,6 @@
 import Text from './text'
 
 const Notification = ({ notifications, remove }) => {
-
   const borderClasses = {
     TIP: 'border-yellow-500',
     MSG: 'border-green-500',
@@ -15,7 +14,7 @@ const Notification = ({ notifications, remove }) => {
   }
 
   return (
-    <div className='absolute top-0 left-0 right-0 z-50 md:px-9 px-5 mt-5 overflow-y-auto h-40 bg-transparent flex flex-col items-start space-y-4'>
+    <div className='absolute top-0 left-0 right-0 z-50 md:px-9 px-5 mt-5 overflow-y-auto max-h-40 bg-transparent flex flex-col items-start space-y-4'>
       {notifications.map((notification, index) => (
         <div
           key={notification?.message + index}

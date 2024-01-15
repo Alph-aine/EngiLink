@@ -1,29 +1,9 @@
 import { useState, useEffect } from 'react'
 
 export default function useNotification(message, signal) {
-  const init = () => {
-    const initTimeOutIds = []
-    const initNotifications = []
+  const [notifications, setNotifications] = useState([])
 
-    if (message && signal) {
-      initNotifications.push({ message, signal })
-
-      const id = setTimeout(() => {
-        setNotifications((prevNotifications) => [
-          ...prevNotifications.slice(0, prevNotifications.length - 1),
-        ])
-      }, 30000)
-      initTimeOutIds.push(id)
-    }
-
-    return [initTimeOutIds, initNotifications]
-  }
-
-  const [initTimeOutIds, initNotifications] = init()
-
-  const [notifications, setNotifications] = useState(initNotifications)
-
-  const [timeoutIds, setTimeoutIds] = useState(initTimeOutIds)
+  const [timeoutIds, setTimeoutIds] = useState([])
 
   const removeNotif = (index) => {
     // Remove notification with corresponding timeoutId.
@@ -44,7 +24,7 @@ export default function useNotification(message, signal) {
 
   const addNotif = (notification) => {
     if (notifications.length > 1) {
-      removeNotif(1)
+      removeNotif(0)
       setNotifications((prev) => [...prev, notification])
     } else setNotifications((prev) => [...prev, notification])
 
@@ -58,10 +38,9 @@ export default function useNotification(message, signal) {
   }
 
   useEffect(() => {
-    const [initNotifications, initTimeOutIds] = init()
-
-    setNotifications((prev) => [...prev, ...initNotifications])
-    setTimeoutIds((prev) => [...prev, initTimeOutIds])
+    if (message && signal) {
+      addNotif({ message, signal })
+    }
   }, [message, signal])
 
   return {

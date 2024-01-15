@@ -6,7 +6,7 @@ export default function UpdatePassword() {
   const { notifications, removeNotif, addNotif } = useNotification()
 
   const submit = (e) => {
-    const formData = e.currentTarget
+    const formData = new FormData(e.currentTarget)
     const jsonData = formToJSON(formData)
 
     axios
@@ -35,11 +35,13 @@ export default function UpdatePassword() {
               type='password'
               name='oldPassword'
               placeholder='Old Password'
+              required
             />
             <Input
               type='password'
               name='newPassword'
               placeholder='New Password'
+              required
             />
           </div>
           <Button cx='bg-primary w-full' type='submit'>

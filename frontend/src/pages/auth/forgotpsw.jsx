@@ -9,7 +9,7 @@ export default function ForgotPassword() {
   const { notifications, removeNotif, addNotif } = useNotification()
 
   const submit = (e) => {
-    const formData = e.currentTarget
+    const formData = new FormData(e.currentTarget)
     const jsonData = formToJSON(formData)
 
     axios
@@ -35,7 +35,7 @@ export default function ForgotPassword() {
             You will receive a reset token in the email you provide below
           </Text>
           <div className='flex flex-col md:gap-5 gap-2 w-full'>
-            <Input type='email' name='email' placeholder='Email' />
+            <Input type='email' name='email' placeholder='Email' required />
           </div>
           <Button cx='bg-primary w-full' type='submit'>
             Receive Token
