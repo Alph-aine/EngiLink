@@ -1,22 +1,29 @@
 import { useState } from 'react'
 
 export default function useNotification(message, signal) {
-  const [notifications, setNotifications] = useState([
-    (() => {
-      if (message && signal) return { message, signal }
-    })(),
-  ])
+  const init = () => {
+    const initTimeOutIds = []
+    const initNotifications = []
 
-  const [timeoutIds, setTimeoutIds] = useState([
-    (() => {
-      if (message && signal)
-        return setTimeout(() => {
-          setNotifications((prevNotifications) => [
-            ...prevNotifications.slice(0, prevNotifications.length - 1),
-          ])
-        }, 30000)
-    })(),
-  ])
+    if (message && signal) {
+      initNotifications.push({ message, signal })
+
+      const id = setTimeout(() => {
+        setNotifications((prevNotifications) => [
+          ...prevNotifications.slice(0, prevNotifications.length - 1),
+        ])
+      }, 30000)
+      initTimeOutIds.push(id)
+    }
+
+    return [initTimeOutIds, initNotifications]
+  }
+
+  const [initTimeOutIds, initNotifications] = init()
+
+  const [notifications, setNotifications] = useState(initNotifications)
+
+  const [timeoutIds, setTimeoutIds] = useState(initTimeOutIds)
 
   const removeNotif = (index) => {
     // Remove notification with corresponding timeoutId.
