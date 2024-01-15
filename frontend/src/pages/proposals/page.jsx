@@ -87,6 +87,10 @@ export default function Proposals() {
             <div className='flex justify-center items-center'>
               <Text size='sm'>Loading Proposals. Please wait...</Text>
             </div>
+          ) : proposals.length < 1 ? (
+            <div className='flex justify-center items-center'>
+              <Text size='sm'>No proposals found, choose another job</Text>
+            </div>
           ) : (
             <div className='flex flex-col gap-10'>
               {proposals.map((proposal) => (
