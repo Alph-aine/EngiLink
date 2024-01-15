@@ -38,7 +38,7 @@ export default function ProposalCard({ proposal }) {
         <div className='flex flex-col gap-1'>
           <div className='flex justify-start items-center gap-1 capitalize'>
             <BsCurrencyDollar className='md:text-base text-sm text-black/40' />
-            <Text size='xs'>Price</Text>
+            <Text size='xs'>Bid</Text>
           </div>
           <span className='line-clamp-2 md:line-clamp-3'>
             <Text size='lg'>{price}</Text>
