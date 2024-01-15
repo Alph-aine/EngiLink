@@ -30,7 +30,7 @@ const Notification = ({ notifications, remove }) => {
           </Text>
           <button
             type='button'
-            className='text-gray-400 hover:text-gray-500'
+            className='text-gray-400 hover:text-gray-500 p-1 border border-gray-400'
             onClick={() => remove(index)}
           >
             <svg
