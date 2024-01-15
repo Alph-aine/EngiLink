@@ -41,8 +41,7 @@ export default function useNotification(message, signal) {
     if (notifications.length > 2) {
       removeNotif(1)
       setNotifications((prev) => [...prev, notification])
-    }
-    else setNotifications((prev) => [...prev, notification])
+    } else setNotifications((prev) => [...prev, notification])
 
     // Remove last notification after 6s
     const timeoutId = setTimeout(() => {
