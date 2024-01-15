@@ -1,4 +1,5 @@
 import Job from '../models/job.js';
+import Employer from '../models/employer.js';
 import asyncErrors from '../middlewares/asyncError.js';
 import ErrorHandler from '../utils/errorHandler.js';
 
@@ -43,6 +44,13 @@ const newJobFunc = asyncErrors(async (req, res, next) => {
       // newJob.employer = req.user;
 
       await newJob.save();
+
+      const employer = await Employer.findById(req.user.id);
+      if (!employer) {
+        return next(new ErrorHandler('Employer not found', 404));
+      }
+      employer.jobPosted.push(newJob._id);
+      await employer.save();
       res.status(201).json(newJob);
 	    }
   } catch (error) {
@@ -135,12 +143,12 @@ export const searchJobs = asyncErrors(async (req, res, next) => {
   } catch (error) {
     next(new ErrorHandler(error.message, 500));
   }
-})
+});
 
 // Update job controller
 export const updateJob = asyncErrors(async (req, res, next) => {
-    try {
-	req.user.role = 'employer';
+  try {
+    req.user.role = 'employer';
     const jobId = req.params.id;
     const job = await Job.findById(jobId);
     if (!job) {
