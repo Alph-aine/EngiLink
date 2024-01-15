@@ -106,7 +106,7 @@ export default function Layout({ companyName, children }) {
           </div>
         </div>
       </header>
-      <main className='grow w-full bg-white xl:px-32 md:px-8 px-4 py-10'>
+      <main className='grow relative w-full bg-white xl:px-32 md:px-8 px-4 py-10'>
         {children}
       </main>
       <footer className='bg-bg-primary w-full xl:px-32 lg:px-24 md:px-8 px-4'>

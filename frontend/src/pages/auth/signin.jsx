@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Input from '../../components/input'
 import Text, { TextLink } from '../../components/text'
 import Button from '../../components/button'
+import Notification from '../../components/notification'
 
 axios.defaults.withCredentials = true;
 
@@ -28,6 +29,7 @@ export default function SignIn() {
 
   return (
     <div className='grid xl:grid-cols-12 lg:grid-cols-10 gap-0 min-h-screen'>
+      <Notification message="This is a message" signal="TIP" />
       <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
         <div className='grow flex flex-col justify-between md:items-start items-center gap-5 md:p-10 p-5'>
           <Text size='xl'>Sign in</Text>
