@@ -44,6 +44,11 @@ const router = createBrowserRouter([
     element: <EditProfile />,
   },
   {
+    path: 'employer/:employerId/proposals',
+    loader: proposalsLoader,
+    element: <Proposals />,
+  },
+  {
     path: 'employer/:employerId/jobs/',
     loader: jobsLoader,
     element: <Jobs />,
@@ -62,11 +67,6 @@ const router = createBrowserRouter([
     path: 'employer/:employerId/jobs/:jobId/edit',
     loader: jobEditLoader,
     element: <EditJob />,
-  },
-  {
-    path: 'employer/:employerId/jobs/:jobId/proposals',
-    loader: proposalsLoader,
-    element: <Proposals />,
   },
   {
     path: 'employer/:employerId/jobs/:jobId/proposals/:proposalId',
