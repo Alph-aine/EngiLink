@@ -8,7 +8,7 @@ import { fetchEmployerJobs } from '../../lib/job'
 
 export const jobsLoader = async ({ params }) => {
   const { employerId } = params
-  
+
   const user = await getLoggedInEmployer()
   if (!user) return redirect('/employer/auth/signin')
 
@@ -26,7 +26,10 @@ export default function Jobs() {
       {jobs.length > 0 ? (
         <div className='flex flex-col'>
           {jobs.map((job) => (
-            <Link to={`/employer/${user._id}/jobs/${job._id}`} className='pb-12 pt-12 first:pt-0 last:pb-0 border-b last:border-none border-bg-primary/40'>
+            <Link
+              to={`/employer/${user._id}/jobs/${job._id}`}
+              className='pb-12 pt-12 first:pt-0 last:pb-0 border-b last:border-none border-bg-primary/40'
+            >
               <JobCard key={job._id} job={job} />
             </Link>
           ))}
