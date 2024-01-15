@@ -25,7 +25,7 @@ const ExperienceSection = ({ onStepChange, formData, onChangeExpLevel }) => {
   const [error, setError] = useState(false)
 
   const nextSection = () => {
-    if (formData.selectedLevel === '') {
+    if (formData.experienceLevel === '') {
       setError(true)
       return
     }
@@ -34,7 +34,7 @@ const ExperienceSection = ({ onStepChange, formData, onChangeExpLevel }) => {
 
   return (
     <div className={css(styles.finalSection)}>
-      <h4>Experience Level</h4>
+      <h4 className={css(styles.title)}>Experience Level</h4>
       <hr />
       <div className={css(styles.cards)}>
         {levels.map(level => 
@@ -42,7 +42,7 @@ const ExperienceSection = ({ onStepChange, formData, onChangeExpLevel }) => {
             key={level.id}
             title={level.title}
             description={level.description}
-            selectedLevel={formData.selectedLevel}
+            experienceLevel={formData.experienceLevel}
             onChangeExpLevel={onChangeExpLevel}
         />)}
         
@@ -65,6 +65,12 @@ const ExperienceSection = ({ onStepChange, formData, onChangeExpLevel }) => {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontWeight: 'bold',
+    fontFamily: 'var(--main-font)',
+    marginBottom: '1em',
+  },
+
   error: {
     color: 'red',
     fontSize: '0.75rem'

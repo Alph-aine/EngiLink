@@ -30,7 +30,7 @@ const CertificationsSection = ({ onStepChange, formData, onSaveCertification, on
       setInputError(true)
       return
     }
-    // onSaveExperience(experiences)
+    // onSaveExperience(skills)
     onStepChange(1)
   }
 

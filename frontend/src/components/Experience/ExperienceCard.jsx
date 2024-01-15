@@ -1,16 +1,16 @@
 import { StyleSheet, css } from "aphrodite"
 
-const ExperienceCard = ({ title, description, selectedLevel, onChangeExpLevel }) => {
+const ExperienceCard = ({ title, description, experienceLevel, onChangeExpLevel }) => {
 
   
 
   return (
-    <div className={css(styles.card, selectedLevel === title && styles.selected)}>
+    <div className={css(styles.card, experienceLevel === title && styles.selected)}>
       <input
         type="radio"
         // name="experienceLevel"
         value={title}
-        checked={selectedLevel === title}
+        checked={experienceLevel === title}
         className={css(styles.radio)}
         onChange={onChangeExpLevel}
       />
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     fontFamily: 'var(--accent-font)',
     border: '1px solid grey',
     borderRadius: '5px',
-    padding: '0.5em',
+    padding: '1em',
     flex: '1',
     textAlign: 'center',
     position: 'relative'
