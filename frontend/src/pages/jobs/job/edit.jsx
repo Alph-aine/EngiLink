@@ -12,9 +12,10 @@ import useNotification from '../../../hooks/usenotification'
 export const jobEditLoader = async ({ params }) => {
   const { employerId, jobId } = params
   const user = await getLoggedInEmployer()
-  if (!user) return redirect(
-    `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
-  )
+  if (!user)
+    return redirect(
+      `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+    )
   if (user._id !== employerId)
     return redirect(
       `/employer/${
@@ -33,7 +34,10 @@ export const jobEditLoader = async ({ params }) => {
     console.log('Error loading data')
   }
 
-  if (!job) return redirect(`/employer/${employerId}/jobs?msg=${'Error loading job'}&msgType=${'BAD'}`)
+  if (!job)
+    return redirect(
+      `/employer/${employerId}/jobs?msg=${'Error loading job'}&msgType=${'BAD'}`
+    )
   return { job, user }
 }
 

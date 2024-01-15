@@ -71,7 +71,12 @@ export default function Profile() {
       .delete(`http://localhost:3000/api/v1/employer/id/${params.employerId}`, {
         withCredentials: true,
       })
-      .then(() => navigate('/employer/auth/signup?msg=account+deleted+successfully&msgType=BAD', { replace: true }))
+      .then(() =>
+        navigate(
+          '/employer/auth/signup?msg=account+deleted+successfully&msgType=BAD',
+          { replace: true }
+        )
+      )
       .catch(() => {
         addNotif({
           message: e.response.data.message ?? e.response.statusText,

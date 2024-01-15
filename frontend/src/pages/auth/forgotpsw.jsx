@@ -17,7 +17,9 @@ export default function ForgotPassword() {
           <div className='flex flex-col md:gap-5 gap-2 w-full'>
             <Input type='email' name='email' placeholder='Email' />
           </div>
-          <Button cx='bg-primary w-full' type='submit'>Receive Token</Button>
+          <Button cx='bg-primary w-full' type='submit'>
+            Receive Token
+          </Button>
           <TextLink to='/contact'>Forgot email?</TextLink>
         </form>
       </div>

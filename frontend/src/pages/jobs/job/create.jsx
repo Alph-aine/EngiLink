@@ -18,9 +18,10 @@ import Notification from '../../../components/notification'
 export const jobCreateLoader = async ({ params }) => {
   const { employerId } = params
   const user = await getLoggedInEmployer()
-  if (!user) return redirect(
-    `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
-  )
+  if (!user)
+    return redirect(
+      `/employer/auth/signin?msg=${'You must login first'}&msgType=${'TIP'}`
+    )
   if (user._id !== employerId)
     return redirect(
       `/employer/${
