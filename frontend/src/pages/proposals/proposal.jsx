@@ -18,7 +18,9 @@ export const proposalLoader = async ({ params }) => {
   let proposal = null
 
   try {
-    res = await axios.get(`http://localhost:3000/api/v1/proposals/${proposalId}`)
+    res = await axios.get(
+      `http://localhost:3000/api/v1/proposals/${proposalId}`
+    )
 
     proposal = res.data?.proposal
   } catch (e) {

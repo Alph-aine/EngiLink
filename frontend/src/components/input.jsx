@@ -6,7 +6,7 @@ export default function Input({
   placeholder,
   value,
   onChange,
-  required=false,
+  required = false,
   defaultValue,
 }) {
   return (
