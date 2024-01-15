@@ -27,7 +27,7 @@ export const proposalsLoader = async ({ params }) => {
   const jobs = await fetchEmployerJobs(user._id)
   if (!jobs)
     return redirect(
-      `/employer/${employerId}/profile?msg=${'Error loading proposals'}&msgType=${'TIP'}`
+      `/employer/${employerId}/profile?msg=${'Error loading proposals'}&msgType=${'BAD'}`
     )
 
   return { jobs, user }
@@ -52,7 +52,12 @@ export default function Proposals() {
         withCredentials: true,
       })
       .then((res) => setProposals(res.data))
-      .catch(() => console.log('An error occurred while loading proposals'))
+      .catch(() => {
+        addNotif({
+          message: e.response.data.message ?? e.response.statusText,
+          signal: 'BAD',
+        })
+      })
       .finally(() => setLoadingProposals(false))
   }, [selectedJob])
 
