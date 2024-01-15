@@ -7,7 +7,6 @@ import { formToJSON } from 'axios'
 
 export default function ForgotPassword() {
   const { notifications, removeNotif, addNotif } = useNotification()
-  const [email, setEmail] = useState()
 
   const submit = (e) => {
     const formData = e.currentTarget
@@ -26,6 +25,7 @@ export default function ForgotPassword() {
   return (
     <div className='grid xl:grid-cols-12 lg:grid-cols-10 gap-0 min-h-screen'>
       <div className='lg:col-span-4 md:col-span-3 bg-white w-full h-full flex justify-center items-center'>
+        <Notification notifications={notifications} remove={removeNotif} />
         <form
           onSubmit={submit}
           className='grow flex flex-col justify-between md:items-start items-center gap-5 md:p-10 p-5 text-center'
