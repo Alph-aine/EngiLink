@@ -5,28 +5,18 @@ import ProposalCard from './card'
 import DropDown, { DropItem } from '../../components/dropdown'
 import Layout from '../../components/layout'
 import { useState } from 'react'
+import { getLoggedInEmployer } from '../../lib/auth'
+import { fetchEmployerJobs } from '../../lib/job'
 
 export const proposalsLoader = async ({ params }) => {
   const { employerId } = params
+
   const user = await getLoggedInEmployer()
   if (!user) return redirect('/employer/auth/signin')
 
-  let jobs = null
-
-  try {
-    const res = await axios.get(
-      `http://localhost:3000/api/v1/employer/${employerId}/jobs`,
-      {
-        withCredentials: true,
-      }
-    )
-
-    jobs = res.data
-  } catch (e) {
-    console.log('Error loading data')
-  }
-
+  const jobs = await fetchEmployerJobs(user._id)
   if (!jobs) return redirect(`/employer/${employerId}/jobs/create`)
+
   return { jobs, user }
 }
 

@@ -4,26 +4,18 @@ import Layout from '../../components/layout'
 import { getLoggedInEmployer } from '../../lib/auth'
 import JobCard from './card'
 import Text from '../../components/text'
+import { fetchEmployerJobs } from '../../lib/job'
 
 export const jobsLoader = async ({ params }) => {
   const { employerId } = params
+  
   const user = await getLoggedInEmployer()
   if (!user) return redirect('/employer/auth/signin')
 
-  let jobs = null
-
-  try {
-    const res = await axios.get(`http://localhost:3000/api/v1/jobs`, {
-      withCredentials: true,
-    })
-
-    jobs = res.data
-  } catch (e) {
-    console.log('Error loading data')
-  }
-
+  const jobs = await fetchEmployerJobs(user._id)
   if (!jobs) return redirect(`/employer/${employerId}/profile`)
-  return { jobs: jobs.filter((job) => job.employer === user._id), user }
+
+  return { jobs, user }
 }
 
 export default function Jobs() {
