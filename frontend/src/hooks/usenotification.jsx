@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function useNotification(message, signal) {
   const init = () => {
@@ -56,6 +56,13 @@ export default function useNotification(message, signal) {
     }, 30000)
     setTimeoutIds((prev) => [...prev, timeoutId])
   }
+
+  useEffect(() => {
+    const [initNotifications, initTimeOutIds] = init()
+
+    setNotifications(prev => [...prev, ...initNotifications])
+    setTimeoutIds(prev => [...prev, initTimeOutIds])
+  }, [message, signal])
 
   return {
     notifications,
