@@ -49,7 +49,7 @@ const engineerSchema = new mongoose.Schema({
   // role is to assign level of authorization
   role: {
     type: String,
-    default: 'user'
+    default: 'engineer'
   },
   phoneNumber: {
     type: String,

@@ -33,8 +33,8 @@ EngiLink is a specialized web platform designed to connect certified and profess
 - **Enter the frontend and start the server**
   - ```cd frontend```  
   - ```npm run dev```
-- **Enter the backend and start the server**
-  - ```cd ../backend```
+- **In another terminal, enter the backend and start the server**
+  - ```cd backend```
   - ```npm run dev ```
 - **Make sure MongoDB is installed locally or available remotely**
 - **Remember to set your environmental variables**

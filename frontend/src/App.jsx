@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+// import Landing from './pages/Landing'
 import SignIn from './pages/auth/signin'
 import SignUp from './pages/auth/signup'
 import ForgotPassword from './pages/auth/forgotpsw'
@@ -12,6 +13,11 @@ import Lander from './pages/lander'
 import Jobs, { jobsLoader } from './pages/jobs/page'
 import Job, { jobLoader } from './pages/jobs/job/page'
 import EditJob, { jobEditLoader } from './pages/jobs/job/edit'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Home from './pages/Home'
+import Discover from './pages/Discover'
+import EngineerProfile from './pages/Profile'
 
 const router = createBrowserRouter([
   {
@@ -72,6 +78,27 @@ const router = createBrowserRouter([
     path: 'employer/:employerId/jobs/:jobId/proposals/:proposalId',
     loader: proposalLoader,
     element: <Proposal />,
+  },
+  {
+    path: 'engineer/auth/signin',
+    element: <Login />,
+  },
+  {
+    path: 'engineer/auth/signup',
+    element: <Register />,
+  },
+  {
+    path: 'engineer/home',
+    loader: proposalLoader,
+    element: <Home />,
+  },
+  {
+    path: 'engineer/discover',
+    element: <Discover />,
+  },
+  {
+    path: 'engineer/profile',
+    element: <EngineerProfile />,
   },
 ])
 
