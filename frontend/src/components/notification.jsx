@@ -11,11 +11,7 @@ const Notification = ({ message, signal }) => {
 
   useEffect(() => {
     // Add notification only if message is different from the last one
-    if (
-        message &&
-          signal
-      )
-      {
+    if (message && signal) {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
         { message, signal },
@@ -53,9 +49,11 @@ const Notification = ({ message, signal }) => {
             borderClasses[notification.signal]
           }`}
         >
-          <Text size='sm'><span className={textClasses[notification.signal]}>
-            {notification.message}
-          </span></Text>
+          <Text size='sm'>
+            <span className={textClasses[notification.signal]}>
+              {notification.message}
+            </span>
+          </Text>
           <button
             type='button'
             className='text-gray-400 hover:text-gray-500'
