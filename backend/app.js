@@ -16,13 +16,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: 'https://engi-link.vercel.app:5173',
+  origin: 'https://engi-link.vercel.app/',
   methods: ['DELETE, POST', 'GET', 'PUT', 'OPTIONS', 'HEAD'],
   credentials: true
 }));
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://engi-link.vercel.app:5173');
+  res.header('Access-Control-Allow-Origin', 'https://engi-link.vercel.app/');
   res.header('Access-Control-Allow-Methods', 'DELETE, POST, GET, PUT, OPTIONS, HEAD');
   next();
 });

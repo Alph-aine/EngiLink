@@ -12,7 +12,7 @@ const EngineerProfile = () => {
 
   useEffect(() => {
     async function fetchProfileInfo() {
-      const response = await axios.get("https://engilink.vercel.app:3000/api/v1/engineer/me", {
+      const response = await axios.get("https://engilink.vercel.app/api/v1/engineer/me", {
         headers: {
           'Content-Type': 'application/json'
         },

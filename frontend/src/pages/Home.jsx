@@ -12,7 +12,7 @@ const Home = () => {
 
   const getProfile = async () => {
     try {
-      const url = 'https://engilink.vercel.app:3000/api/v1/engineer/me'
+      const url = 'https://engilink.vercel.app/api/v1/engineer/me'
       // console.log(`token=${sharedToken}`)
 
       const response = await axios.get(url, {

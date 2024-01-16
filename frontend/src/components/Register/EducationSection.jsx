@@ -32,7 +32,7 @@ const EducationSection = ({ formData, handleInputChange, onChangeDegree }) => {
     try {
       setButtonText("Please wait...")
       setAuthError(false)
-      const url = 'http://localhost:3000/api/v1/engineer/register'
+      const url = 'https://engilink.vercel.app/api/v1/engineer/register'
 
       const {confirmPassword, ...postFormData} = formData
 
