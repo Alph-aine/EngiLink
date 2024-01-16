@@ -43,7 +43,7 @@ const Discover = () => {
     })
   }
 
-  const url = "http://localhost:3000/api/v1/jobs"
+  const url = "https://engilink.vercel.app/api/v1/jobs"
 
   useEffect(() => {
     async function fetchData() {

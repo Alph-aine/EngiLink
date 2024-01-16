@@ -48,7 +48,7 @@ export default function Proposals() {
     setLoadingProposals(true)
 
     axios
-      .get(`http://localhost:3000/api/v1/jobs/${selectedJob}/proposals`, {
+      .get(`https://engilink.vercel.app/pi/v1/jobs/${selectedJob}/proposals`, {
         withCredentials: true,
       })
       .then((res) => setProposals(res.data))

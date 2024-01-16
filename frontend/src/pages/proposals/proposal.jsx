@@ -19,7 +19,7 @@ export const proposalLoader = async ({ params }) => {
 
   try {
     res = await axios.get(
-      `http://localhost:3000/api/v1/proposals/${proposalId}`
+      `https://engilink.vercel.app/api/v1/proposals/${proposalId}`
     )
 
     proposal = res.data?.proposal
