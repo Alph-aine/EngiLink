@@ -28,7 +28,7 @@ export const profileLoader = async ({ params }) => {
 
   try {
     const res = await axios.get(
-      `https://engilink.vercel.app/api/v1/employer/id/${params.employerId}`,
+      `https://engilink.vercel.app:3000/api/v1/employer/id/${params.employerId}`,
       { withCredentials: true }
     )
 
@@ -68,7 +68,7 @@ export default function Profile() {
     setDeleting(true)
 
     axios
-      .delete(`https://engilink.vercel.app/api/v1/employer/id/${params.employerId}`, {
+      .delete(`https://engilink.vercel.app:3000/api/v1/employer/id/${params.employerId}`, {
         withCredentials: true,
       })
       .then(() =>
@@ -90,7 +90,7 @@ export default function Profile() {
     setLoggingOut(true)
 
     axios
-      .get(`https://engilink.vercel.app/api/v1/logout`, {
+      .get(`https://engilink.vercel.app:3000/api/v1/logout`, {
         withCredentials: true,
       })
       .then(() => navigate('/', { replace: true }))

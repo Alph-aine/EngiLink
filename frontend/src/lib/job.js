@@ -4,7 +4,7 @@ export const fetchEmployerJobs = async (userId) => {
   let jobs = null
 
   try {
-    const res = await axios.get(`http://localhost:3000/api/v1/jobs`, {
+    const res = await axios.get(`https://engilink.vercel.app:3000/api/v1/jobs`, {
       withCredentials: true,
     })
 

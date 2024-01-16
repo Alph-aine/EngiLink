@@ -54,7 +54,7 @@ export default function CreateJob() {
     jsonData['postedAt'] = postedAt
 
     axios
-      .post('https://engilink.vercel.app/api/v1/jobs/', jsonData, {
+      .post('https://engilink.vercel.app:3000/api/v1/jobs/', jsonData, {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/${user._id}/jobs`))
