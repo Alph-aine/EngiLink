@@ -4,7 +4,7 @@ export const getLoggedInEmployer = async () => {
   let user = null
 
   try {
-    const res = await axios.get(`https://engilink.vercel.app/api/v1/employer/me`, {
+    const res = await axios.get(`https://engilink.onrender.com/api/v1/employer/me`, {
       withCredentials: true,
     })
 
