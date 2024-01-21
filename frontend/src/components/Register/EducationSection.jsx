@@ -32,7 +32,7 @@ const EducationSection = ({ formData, handleInputChange, onChangeDegree }) => {
     try {
       setButtonText("Please wait...")
       setAuthError(false)
-      const url = 'https://engilink.onrender.com:3000/api/v1/engineer/register'
+      const url = 'https://engilink.onrender.com/api/v1/engineer/register'
 
       const {confirmPassword, ...postFormData} = formData
 

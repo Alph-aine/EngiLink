@@ -12,7 +12,7 @@ export default function UpdatePassword() {
     const jsonData = formToJSON(formData)
 
     axios
-      .put('https://engilink.onrender.com:3000/api/v1/employer/password/update', jsonData, {
+      .put('https://engilink.onrender.com/api/v1/employer/password/update', jsonData, {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/auth/signin`))
