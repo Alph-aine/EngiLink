@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   origin: 'https://engi-link.vercel.app/',
-  methods: ['DELETE, POST', 'GET', 'PUT', 'OPTIONS', 'HEAD'],
+  methods: ['DELETE', 'POST', 'GET', 'PUT', 'OPTIONS', 'HEAD'],
   credentials: true
 }));
 
