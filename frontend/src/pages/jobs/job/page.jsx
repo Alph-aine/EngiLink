@@ -23,7 +23,7 @@ export const jobLoader = async ({ params }) => {
   let job = null
 
   try {
-    const res = await axios.get(`https://engilink.vercel.app/api/v1/jobs/${jobId}`, {
+    const res = await axios.get(`https://engilink.onrender.com:3000/api/v1/jobs/${jobId}`, {
       withCredentials: true,
     })
     job = res.data
@@ -48,7 +48,7 @@ export default function Job() {
     setDeleting(true)
 
     axios
-      .delete(`https://engilink.vercel.app/api/v1/jobs/${job._id}`, {
+      .delete(`https://engilink.onrender.com:3000/api/v1/jobs/${job._id}`, {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/${user._id}/jobs`, { replace: true }))

@@ -15,7 +15,7 @@ export default function ForgotPassword() {
     const jsonData = formToJSON(formData)
 
     axios
-      .post('https://engilink.vercel.app/api/v1/employer/password/forgot', jsonData, {
+      .post('https://engilink.onrender.com:3000/api/v1/employer/password/forgot', jsonData, {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/auth/signin`))

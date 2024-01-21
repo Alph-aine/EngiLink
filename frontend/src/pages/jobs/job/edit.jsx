@@ -27,7 +27,7 @@ export const jobEditLoader = async ({ params }) => {
   let job = null
 
   try {
-    const res = await axios.get(`https://engilink.vercel.app/api/v1/jobs/${jobId}`, {
+    const res = await axios.get(`https://engilink.onrender.com:3000/api/v1/jobs/${jobId}`, {
       withCredentials: true,
     })
     job = res.data
@@ -63,7 +63,7 @@ export default function EditJob() {
     jsonData['postedAt'] = postedAt
 
     axios
-      .put(`https://engilink.vercel.app/api/v1/jobs/${job._id}`, jsonData, {
+      .put(`https://engilink.onrender.com:3000/api/v1/jobs/${job._id}`, jsonData, {
         withCredentials: true,
       })
       .then(() => navigate(`/employer/${user._id}/jobs/${job._id}`))
