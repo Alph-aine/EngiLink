@@ -27,6 +27,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/', (req, res) => {
+  res.send('Welcome to Backend');
+});
+
 app.use('/api/v1', engrAuth);
 app.use('/api/v1', empAuth);
 app.use('/api/v1', index);
